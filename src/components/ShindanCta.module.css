@@ -1,0 +1,29 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.center {
+  align-items: center;
+  text-align: center;
+}
+
+.lg {
+  min-height: 58px;
+  padding-inline: 34px;
+  font-size: 17px;
+}
+
+.note {
+  font-size: 13px;
+  color: var(--c-white-50);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 480px) {
+  .wrap :global(.btn) {
+    width: 100%;
+  }
+}

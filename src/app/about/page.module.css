@@ -1,0 +1,82 @@
+.main {
+  padding-top: 8px;
+}
+
+.h1 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(22px, 3.6vw, 30px);
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+.section {
+  margin-top: 48px;
+}
+
+.h2 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  letter-spacing: 0.04em;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--c-verdigris-40);
+}
+
+.prose p + p,
+.prose ul + p,
+.prose p + ul {
+  margin-top: 1.3em;
+}
+
+.ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 24px;
+  font-size: 15px;
+}
+
+.code {
+  font-size: 11.5px;
+  margin-right: 6px;
+}
+
+.dl {
+  border-top: 1px solid var(--c-verdigris-40);
+}
+
+.dlRow {
+  display: grid;
+  grid-template-columns: 9em 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--c-verdigris-40);
+  font-size: 15px;
+}
+
+.dt {
+  padding-top: 4px;
+}
+
+.links {
+  margin-top: 40px;
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+}
+
+.cta {
+  margin-top: 40px;
+}
+
+@media (max-width: 480px) {
+  .ul {
+    grid-template-columns: 1fr;
+  }
+  .dlRow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

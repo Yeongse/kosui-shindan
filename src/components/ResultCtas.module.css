@@ -1,0 +1,27 @@
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--c-verdigris-40);
+}
+
+.concentration {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 14px;
+  font-size: 14.5px;
+  color: var(--c-white-70);
+}
+
+.k {
+  font-size: 11px;
+}
+
+@media (max-width: 480px) {
+  .wrap :global(.btn) {
+    width: 100%;
+  }
+}

@@ -1,0 +1,36 @@
+.nav {
+  margin-bottom: 28px;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 0;
+  font-family: var(--ff-data);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--c-verdigris);
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.link {
+  color: var(--c-verdigris);
+  transition: color var(--dur-base) var(--ease);
+}
+.link:hover {
+  color: var(--c-white);
+}
+
+.current {
+  color: var(--c-white-70);
+}
+
+.sep {
+  margin-inline: 10px;
+  color: var(--c-verdigris-40);
+}

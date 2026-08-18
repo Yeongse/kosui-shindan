@@ -1,0 +1,39 @@
+.band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  min-height: 56px;
+  padding: 10px 0 14px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--c-verdigris-40);
+}
+
+.text {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--c-white-70);
+}
+
+.result .text {
+  color: var(--c-white);
+}
+
+.k {
+  font-size: 11px;
+}
+
+.cta {
+  font-size: 13.5px;
+  color: var(--c-amber);
+  text-decoration: underline;
+  text-decoration-color: var(--c-amber-20);
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color var(--dur-base) var(--ease);
+}
+.cta:hover {
+  text-decoration-color: var(--c-amber);
+}

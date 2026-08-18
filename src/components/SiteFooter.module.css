@@ -1,0 +1,49 @@
+.footer {
+  margin-top: 96px;
+  border-top: 1px solid var(--c-verdigris-40);
+}
+
+.inner {
+  padding-block: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.disclaimer {
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--c-white-50);
+  max-width: 60ch;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+}
+
+.link {
+  font-size: 13px;
+  color: var(--c-white-70);
+  text-decoration: underline;
+  text-decoration-color: var(--c-verdigris-40);
+  text-underline-offset: 0.25em;
+}
+.link:hover {
+  color: var(--c-white);
+  text-decoration-color: var(--c-white);
+}
+
+.copy {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: var(--c-white-50);
+}
+
+.copyName {
+  font-family: var(--ff-display);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}

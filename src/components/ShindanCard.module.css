@@ -1,0 +1,199 @@
+.card {
+  position: relative;
+  background: var(--c-paper);
+  color: var(--c-sumi);
+  padding: 22px 26px 26px;
+  border-radius: var(--radius);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 24px 60px -30px rgba(0, 0, 0, 0.7);
+}
+
+/* 紙の縁（薬包紙の折り目のような二重線） */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--c-sumi-12);
+  pointer-events: none;
+}
+
+.animate {
+  animation: rise 0.5s var(--ease) both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mono {
+  font-family: var(--ff-data);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--c-sumi-60);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--c-sumi-30);
+}
+
+.pharmacy {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.batch {
+  white-space: nowrap;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px 28px;
+  padding-top: 22px;
+}
+
+/* 縦書きタイプ名（1画面1箇所） */
+.nameBlock {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.name {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(44px, 9vw, 72px);
+  line-height: 1;
+  letter-spacing: 0.18em;
+  margin: 0;
+  color: var(--c-sumi);
+}
+
+.nameMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.kana {
+  writing-mode: vertical-rl;
+  font-family: var(--ff-display);
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  color: var(--c-sumi-60);
+}
+
+.code {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 11px;
+}
+
+.accord {
+  writing-mode: vertical-rl;
+  font-size: 10px;
+  color: var(--c-sumi-30);
+}
+
+.main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.catch {
+  font-family: var(--ff-display);
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+
+.notes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.notes th {
+  text-align: left;
+  font-weight: 400;
+  width: 5.5em;
+  padding: 8px 0;
+  vertical-align: baseline;
+  border-bottom: 1px solid var(--c-sumi-12);
+}
+
+.notes td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--c-sumi-12);
+  line-height: 1.7;
+}
+
+.notes tr:last-child th,
+.notes tr:last-child td {
+  border-bottom: 0;
+}
+
+.bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.radar {
+  margin-left: -10px;
+}
+
+.seal {
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 560px) {
+  .card {
+    padding: 18px 18px 22px;
+  }
+  .body {
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+  }
+  .name {
+    font-size: 48px;
+  }
+  .radar svg {
+    width: 128px;
+    height: 128px;
+  }
+  .pharmacy {
+    font-size: 10px;
+  }
+  .pharmacySuffix {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate {
+    animation: none;
+  }
+}

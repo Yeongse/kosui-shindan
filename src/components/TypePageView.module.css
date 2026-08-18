@@ -1,0 +1,103 @@
+.main {
+  padding-top: 8px;
+}
+
+.h1 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(19px, 3.2vw, 24px);
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: var(--c-white-70);
+  margin-bottom: 26px;
+}
+
+.cardWrap {
+  max-width: 560px;
+}
+
+/* 2. 本文（紙面の外、--c-bottle 背景に --c-white テキスト） */
+.body {
+  margin-top: 44px;
+}
+
+.bodyText {
+  font-size: 16.5px;
+  line-height: 2;
+  letter-spacing: 0.01em;
+}
+.bodyText + .bodyText {
+  margin-top: 1.4em;
+}
+
+/* 3. まとう場面 / 相性 / 隠し香調 */
+.meta {
+  margin-top: 40px;
+}
+
+.dl {
+  border-top: 1px solid var(--c-verdigris-40);
+}
+
+.dlRow {
+  display: grid;
+  grid-template-columns: 8em 1fr;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--c-verdigris-40);
+}
+
+.dt {
+  padding-top: 4px;
+}
+
+.dd {
+  font-size: 15.5px;
+  line-height: 1.85;
+}
+
+.dd p + p {
+  margin-top: 4px;
+}
+
+.reason {
+  color: var(--c-white-50);
+  font-size: 14px;
+}
+
+/* 5. 選び方 */
+.section {
+  margin-top: 64px;
+}
+
+.h2 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.prose p {
+  font-size: 16px;
+  line-height: 1.95;
+}
+.prose p + p {
+  margin-top: 1.4em;
+}
+
+/* 7. 関連 */
+.relatedList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+}
+
+@media (max-width: 480px) {
+  .dlRow {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

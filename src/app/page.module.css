@@ -1,0 +1,246 @@
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 32px clamp(24px, 6vw, 80px);
+  align-items: center;
+  padding-block: clamp(32px, 7vh, 88px) clamp(40px, 8vh, 96px);
+}
+
+.heroText {
+  animation: fadeIn 0.6s var(--ease) both; /* §9.1 初回ロード時のみ */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.eyebrow {
+  margin-bottom: 18px;
+}
+
+.h1 {
+  font-size: var(--fs-display);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  color: var(--c-white);
+}
+
+.sub {
+  margin-top: 22px;
+  max-width: 44ch;
+  font-size: 15.5px;
+  color: var(--c-white-70);
+}
+
+.cta {
+  margin-top: 34px;
+}
+
+.heroVisual {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  justify-self: end;
+}
+
+.vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 12.5px;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  color: var(--c-white-50);
+  padding-top: 8px;
+  height: 340px;
+  white-space: nowrap;
+}
+
+.rule {
+  margin-inline: auto;
+}
+
+/* ---------- Sections ---------- */
+.section {
+  padding-top: 64px;
+}
+
+.h2 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: var(--fs-h2);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.h3 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: var(--fs-h3);
+  letter-spacing: 0.04em;
+  margin: 36px 0 14px;
+}
+
+.lead {
+  color: var(--c-white-70);
+  margin-bottom: 22px;
+  max-width: 62ch;
+}
+
+.prose p + p {
+  margin-top: 1.4em;
+}
+
+.inlineCta {
+  margin-top: 30px;
+}
+
+/* §A */
+.whatList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--c-verdigris-40);
+}
+
+.whatItem {
+  display: grid;
+  grid-template-columns: 3ch 1fr;
+  gap: 16px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--c-verdigris-40);
+}
+
+.whatNo {
+  padding-top: 3px;
+}
+
+.whatTitle {
+  font-size: 16.5px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.whatBody {
+  margin-top: 6px;
+  font-size: 14.5px;
+  color: var(--c-white-70);
+}
+
+/* §C タイプ目録（カードグリッド禁止 → 2列の目録） */
+.typeList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  border-top: 1px solid var(--c-verdigris-40);
+}
+
+.typeItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--c-verdigris-40);
+}
+
+.typeDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.typeLink {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.typeLink:hover .typeName {
+  color: var(--c-amber);
+}
+
+.typeName {
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  transition: color var(--dur-base) var(--ease);
+}
+
+.typeKana {
+  font-size: 12.5px;
+  color: var(--c-white-50);
+}
+
+.typeMeta {
+  font-family: var(--ff-data);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--c-verdigris);
+  margin-left: 4px;
+}
+
+.more {
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+/* §E */
+.noteList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 15px;
+}
+
+/* 末尾 CTA */
+.finalCta {
+  margin-top: 88px;
+  padding-top: 48px;
+  border-top: 1px solid var(--c-verdigris-40);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.finalLine {
+  font-size: clamp(18px, 3vw, 24px);
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 12px;
+  }
+  .heroVisual {
+    justify-self: start;
+    order: -1;
+    gap: 14px;
+  }
+  .heroVisual svg {
+    max-width: 96px;
+  }
+  .vertical {
+    display: none; /* モバイルは縦書き装飾を省略（1画面1箇所ルールと可読性のため） */
+  }
+  .typeList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  /* 「あなたに似合う香水がわかる。」（14字）を1行に収める */
+  .h1 {
+    font-size: 24px;
+    letter-spacing: 0;
+  }
+}

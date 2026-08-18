@@ -1,0 +1,52 @@
+/*
+ * §7 デザインシステム — トークン（唯一の真実）
+ * 「明治の生薬問屋 × 現代の調香ラボ」。紙と硝子と液体の質感だけで世界を作る。
+ */
+:root {
+  /* §7.2 カラートークン */
+  --c-bottle: #101b16; /* 薬瓶 — ベース背景 */
+  --c-glass: #1b2a22; /* 暗硝子 — サーフェス */
+  --c-white: #ede8dc; /* 蒸留白 — 本文テキスト */
+  --c-amber: #c9973b; /* 琥珀液 — 主アクセント */
+  --c-verdigris: #5e7d6b; /* 緑青 — 副アクセント */
+  --c-paper: #f2ede0; /* 箋紙 — 調香箋カード内部のみ */
+  --c-sumi: #26221c; /* 墨 — 箋紙上のテキスト */
+  --c-rakkan: #9e2b25; /* 落款朱 — 印影専用 */
+
+  /* 派生（透過） */
+  --c-white-70: rgba(237, 232, 220, 0.7);
+  --c-white-50: rgba(237, 232, 220, 0.5);
+  --c-white-30: rgba(237, 232, 220, 0.3);
+  --c-verdigris-40: rgba(94, 125, 107, 0.4);
+  --c-verdigris-20: rgba(94, 125, 107, 0.2);
+  --c-amber-20: rgba(201, 151, 59, 0.2);
+  --c-sumi-60: rgba(38, 34, 28, 0.6);
+  --c-sumi-30: rgba(38, 34, 28, 0.3);
+  --c-sumi-12: rgba(38, 34, 28, 0.12);
+
+  /* §7.3 タイポグラフィ（next/font が --font-* を注入する） */
+  --ff-display: var(--font-display), 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --ff-body: var(--font-body), 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
+  --ff-data: var(--font-data), 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  --fs-display: clamp(28px, 6vw, 56px);
+  --fs-h2: 22px;
+  --fs-h3: 18px;
+  --fs-body: 16px;
+  --fs-small: 14px;
+  --fs-data: 12.5px;
+  --lh-body: 1.9;
+  --ls-data: 0.08em;
+
+  /* レイアウト */
+  --w-content: 720px;
+  --w-wide: 1040px;
+  --gutter: clamp(20px, 5vw, 48px);
+  --radius: 2px;
+
+  /* §9 モーション */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur-base: 250ms;
+  --dur-slow: 500ms;
+}

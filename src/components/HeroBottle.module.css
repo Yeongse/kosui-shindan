@@ -1,0 +1,25 @@
+.svg {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+}
+
+.liquid {
+  animation: sway 6s var(--ease) infinite alternate;
+  transform-origin: 80px 150px;
+}
+
+@keyframes sway {
+  from {
+    transform: translateY(-2px);
+  }
+  to {
+    transform: translateY(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid {
+    animation: none;
+  }
+}

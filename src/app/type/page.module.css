@@ -1,0 +1,142 @@
+.main {
+  padding-top: 8px;
+}
+
+.h1 {
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: clamp(24px, 4vw, 34px);
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+.lead {
+  margin-top: 16px;
+  max-width: 62ch;
+  color: var(--c-white-70);
+}
+
+/* 表紙をめくる目録の趣で、2列 */
+.catalog {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+  border-top: 1px solid var(--c-verdigris-40);
+}
+
+.group {
+  padding: 22px 0 18px;
+  border-bottom: 1px solid var(--c-verdigris-40);
+}
+
+.groupHead {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--ff-display);
+  font-weight: 400;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.groupCode {
+  font-size: 11px;
+}
+
+.groupLink {
+  color: var(--c-white-70);
+  border-bottom: 1px solid var(--c-verdigris-40);
+  transition: color var(--dur-base) var(--ease);
+}
+.groupLink:hover {
+  color: var(--c-white);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 12px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 8px;
+}
+
+.rowBody {
+  min-width: 0;
+}
+
+.rowLink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.rowLink:hover .name {
+  color: var(--c-amber);
+}
+
+.name {
+  font-family: var(--ff-display);
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  transition: color var(--dur-base) var(--ease);
+}
+
+.kana {
+  font-size: 12.5px;
+  color: var(--c-white-50);
+}
+
+.temp {
+  font-family: var(--ff-data);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: var(--c-verdigris);
+  margin-left: 4px;
+}
+
+.catch {
+  margin-top: 2px;
+  font-size: 14px;
+  color: var(--c-white-70);
+}
+
+.notes {
+  margin-top: 4px;
+  font-size: 12.5px;
+}
+
+.notesLink {
+  color: var(--c-verdigris);
+  text-decoration: underline;
+  text-decoration-color: var(--c-verdigris-40);
+  text-underline-offset: 0.25em;
+  transition: color var(--dur-base) var(--ease);
+}
+.notesLink:hover {
+  color: var(--c-white);
+}
+
+.cta {
+  margin-top: 48px;
+}
+
+@media (max-width: 720px) {
+  .catalog {
+    grid-template-columns: 1fr;
+  }
+}
