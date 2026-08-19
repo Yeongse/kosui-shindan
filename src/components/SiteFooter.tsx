@@ -34,6 +34,9 @@ export function SiteFooter() {
         <p className={styles.disclaimer}>
           本診断は娯楽コンテンツであり、医学・心理学的評価ではありません。結果は香りの好みを言葉にするための一つの目安としてお使いください。
         </p>
+        {process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG && (
+          <p className={styles.disclaimer}>Amazonのアソシエイトとして、香水診断 調香箋は適格販売により収入を得ています。</p>
+        )}
       </div>
     </footer>
   );

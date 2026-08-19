@@ -16,6 +16,7 @@ import { ResultBand } from './ResultBand';
 import { ShindanCard } from './ShindanCard';
 import { ConcentrationLine, ResultCtas } from './ResultCtas';
 import { AffiliateBlock } from './AffiliateBlock';
+import { ExperienceBlock } from './ExperienceBlock';
 import { ShareRow } from './ShareRow';
 import { Faq } from './Faq';
 import { TypeCard } from './TypeCard';
@@ -127,6 +128,7 @@ export function TypePageView({ type, digest }: { type: ScentType; digest: string
 
         {/* 6. 探す */}
         <AffiliateBlock type={type} />
+        <ExperienceBlock type={type} />
 
         {/* 7. 関連 */}
         <section className={`card ${styles.panel}`} aria-labelledby="related-heading">
