@@ -16,7 +16,8 @@ import styles from './ShindanFlow.module.css';
  * 診断フロー
  * - 1画面1問。選択と同時に 350ms 後に次問へ自動遷移。戻る可。
  * - 上部に「3 / 12」と細いプログレスバー。
- * - キーボード: 1-4 / A-D で選択、矢印キーでフォーカス移動。
+ * - 設問文の長さに関わらず選択肢の位置が動かないよう、設問見出しは2行分の高さを確保。
+ * - キーボードショートカットは意図的に持たない（自分で選ぶ体験を優先）。Tab/Enter の標準操作のみ。
  * - 回答状態は sessionStorage。回答済みが12件なら新規開始。
  */
 
@@ -69,7 +70,6 @@ export function ShindanFlow() {
     pending: null,
   });
   const [target, setTarget] = useState<{ href: string; color: string } | null>(null);
-  const listRef = useRef<HTMLDivElement>(null);
   const advanceTimer = useRef<number | null>(null);
   const startedRef = useRef(false);
 
@@ -130,36 +130,6 @@ export function ShindanFlow() {
     if (advanceTimer.current) window.clearTimeout(advanceTimer.current);
   }, []);
 
-  // キーボード
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (state.phase !== 'question') return;
-      const tag = (e.target as HTMLElement | null)?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-      const k = e.key.toUpperCase();
-      if (['1', '2', '3', '4'].includes(k)) {
-        e.preventDefault();
-        select(KEYS[Number(k) - 1]!);
-        return;
-      }
-      if (KEYS.includes(k as OptionKey)) {
-        e.preventDefault();
-        select(k as OptionKey);
-        return;
-      }
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        const buttons = Array.from(listRef.current?.querySelectorAll<HTMLButtonElement>('button[data-key]') ?? []);
-        if (!buttons.length) return;
-        e.preventDefault();
-        const i = buttons.findIndex((b) => b === document.activeElement);
-        const next = e.key === 'ArrowDown' ? (i + 1) % buttons.length : (i - 1 + buttons.length) % buttons.length;
-        buttons[next]?.focus();
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [select, state.phase]);
-
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     if (!state.hydrated) return;
@@ -209,7 +179,7 @@ export function ShindanFlow() {
           {question.text}
         </h1>
 
-        <div ref={listRef} className={styles.options} role="group" aria-label="選択肢">
+        <div className={styles.options} role="group" aria-label="選択肢">
           {question.options.map((o, i) => {
             const selected = (state.pending ?? currentAnswer) === o.key;
             return (
@@ -232,9 +202,6 @@ export function ShindanFlow() {
         </div>
       </div>
 
-      <p className={styles.hint}>
-        <kbd>1</kbd>〜<kbd>4</kbd> または <kbd>A</kbd>〜<kbd>D</kbd> キーでも選べます
-      </p>
     </div>
   );
 }

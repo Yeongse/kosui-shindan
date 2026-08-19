@@ -64,11 +64,19 @@ test('shared link (未診断者) shows SPECIMEN and swaps CTA', async ({ page })
   expect(og).toContain('d=050f110003030203');
 });
 
-test('keyboard-only: number keys answer questions', async ({ page }) => {
+test('選択肢の縦位置は設問の長さに関わらず一定', async ({ page }) => {
   await page.goto('/shindan');
   await expect(page.locator('[data-qno="1"]')).toBeVisible();
-  await page.keyboard.press('2');
-  await expect(page.locator('[data-qno="2"]')).toBeVisible({ timeout: 3000 });
-  await page.keyboard.press('c');
-  await expect(page.locator('[data-qno="3"]')).toBeVisible({ timeout: 3000 });
+  const yOf = async () => {
+    await page.waitForTimeout(400); // 切替アニメーション（220ms）の完了を待つ
+    return (await page.locator('button[data-key="A"]').boundingBox())!.y;
+  };
+  const y1 = await yOf();
+  // Q1（1行）→ Q2 → … Q9（もし一週間、言葉を使えないなら…＝最長・2行）まで進めて比較
+  for (let i = 1; i < 9; i++) {
+    await page.locator('button[data-key="A"]').click();
+    await expect(page.locator(`[data-qno="${i + 1}"]`)).toBeVisible({ timeout: 3000 });
+  }
+  const y9 = await yOf();
+  expect(Math.abs(y9 - y1)).toBeLessThanOrEqual(1);
 });
