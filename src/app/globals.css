@@ -252,6 +252,11 @@ svg {
   font-size: 15px;
 }
 
+/* ロゴ画像（透過PNG想定・object-fit contain） */
+.logo-mark-img {
+  object-fit: contain !important;
+}
+
 /* 互換（旧クラス） */
 .data {
   font-size: 12px;

@@ -117,3 +117,51 @@ Japanese modern (wa-modern) illustration, clean contemporary style like a presen
 ## public/img/notes/musk.png（1600×700）
 
 Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. Soft white linen and small white flowers with generous empty space, clean and calm, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.
+
+---
+---
+
+# ロゴ・favicon（5案）
+
+使い方: 気に入った案を生成 → **1024×1024 のPNG（背景透過）** を `public/img/brand/logo-mark.png` に保存 → ヘッダーのマークに自動で使われる（未配置なら今のSVGが出る）。
+favicon にしたい場合は同じ画像を 512×512 に縮小して `src/app/icon.png`、180×180 を `src/app/apple-icon.png` に置く（`src/app/icon.svg` は消してよい）。
+
+共通ルール（favicon で潰れないため）: 1〜2色のフラットなベクター風、太い面、細部なし、正方形の中央に配置、外周 10% は空ける、文字なし（文字入りは別案）。色は朱 `#E0492F`・藍 `#2D4F8A`・白。
+
+## 案1: 朱印の雫（現行の延長・いちばん安全）
+
+## public/img/brand/logo-mark.png（1024×1024, 透過）
+
+flat vector logo mark, a vermilion #E0492F rounded square seal (Japanese hanko style) with a thin white inner border line, and a single bold white water-drop shape in the center, clean and geometric, centered, generous margin, solid shapes only, no gradients, no text, no letters, transparent background, square 1:1.
+
+## 案2: 扇の雫（扇を逆さにすると雫になる）
+
+## public/img/brand/logo-mark.png（1024×1024, 透過）
+
+flat vector logo mark, a single water-drop silhouette whose inside is an open Japanese folding fan (sensu) with 5 to 7 ribs radiating from the bottom point, two colors only — vermilion #E0492F drop and white ribs (or indigo #2D4F8A ribs), bold simple geometry readable at 16px, centered, generous margin, no gradients, no text, no letters, transparent background, square 1:1.
+
+## 案3: 一筋の煙（香炉の煙が雫を描く）
+
+## public/img/brand/logo-mark.png（1024×1024, 透過）
+
+flat vector logo mark, a small white porcelain incense burner silhouette at the bottom and a single thick smooth line of smoke rising and curling once to form a drop shape above it, drawn in indigo #2D4F8A with a vermilion #E0492F dot at the tip, minimal, bold line weight readable at 16px, centered, generous margin, no gradients, no text, no letters, transparent background, square 1:1.
+
+## 案4: 十二の紋（12問＝12の点を丸く並べた家紋風）
+
+## public/img/brand/logo-mark.png（1024×1024, 透過）
+
+flat vector logo mark in the style of a modern Japanese family crest (kamon): twelve small solid circles arranged evenly on a ring, and one bold water-drop shape in the center, all in vermilion #E0492F (alternative: indigo #2D4F8A), perfectly symmetrical, clean geometry, centered, generous margin, no gradients, no text, no letters, transparent background, square 1:1.
+
+## 案5: 短冊と雫（「箋」＝紙片）
+
+## public/img/brand/logo-mark.png（1024×1024, 透過）
+
+flat vector logo mark, a slightly tilted vertical rectangular paper strip (tanzaku) in white with a thin indigo #2D4F8A outline and a small hole with a short cord at the top, and one bold vermilion #E0492F water-drop in the middle of the strip, simple and bold, readable at 16px, centered, generous margin, no gradients, no text, no letters, transparent background, square 1:1.
+
+## おまけ: 文字入りのワードマーク（SNSのアイコン用・任意）
+
+## public/img/brand/wordmark.png（1600×600, 白背景）
+
+Japanese modern wordmark: the two kanji 「調香箋」 in a bold contemporary mincho typeface in ink black #27262B, with a small vermilion #E0492F rounded-square seal mark containing a white water drop placed to the left, horizontal layout, lots of white space, flat vector style, white background, no other text, no watermark, 8:3.
+
+（※文字の正確さは画像生成が苦手なので、ワードマークは実際にはサイトのWebフォントで出している。生成するなら「調香箋」の字形をよく確認すること）
