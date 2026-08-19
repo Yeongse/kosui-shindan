@@ -30,6 +30,26 @@ const C = {
   text3: '#9D9BA2',
 };
 
+let logoPromise: Promise<string | null> | null = null;
+/** ロゴ画像（public/img/brand/logo-mark.png）を data URI で同梱。無ければ null */
+function loadLogo() {
+  if (!logoPromise) {
+    logoPromise = fetch(new URL('../../../../public/img/brand/logo-mark.png', import.meta.url))
+      .then(async (r) => {
+        if (!r.ok) return null;
+        const buf = await r.arrayBuffer();
+        let bin = '';
+        const bytes = new Uint8Array(buf);
+        for (let i = 0; i < bytes.length; i += 0x8000) {
+          bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+        }
+        return `data:image/png;base64,${btoa(bin)}`;
+      })
+      .catch(() => null);
+  }
+  return logoPromise;
+}
+
 let fontsPromise: Promise<{ display: ArrayBuffer; body: ArrayBuffer }> | null = null;
 function loadFonts() {
   if (!fontsPromise) {
@@ -52,14 +72,13 @@ function Blobs() {
   );
 }
 
-function Logo() {
+function Logo({ src }: { src: string | null }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-      <svg width="34" height="34" viewBox="0 0 40 40">
-        <rect x="2" y="2" width="36" height="36" rx="6" fill="#E0492F" />
-        <rect x="5.5" y="5.5" width="29" height="29" rx="3" fill="none" stroke="#fff" strokeOpacity="0.55" strokeWidth="1" />
-        <path d="M20 10.5 C20 10.5, 12.5 18.8, 12.5 23.6 C12.5 27.9 15.9 30.8 20 30.8 C24.1 30.8 27.5 27.9 27.5 23.6 C27.5 18.8 20 10.5 20 10.5 Z" fill="#fff" />
-      </svg>
+      {src ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={src} width={44} height={44} alt="" style={{ objectFit: 'contain' }} />
+      ) : null}
       <span style={{ fontFamily: 'Display', fontSize: 24, color: C.text }}>調香箋</span>
       <span style={{ fontFamily: 'Body', fontSize: 15, color: C.text3 }}>香水診断</span>
     </div>
@@ -75,7 +94,7 @@ export async function GET(req: NextRequest) {
   const type = getTypeByCode(typeParam);
   const label = allowedOgLabels().has(labelParam) ? labelParam : null;
 
-  const fonts = await loadFonts();
+  const [fonts, logo] = await Promise.all([loadFonts(), loadLogo()]);
   const fontConfig = [
     { name: 'Display', data: fonts.display, weight: 700 as const, style: 'normal' as const },
     { name: 'Body', data: fonts.body, weight: 400 as const, style: 'normal' as const },
@@ -129,7 +148,7 @@ export async function GET(req: NextRequest) {
             </div>
             {/* 右: キャッチ・タグ・ノート・バー */}
             <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: 36, paddingRight: 110, gap: 18, minWidth: 0 }}>
-              <Logo />
+              <Logo src={logo} />
               <div style={{ display: 'flex', fontFamily: 'Display', fontSize: 34, lineHeight: 1.4, color: C.text }}>{type.catch}</div>
               <div style={{ display: 'flex', gap: 8 }}>
                 {tags.map((t) => (
@@ -181,7 +200,7 @@ export async function GET(req: NextRequest) {
       <div style={{ width: W, height: H, display: 'flex', background: C.bg, position: 'relative', fontFamily: 'Body', color: C.text, overflow: 'hidden' }}>
         <Blobs />
         <div style={{ position: 'absolute', left: 60, top: 50, width: 1080, height: 530, background: C.card, borderRadius: 32, border: `1px solid ${C.border}`, boxShadow: '0 30px 60px -30px rgba(120,80,160,0.35)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '44px 56px' }}>
-          <Logo />
+          <Logo src={logo} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 22, maxWidth: 900 }}>
             <div style={{ display: 'flex', fontFamily: 'Display', fontSize: label ? 58 : 84, lineHeight: 1.3, color: C.text }}>{title}</div>
             <div style={{ display: 'flex', fontSize: 26, color: C.text2 }}>{OG_TAGLINE}</div>

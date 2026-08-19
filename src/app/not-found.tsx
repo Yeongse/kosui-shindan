@@ -17,7 +17,7 @@ export default function NotFound() {
       <SiteHeader />
       <main className="container container--app" style={{ paddingTop: 48, paddingBottom: 48, textAlign: 'center' }}>
         <div style={{ marginBottom: 16 }}>
-          <LogoMark size={44} />
+          <LogoMark size={64} />
         </div>
         <span className="eyebrow">404</span>
         <h1 style={{ fontSize: 'clamp(22px, 3.6vw, 30px)', marginTop: 12 }}>ページが見つかりません</h1>

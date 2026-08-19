@@ -31,7 +31,6 @@ export const metadata: Metadata = {
   description: META.home.description,
   applicationName: SITE_NAME,
   formatDetection: { telephone: false },
-  icons: { icon: '/icon.svg' },
 };
 
 export const viewport: Viewport = {

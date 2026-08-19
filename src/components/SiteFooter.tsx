@@ -7,7 +7,7 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <div className={`container container--wide ${styles.inner}`}>
         <div className={styles.brand}>
-          <LogoMark size={28} />
+          <LogoMark size={36} />
           <span className={styles.brandName}>調香箋</span>
           <span className={styles.brandSub}>香水診断</span>
         </div>

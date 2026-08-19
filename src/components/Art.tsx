@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 /**
  * 画像スロット。画像が未配置（404）のときは fallback を表示し、レイアウトを崩さない。
+ * 読み込み完了後は fallback を外す（透過PNGの背後に fallback が透けないように）。
  * SSR 直後に失敗した画像（ハイドレーション前に error が発火したもの）も、マウント時に
  * naturalWidth === 0 を見て検出する。
  */
@@ -43,7 +44,7 @@ export function Art({
 
   return (
     <div className={className} style={{ position: 'relative', ...style }}>
-      {fallback && (
+      {fallback && (!loaded || failed) && (
         <div aria-hidden={!failed} style={{ position: 'absolute', inset: 0 }}>
           {fallback}
         </div>

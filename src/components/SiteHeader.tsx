@@ -8,7 +8,7 @@ export function SiteHeader({ minimal = false }: { minimal?: boolean }) {
     <header className={styles.header}>
       <div className={`container container--wide ${styles.inner}`}>
         <Link href="/" className={styles.logo} aria-label="香水診断 調香箋 トップへ">
-          <LogoMark size={32} />
+          <LogoMark size={40} />
           <span className={styles.logoText}>
             <span className={styles.logoMain}>調香箋</span>
             <span className={styles.logoSmall}>香水診断</span>

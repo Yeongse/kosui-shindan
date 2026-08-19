@@ -123,8 +123,8 @@ Japanese modern (wa-modern) illustration, clean contemporary style like a presen
 
 # ロゴ・favicon（5案）
 
-使い方: 気に入った案を生成 → **1024×1024 のPNG（背景透過）** を `public/img/brand/logo-mark.png` に保存 → ヘッダーのマークに自動で使われる（未配置なら今のSVGが出る）。
-favicon にしたい場合は同じ画像を 512×512 に縮小して `src/app/icon.png`、180×180 を `src/app/apple-icon.png` に置く（`src/app/icon.svg` は消してよい）。
+使い方: 気に入った案を生成 → **PNG（背景透過）** を `public/img/brand/logo-mark.png` に保存 → `npm run favicon` を実行。
+これで余白トリム版（ヘッダー用）・`src/app/icon.png`（favicon 512）・`src/app/apple-icon.png`（180）が自動生成され、ヘッダー／フッター／OG画像／faviconすべてに反映される。
 
 共通ルール（favicon で潰れないため）: 1〜2色のフラットなベクター風、太い面、細部なし、正方形の中央に配置、外周 10% は空ける、文字なし（文字入りは別案）。色は朱 `#E0492F`・藍 `#2D4F8A`・白。
 

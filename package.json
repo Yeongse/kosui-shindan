@@ -16,6 +16,7 @@
     "analyze:distribution": "tsx scripts/analyze-distribution.ts",
     "og:fonts": "tsx scripts/build-og-fonts.ts",
     "shots": "tsx scripts/shots.ts",
+    "favicon": "tsx scripts/make-favicon.ts",
     "verify": "npm run typecheck && npm run test && npm run build && npm run check:links && npm run test:e2e"
   },
   "dependencies": {
