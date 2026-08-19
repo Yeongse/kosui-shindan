@@ -1,61 +1,66 @@
 /*
- * デザイントークン v4 — 「香水診断 調香箋」
- * 白いカード・淡いローズ／ラベンダーの地・太い丸ゴシック・ピル。
+ * デザイントークン v5 — 「和モダン」
+ * v4 のレイアウト/UX（白カード・ピル・一列・進捗バー・丸い絵・%バー）はそのまま、
+ * 色を 朱・藍・和色パステル、見出しを現代明朝に差し替え、地に極薄の麻の葉、結果カードに落款印。
  * 詳細は docs/design-brief.md。
  */
 :root {
   /* 地・面 */
-  --c-bg: #fbf8fc; /* ページ地（極淡い藤白） */
-  --c-bg-rose: #fff4f8; /* にじみ: ローズ */
-  --c-bg-lav: #f4f1ff; /* にじみ: ラベンダー */
+  --c-bg: #fcfaf7; /* 白練（ほぼ白） */
+  --c-bg-rose: #fbeeea; /* にじみ: 桜 */
+  --c-bg-lav: #eef1f7; /* にじみ: 藍の薄 */
   --c-card: #ffffff;
-  --c-card-2: #faf7fc; /* 面の2段目（選択肢 hover・表の帯） */
-  --c-border: #efe8f3;
-  --c-border-2: #e2d9ea;
-  --c-shadow: 0 10px 30px -14px rgba(120, 80, 160, 0.18), 0 2px 6px -2px rgba(120, 80, 160, 0.08);
-  --c-shadow-lg: 0 24px 60px -28px rgba(120, 80, 160, 0.28), 0 4px 12px -4px rgba(120, 80, 160, 0.1);
+  --c-card-2: #f8f5f1; /* 面の2段目 */
+  --c-border: #ebe6e0;
+  --c-border-2: #dcd5cc;
+  --c-shadow: 0 10px 30px -14px rgba(60, 40, 30, 0.16), 0 2px 6px -2px rgba(60, 40, 30, 0.06);
+  --c-shadow-lg: 0 24px 60px -28px rgba(60, 40, 30, 0.26), 0 4px 12px -4px rgba(60, 40, 30, 0.08);
 
-  /* 文字 */
-  --c-text: #1e1b2e;
-  --c-text-2: #6e6785;
-  --c-text-3: #a19bb3;
+  /* 文字（墨） */
+  --c-text: #27262b;
+  --c-text-2: #6b6a70;
+  --c-text-3: #9d9ba2;
 
-  /* 主色・副色 */
-  --c-rose: #ff5c8d;
-  --c-rose-deep: #e8467a;
-  --c-rose-soft: #ffe3ec;
-  --c-rose-12: rgba(255, 92, 141, 0.12);
-  --c-lav: #8b7cf6;
-  --c-lav-soft: #ebe6ff;
-  --c-lav-12: rgba(139, 124, 246, 0.12);
-  --c-mint-soft: #dff5ec;
-  --c-grad: linear-gradient(90deg, #ff6b9a 0%, #a48cff 100%);
+  /* 主色: 朱 / 副色: 藍 / 差し色: 金 */
+  --c-rose: #e0492f; /* 朱 */
+  --c-rose-deep: #c83d26;
+  --c-rose-soft: #fce6e0;
+  --c-rose-12: rgba(224, 73, 47, 0.12);
+  --c-lav: #2d4f8a; /* 藍 */
+  --c-lav-soft: #e7ecf5;
+  --c-lav-12: rgba(45, 79, 138, 0.12);
+  --c-mint-soft: #e4f1ea;
+  --c-kin: #c9a24a; /* 金 — ごく小さな差し色 */
+  --c-grad: linear-gradient(90deg, #e0492f 0%, #e0492f 100%);
 
-  /* 香調8色（パステル・チップとバーの地） */
-  --c-acc-cit: #ffe38a;
-  --c-acc-grn: #bfe8c9;
-  --c-acc-flr: #ffc2d6;
-  --c-acc-frt: #ffc8a8;
-  --c-acc-grm: #f1d3b6;
-  --c-acc-wdy: #d9c7b3;
-  --c-acc-amb: #f3d39b;
-  --c-acc-msk: #e6e2f2;
+  /* 香調8色（和色パステル・チップとバーの地） */
+  --c-acc-cit: #f8e08a;
+  --c-acc-grn: #bfe6cc;
+  --c-acc-flr: #f9c6d0;
+  --c-acc-frt: #f9cbb8;
+  --c-acc-grm: #efd5b4;
+  --c-acc-wdy: #d9c8b3;
+  --c-acc-amb: #f3d69a;
+  --c-acc-msk: #e3ddf0;
 
   /* 書体 */
-  --ff-display: var(--font-display), 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', 'Hiragino Sans', sans-serif;
+  --ff-display: var(--font-display), 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
   --ff-body: var(--font-body), 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
 
   --fs-body: 15.5px;
   --lh-body: 1.85;
 
   /* レイアウト */
-  --w-app: 560px; /* 診断・結果の一列幅 */
+  --w-app: 560px;
   --w-content: 720px;
   --w-wide: 960px;
   --gutter: clamp(16px, 4vw, 28px);
-  --r-card: 20px;
+  --r-card: 18px;
   --r-pill: 999px;
   --r-btn: 14px;
+
+  /* 地紋（麻の葉・極薄） */
+  --pat-asanoha: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='110.85' viewBox='0 0 64 110.85'><g fill='none' stroke='%232d4f8a' stroke-opacity='0.07' stroke-width='1'><path d='M32 0L64 18.47V55.42L32 73.9 0 55.42V18.47z'/><path d='M32 0v73.9M0 18.47l64 36.95M64 18.47L0 55.42M32 36.95L0 18.47M32 36.95L64 18.47M32 36.95L0 55.42M32 36.95L64 55.42M32 36.95V0M32 36.95v36.95'/><path d='M32 73.9L64 92.37v18.48M32 73.9L0 92.37v18.48M32 73.9v36.95M0 92.37l32 18.48 32-18.48'/></g></svg>");
 
   /* モーション */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -82,7 +87,6 @@
   --c-line: var(--c-border-2);
   --c-line-soft: var(--c-border);
   --c-line-strong: var(--c-border-2);
-  --c-kin: var(--c-rose);
   --c-kin-deep: var(--c-rose-deep);
   --c-kin-pale: var(--c-rose-soft);
   --c-kin-20: var(--c-border);

@@ -26,7 +26,7 @@
   padding: 0 10px;
   border-radius: var(--r-pill);
   background: var(--c-lav-soft);
-  color: #5f4fd6;
+  color: var(--c-lav);
   font-size: 11.5px;
   font-weight: 700;
 }

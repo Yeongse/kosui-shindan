@@ -81,9 +81,9 @@
 
 .qLabel {
   font-family: var(--ff-display);
-  font-weight: 900;
+  font-weight: 700;
   font-size: 13px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   color: var(--c-rose);
 }
 
@@ -91,7 +91,8 @@
   margin-top: 6px;
   font-size: clamp(19px, 2.8vw, 22px);
   font-weight: 700;
-  line-height: 1.6;
+  line-height: 1.7;
+  letter-spacing: 0.03em;
   outline: none;
 }
 
@@ -153,10 +154,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--c-lav-soft);
-  color: #5f4fd6;
-  font-family: var(--ff-display);
-  font-weight: 900;
+  background: var(--c-rose-soft);
+  color: var(--c-rose);
+  font-family: var(--ff-body);
+  font-weight: 700;
   font-size: 13px;
   transition:
     background-color var(--dur-fast) var(--ease),

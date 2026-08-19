@@ -48,7 +48,7 @@
   height: 44px;
   border-radius: 14px;
   background: var(--c-lav-soft);
-  color: #5f4fd6;
+  color: var(--c-lav);
   display: inline-flex;
   align-items: center;
   justify-content: center;

@@ -4,14 +4,15 @@ import { ACCORD_LIQUID as ACCORD_LIQUID_LOCAL, ACCORD_NAME_JA as ACCORD_NAME_JA_
 
 /** 縦長画像の配色（tokens.css と同期） */
 const P = {
-  bg: '#FBF8FC',
-  roseSoft: '#FFE3EC',
-  lavSoft: '#EBE6FF',
+  bg: '#FCFAF7',
+  roseSoft: '#FBEEEA',
+  lavSoft: '#E7ECF5',
   card: '#FFFFFF',
-  rose: '#FF5C8D',
-  text: '#1E1B2E',
-  text2: '#6E6785',
-  text3: '#A19BB3',
+  rose: '#E0492F',
+  lav: '#2D4F8A',
+  text: '#27262B',
+  text2: '#6B6A70',
+  text3: '#9D9BA2',
 };
 
 /**
@@ -102,7 +103,7 @@ export async function generateStoryImage({
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('canvas unsupported');
 
-  const display = cssVar('--ff-display', "'Zen Maru Gothic', sans-serif");
+  const display = cssVar('--ff-display', "'Zen Old Mincho', serif");
   const body = cssVar('--ff-body', "'Zen Kaku Gothic New', sans-serif");
   await ensureFonts([`900 120px ${display}`, `700 40px ${display}`, `500 30px ${body}`, `400 24px ${body}`]);
 
@@ -160,6 +161,27 @@ export async function generateStoryImage({
   ctx.arc(cx, cy, 162, 0, Math.PI * 2);
   ctx.stroke();
 
+  // 落款印（右上）
+  ctx.save();
+  ctx.translate(px + pw - 120, py + 120);
+  ctx.rotate((-5 * Math.PI) / 180);
+  ctx.fillStyle = P.rose;
+  roundRect(ctx, -60, -60, 120, 120, 12);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+  ctx.lineWidth = 3;
+  roundRect(ctx, -50, -50, 100, 100, 8);
+  ctx.stroke();
+  ctx.fillStyle = '#fff';
+  ctx.font = `700 44px ${display}`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const nm = Array.from(type.name);
+  ctx.fillText(nm[0] ?? '', 0, -24);
+  ctx.fillText(nm[1] ?? '', 0, 26);
+  ctx.restore();
+  ctx.textBaseline = 'alphabetic';
+
   // ラベル・名前
   ctx.textAlign = 'center';
   ctx.fillStyle = P.text2;
@@ -185,7 +207,7 @@ export async function generateStoryImage({
     ctx.fillStyle = P.lavSoft;
     roundRect(ctx, tx, cy + 505, widths[i]!, 46, 23);
     ctx.fill();
-    ctx.fillStyle = '#5F4FD6';
+    ctx.fillStyle = P.lav;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(t, tx + widths[i]! / 2, cy + 528);

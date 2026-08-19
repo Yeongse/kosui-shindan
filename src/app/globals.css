@@ -17,9 +17,10 @@ body {
   background-color: var(--c-bg);
   background-image:
     radial-gradient(ellipse 70% 40% at 15% 0%, var(--c-bg-rose) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 90% 10%, var(--c-bg-lav) 0%, transparent 70%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+    radial-gradient(ellipse 60% 40% at 90% 10%, var(--c-bg-lav) 0%, transparent 70%),
+    var(--pat-asanoha);
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-attachment: fixed, fixed, scroll;
   color: var(--c-text);
   font-family: var(--ff-body);
   font-size: var(--fs-body);
@@ -50,8 +51,8 @@ h3,
 h4 {
   font-family: var(--ff-display);
   font-weight: 700;
-  line-height: 1.45;
-  letter-spacing: 0.01em;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
 }
 
 ul,
@@ -133,7 +134,7 @@ svg {
 .chip--lav {
   background: var(--c-lav-soft);
   border-color: transparent;
-  color: #5f4fd6;
+  color: var(--c-lav);
 }
 
 /* ピルCTA */
@@ -147,11 +148,11 @@ svg {
   border-radius: var(--r-pill);
   background: var(--c-rose);
   color: #fff;
-  font-family: var(--ff-display);
+  font-family: var(--ff-body);
   font-weight: 700;
   font-size: 16px;
-  letter-spacing: 0.02em;
-  box-shadow: 0 10px 24px -10px rgba(255, 92, 141, 0.55);
+  letter-spacing: 0.06em;
+  box-shadow: 0 10px 24px -10px rgba(224, 73, 47, 0.5);
   transition:
     transform var(--dur-fast) var(--ease),
     background-color var(--dur-base) var(--ease),
@@ -159,7 +160,7 @@ svg {
 }
 .btn:hover {
   background: var(--c-rose-deep);
-  box-shadow: 0 12px 28px -10px rgba(255, 92, 141, 0.65);
+  box-shadow: 0 12px 28px -10px rgba(224, 73, 47, 0.6);
 }
 .btn:active {
   transform: translateY(1px);
@@ -197,6 +198,17 @@ svg {
   font-size: 22px;
   line-height: 1.5;
 }
+
+/* 見出しの下に小さな朱の点（中央寄せ見出し用） */
+.h2--center::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-rose);
+  margin: 10px auto 0;
+}
 .h2--center {
   text-align: center;
 }
@@ -206,21 +218,19 @@ svg {
   align-items: center;
   height: 26px;
   padding: 0 12px;
-  border-radius: var(--r-pill);
-  background: var(--c-lav-soft);
-  color: #5f4fd6;
-  font-size: 11.5px;
+  border-radius: 4px;
+  background: var(--c-card);
+  border: 1px solid var(--c-rose);
+  color: var(--c-rose);
+  font-family: var(--ff-display);
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.18em;
 }
 
-/* 強調文字（ローズ→ラベンダー） */
+/* 強調文字（朱書き） */
 .grad-text {
-  background: var(--c-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--c-rose);
 }
 
 .visually-hidden {

@@ -18,16 +18,16 @@ const W = 1200;
 const H = 630;
 
 const C = {
-  bg: '#FBF8FC',
-  rose: '#FF5C8D',
-  roseSoft: '#FFE3EC',
-  lav: '#8B7CF6',
-  lavSoft: '#EBE6FF',
+  bg: '#FCFAF7',
+  rose: '#E0492F',
+  roseSoft: '#FCE6E0',
+  lav: '#2D4F8A',
+  lavSoft: '#E7ECF5',
   card: '#FFFFFF',
-  border: '#EFE8F3',
-  text: '#1E1B2E',
-  text2: '#6E6785',
-  text3: '#A19BB3',
+  border: '#EBE6E0',
+  text: '#27262B',
+  text2: '#6B6A70',
+  text3: '#9D9BA2',
 };
 
 let fontsPromise: Promise<{ display: ArrayBuffer; body: ArrayBuffer }> | null = null;
@@ -46,8 +46,8 @@ const CACHE = 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=25
 function Blobs() {
   return (
     <>
-      <div style={{ position: 'absolute', left: -120, top: -140, width: 520, height: 520, borderRadius: 260, background: '#FFE3EC', opacity: 0.9, display: 'flex' }} />
-      <div style={{ position: 'absolute', right: -140, bottom: -200, width: 560, height: 560, borderRadius: 280, background: '#EBE6FF', opacity: 0.95, display: 'flex' }} />
+      <div style={{ position: 'absolute', left: -120, top: -140, width: 520, height: 520, borderRadius: 260, background: '#FBEEEA', opacity: 0.9, display: 'flex' }} />
+      <div style={{ position: 'absolute', right: -140, bottom: -200, width: 560, height: 560, borderRadius: 280, background: '#EEF1F7', opacity: 0.95, display: 'flex' }} />
     </>
   );
 }
@@ -56,8 +56,9 @@ function Logo() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
       <svg width="34" height="34" viewBox="0 0 40 40">
-        <rect x="2" y="2" width="36" height="36" rx="11" fill="#FF6B9A" />
-        <path d="M20 9.5 C20 9.5, 12 18.5, 12 23.5 C12 28 15.6 31 20 31 C24.4 31 28 28 28 23.5 C28 18.5 20 9.5 20 9.5 Z" fill="#fff" />
+        <rect x="2" y="2" width="36" height="36" rx="6" fill="#E0492F" />
+        <rect x="5.5" y="5.5" width="29" height="29" rx="3" fill="none" stroke="#fff" strokeOpacity="0.55" strokeWidth="1" />
+        <path d="M20 10.5 C20 10.5, 12.5 18.8, 12.5 23.6 C12.5 27.9 15.9 30.8 20 30.8 C24.1 30.8 27.5 27.9 27.5 23.6 C27.5 18.8 20 10.5 20 10.5 Z" fill="#fff" />
       </svg>
       <span style={{ fontFamily: 'Display', fontSize: 24, color: C.text }}>調香箋</span>
       <span style={{ fontFamily: 'Body', fontSize: 15, color: C.text3 }}>香水診断</span>
@@ -113,20 +114,26 @@ export async function GET(req: NextRequest) {
               padding: '40px 48px',
             }}
           >
+            {/* 落款印 */}
+            <div style={{ position: 'absolute', right: 44, top: 40, width: 92, height: 92, borderRadius: 10, background: C.rose, transform: 'rotate(-5deg)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0 }}>
+              <div style={{ position: 'absolute', inset: 6, border: '2px solid rgba(255,255,255,0.7)', borderRadius: 6, display: 'flex' }} />
+              <span style={{ fontFamily: 'Display', fontSize: 34, color: '#fff', lineHeight: 1.05 }}>{Array.from(type.name)[0] ?? ''}</span>
+              <span style={{ fontFamily: 'Display', fontSize: 34, color: '#fff', lineHeight: 1.05 }}>{Array.from(type.name)[1] ?? ''}</span>
+            </div>
             {/* 左: 丸 + 名前 */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 380, gap: 18 }}>
-              <div style={{ width: 190, height: 190, borderRadius: 95, background: liquid, opacity: 0.9, display: 'flex', boxShadow: `0 0 0 8px #fff, 0 0 0 9px ${liquid}` }} />
+              <div style={{ width: 190, height: 190, borderRadius: 95, background: liquid, opacity: 0.9, display: 'flex', boxShadow: `0 0 0 6px #fff, 0 0 0 8px ${liquid}, 0 0 0 14px #fff, 0 0 0 15px ${liquid}88` }} />
               <div style={{ display: 'flex', fontSize: 16, color: C.text2, marginTop: 6 }}>あなたの香水タイプは</div>
-              <div style={{ display: 'flex', fontFamily: 'Display', fontSize: 74, lineHeight: 1, color: C.text }}>{type.name}</div>
+              <div style={{ display: 'flex', fontFamily: 'Display', fontSize: 78, lineHeight: 1, letterSpacing: 8, color: C.text }}>{type.name}</div>
               <div style={{ display: 'flex', fontSize: 16, color: C.text3, letterSpacing: 4 }}>{type.kana}</div>
             </div>
             {/* 右: キャッチ・タグ・ノート・バー */}
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: 36, gap: 18, minWidth: 0 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: 36, paddingRight: 110, gap: 18, minWidth: 0 }}>
               <Logo />
               <div style={{ display: 'flex', fontFamily: 'Display', fontSize: 34, lineHeight: 1.4, color: C.text }}>{type.catch}</div>
               <div style={{ display: 'flex', gap: 8 }}>
                 {tags.map((t) => (
-                  <div key={t} style={{ display: 'flex', padding: '6px 14px', borderRadius: 999, background: C.lavSoft, color: '#5F4FD6', fontSize: 15, fontFamily: 'Display' }}>
+                  <div key={t} style={{ display: 'flex', padding: '6px 14px', borderRadius: 999, background: C.lavSoft, color: C.lav, fontSize: 15, fontFamily: 'Body' }}>
                     {t}
                   </div>
                 ))}
@@ -180,7 +187,7 @@ export async function GET(req: NextRequest) {
             <div style={{ display: 'flex', fontSize: 26, color: C.text2 }}>{OG_TAGLINE}</div>
             <div style={{ display: 'flex', gap: 8 }}>
               {OG_SUBLINE.split(/[・／]/).filter(Boolean).map((s) => (
-                <div key={s} style={{ display: 'flex', padding: '6px 14px', borderRadius: 999, background: C.roseSoft, color: '#E8467A', fontSize: 15, fontFamily: 'Display' }}>
+                <div key={s} style={{ display: 'flex', padding: '6px 14px', borderRadius: 999, background: C.roseSoft, color: C.rose, fontSize: 15, fontFamily: 'Body' }}>
                   {s.trim()}
                 </div>
               ))}

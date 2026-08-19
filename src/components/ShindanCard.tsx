@@ -3,6 +3,7 @@ import { ACCORD_NAME_JA } from '@/data/palette';
 import { Art } from './Art';
 import { AccordBars } from './AccordBars';
 import { ResultLabel } from './ResultLabel';
+import { Stamp } from './Stamp';
 import styles from './ShindanCard.module.css';
 
 /**
@@ -35,6 +36,7 @@ export function ShindanCard({
       style={{ ['--type' as string]: type.liquidColor } as React.CSSProperties}
     >
       <div className={styles.top}>
+        <Stamp name={type.name} size={60} className={styles.stamp} />
         <div className={styles.avatar}>
           <Art
             src={`/img/types/${type.slug}.png`}

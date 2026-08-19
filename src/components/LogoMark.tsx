@@ -1,19 +1,13 @@
-/** ロゴマーク: ローズ→ラベンダーの丸角に白い一滴 */
+/** ロゴマーク: 朱の角印に白い一滴 */
 export function LogoMark({ size = 30 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true" focusable="false" style={{ flexShrink: 0 }}>
-      <defs>
-        <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#FF6B9A" />
-          <stop offset="1" stopColor="#A48CFF" />
-        </linearGradient>
-      </defs>
-      <rect x="2" y="2" width="36" height="36" rx="11" fill="url(#logo-grad)" />
+      <rect x="2" y="2" width="36" height="36" rx="6" fill="#E0492F" />
+      <rect x="5.5" y="5.5" width="29" height="29" rx="3" fill="none" stroke="#fff" strokeOpacity="0.55" strokeWidth="1" />
       <path
-        d="M20 9.5 C20 9.5, 12 18.5, 12 23.5 C12 28 15.6 31 20 31 C24.4 31 28 28 28 23.5 C28 18.5 20 9.5 20 9.5 Z"
+        d="M20 10.5 C20 10.5, 12.5 18.8, 12.5 23.6 C12.5 27.9 15.9 30.8 20 30.8 C24.1 30.8 27.5 27.9 27.5 23.6 C27.5 18.8 20 10.5 20 10.5 Z"
         fill="#fff"
       />
-      <circle cx="16.8" cy="24" r="1.8" fill="#FFD1E0" />
     </svg>
   );
 }

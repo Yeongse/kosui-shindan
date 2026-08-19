@@ -52,8 +52,13 @@
 .h1 {
   font-size: clamp(26px, 5.2vw, 40px);
   font-weight: 900;
-  line-height: 1.4;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
   margin-top: 8px;
+}
+
+.brMobile {
+  display: none;
 }
 
 .sub {
@@ -120,11 +125,11 @@
 
 .whatCard:nth-child(2) .whatIcon {
   background: var(--c-lav-soft);
-  color: #5f4fd6;
+  color: var(--c-lav);
 }
 .whatCard:nth-child(3) .whatIcon {
   background: var(--c-mint-soft);
-  color: #2f9a78;
+  color: #2f7d5d;
 }
 
 .whatTitle {
@@ -239,6 +244,12 @@
 @media (max-width: 900px) {
   .typeGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .brMobile {
+    display: inline;
   }
 }
 

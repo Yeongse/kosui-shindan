@@ -69,7 +69,9 @@ export default function HomePage() {
           <h1 className={styles.h1}>
             12の質問で、
             <br />
-            <span className="grad-text">あなたに似合う香水</span>がわかる。
+            <span className="grad-text">あなたに似合う香水</span>
+            <br className={styles.brMobile} />
+            がわかる。
           </h1>
           <p className={styles.sub}>
             結果は16タイプの「調香箋」。トップ・ミドル・ラストの具体的なノートと、香水を探すときにそのまま使える検索ワードまでわかります。
