@@ -54,7 +54,7 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
           <ArticleMeta publishedAt={n.publishedAt} updatedAt={n.updatedAt} />
         </div>
         <div className={styles.heroArt} style={{ background: `${ACCORD_LIQUID[n.accord]}33` }} aria-hidden="true">
-          <Art src={`/img/notes/${n.slug}.jpg`} alt="" className={styles.heroArtInner} fallback={<span className={styles.heroDot} style={{ background: ACCORD_LIQUID[n.accord] }} />} />
+          <Art src={`/img/notes/${n.slug}.png`} alt="" className={styles.heroArtInner} fallback={<span className={styles.heroDot} style={{ background: ACCORD_LIQUID[n.accord] }} />} />
         </div>
         <p className={`card ${styles.lead}`}>{n.lead}</p>
 

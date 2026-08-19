@@ -53,7 +53,7 @@ export default function HomePage() {
           <span className="eyebrow">Perfume Type Test</span>
           <div className={styles.kv}>
             <Art
-              src="/img/hero/key-visual.jpg"
+              src="/img/hero/key-visual.png"
               alt="香水瓶と花を描いたやわらかなイラスト"
               className={styles.kvArt}
               loading="eager"
