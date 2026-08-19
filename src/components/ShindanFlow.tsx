@@ -11,6 +11,7 @@ import { accumulate, dominantAccordOfOption, score } from '@/lib/scoring';
 import { clearAnswers, loadAnswers, saveAnswers, saveLastResult } from '@/lib/storage';
 import { track } from '@/lib/analytics';
 import { Vial } from './Vial';
+import { toKanji } from '@/lib/kanji';
 import { Distill } from './Distill';
 import styles from './ShindanFlow.module.css';
 
@@ -231,8 +232,9 @@ export function ShindanFlow() {
             <span aria-hidden="true">←</span> トップへ戻る
           </Link>
         )}
-        <p className={`data ${styles.counter}`} aria-live="polite">
-          No.{String(question.no).padStart(2, '0')} / {QUESTION_COUNT}
+        <p className={styles.counter} aria-live="polite" data-qno={question.no}>
+          <span className={`brush ${styles.counterMain}`}>其の{toKanji(question.no)}</span>
+          <span className={styles.counterSub}>／ 全{toKanji(QUESTION_COUNT)}問</span>
         </p>
       </div>
 
@@ -254,7 +256,10 @@ export function ShindanFlow() {
                 aria-pressed={selected}
                 disabled={!!state.pending}
               >
-                <span className={`data ${styles.key}`}>{o.key}.</span>
+                <span className={`brush ${styles.key}`} aria-hidden="true">
+                  {toKanji(KEYS.indexOf(o.key) + 1)}
+                </span>
+                <span className="visually-hidden">{o.key}.</span>
                 <span className={styles.label}>{o.label}</span>
               </button>
             );
@@ -263,7 +268,7 @@ export function ShindanFlow() {
       </div>
 
       <p className={styles.hint}>
-        キーボード: <kbd>1</kbd>〜<kbd>4</kbd> または <kbd>A</kbd>〜<kbd>D</kbd> で選択
+        <kbd>1</kbd>〜<kbd>4</kbd> または <kbd>A</kbd>〜<kbd>D</kbd> の鍵でも選べます
       </p>
 
       <Vial id="shindan-vial" level={state.answers.length} total={QUESTION_COUNT} color={mixedColor} drop={state.drop} />

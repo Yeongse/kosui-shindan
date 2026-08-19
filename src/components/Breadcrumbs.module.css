@@ -7,10 +7,9 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 4px 0;
-  font-family: var(--ff-data);
-  font-size: 12px;
+  font-size: 12.5px;
   letter-spacing: 0.06em;
-  color: var(--c-verdigris);
+  color: var(--c-usuzumi);
 }
 
 .item {
@@ -19,18 +18,18 @@
 }
 
 .link {
-  color: var(--c-verdigris);
+  color: var(--c-usuzumi);
   transition: color var(--dur-base) var(--ease);
 }
 .link:hover {
-  color: var(--c-white);
+  color: var(--c-sumi);
 }
 
 .current {
-  color: var(--c-white-70);
+  color: var(--c-sumi);
 }
 
 .sep {
   margin-inline: 10px;
-  color: var(--c-verdigris-40);
+  color: var(--c-kin);
 }

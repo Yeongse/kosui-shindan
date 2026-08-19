@@ -11,15 +11,15 @@
 }
 
 .lg {
-  min-height: 58px;
-  padding-inline: 34px;
+  min-height: 60px;
+  padding-inline: 36px;
   font-size: 17px;
 }
 
 .note {
   font-size: 13px;
-  color: var(--c-white-50);
-  letter-spacing: 0.02em;
+  color: var(--c-usuzumi);
+  letter-spacing: 0.04em;
 }
 
 @media (max-width: 480px) {

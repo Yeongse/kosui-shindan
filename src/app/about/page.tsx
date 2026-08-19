@@ -23,7 +23,7 @@ export default function AboutPage() {
       <SiteHeader />
       <main className={`container ${styles.main}`}>
         <Breadcrumbs crumbs={[{ name: '診断の考え方・運営者', path: '/about' }]} />
-        <p className="data">ABOUT</p>
+        <p className="data">この診断について</p>
         <h1 className={styles.h1}>香水診断 調香箋について</h1>
 
         <section className={styles.section} aria-labelledby="about-idea">
@@ -43,7 +43,7 @@ export default function AboutPage() {
           </h2>
           <div className={styles.prose}>
             <p>
-              12問それぞれの選択肢に、8つの香調と温度への重みが設定されています。回答を集計し、最も値の高い香調（同点の場合は決められた優先順位）を主香調、温度の合計が正なら温かい（warm）、0以下なら冷たい（cool）として、主香調×温度の16タイプに分類します。乱数や日時は使わないため、同じ回答であれば常に同じ結果になります。
+              12問それぞれの選択肢に、8つの香調と温度への重みが設定されています。回答を集計し、最も値の高い香調を主香調、温度の合計が温かい側なら warm、冷たい側なら cool として、主香調×温度の16タイプに分類します。同じ回答であれば、いつ受けても同じ結果になります。
             </p>
             <p>8つの香調は次のとおりです。</p>
             <ul className={styles.ul}>
@@ -53,10 +53,6 @@ export default function AboutPage() {
                 </li>
               ))}
             </ul>
-            <p>
-              結果ページのURLに付く <span className="data">?d=</span>{' '}
-              は8軸の集計値を16桁の16進数で表したもので、レーダーチャートの復元にだけ使います。個人を特定する情報は含みません。
-            </p>
           </div>
         </section>
 

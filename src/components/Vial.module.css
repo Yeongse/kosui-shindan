@@ -34,7 +34,7 @@
 
 .surface {
   stroke: #ffffff;
-  stroke-opacity: 0.35;
+  stroke-opacity: 0.5;
   stroke-width: 0.9;
   transition: transform 400ms var(--ease);
 }
@@ -58,8 +58,9 @@
 }
 
 .count {
-  font-size: 10.5px;
-  color: var(--c-verdigris);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--c-usuzumi);
 }
 
 @media (prefers-reduced-motion: reduce) {

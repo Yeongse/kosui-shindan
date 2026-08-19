@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ShindanCta } from '@/components/ShindanCta';
-import { BottleMark } from '@/components/BottleMark';
+import { SealMark } from '@/components/SealMark';
 
 export const metadata: Metadata = {
   title: { absolute: 'ページが見つかりません｜香水診断 調香箋' },
@@ -16,17 +16,17 @@ export default function NotFound() {
     <>
       <SiteHeader />
       <main className="container" style={{ paddingTop: 48, paddingBottom: 48 }}>
-        <div style={{ color: 'var(--c-verdigris)', marginBottom: 20 }}>
-          <BottleMark size={44} liquid="var(--c-glass)" />
+        <div style={{ marginBottom: 20 }}>
+          <SealMark size={44} char="無" />
         </div>
-        <p className="data">404 — NOT FOUND</p>
+        <p className="data">404 — 見つかりません</p>
         <h1
           className="display"
           style={{ fontSize: 'clamp(22px, 3.6vw, 30px)', letterSpacing: '0.06em', marginTop: 10, lineHeight: 1.5 }}
         >
           この箋は、棚にありません。
         </h1>
-        <p style={{ marginTop: 18, color: 'var(--c-white-70)', maxWidth: '52ch' }}>
+        <p style={{ marginTop: 18, color: 'var(--c-usuzumi)', maxWidth: '52ch' }}>
           お探しのページは移動したか、削除された可能性があります。URLをご確認いただくか、以下から目的のページへお進みください。
         </p>
         <ul style={{ marginTop: 22, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 15 }}>

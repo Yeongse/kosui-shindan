@@ -46,7 +46,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             { name: shortTitle, path },
           ]}
         />
-        <p className="data">GUIDE</p>
+        <p className="data">指南</p>
         <h1 className={styles.h1}>{g.title}</h1>
         <ArticleMeta publishedAt={g.publishedAt} updatedAt={g.updatedAt} />
         <p className={styles.lead}>{g.lead}</p>

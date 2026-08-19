@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import styles from './SiteFooter.module.css';
 
-/**
- * §8.1 フッター: 運営者 / 免責 / プライバシーポリシー / サイトマップ(html)
- */
+/** フッター: 免責 / 運営者 / プライバシーポリシー / サイトマップ */
 export function SiteFooter() {
   return (
     <footer className={styles.footer}>
+      <div className="kumo" aria-hidden="true" />
       <div className={`container container--wide ${styles.inner}`}>
         <p className={styles.disclaimer}>
           本診断は娯楽コンテンツであり、医学・心理学的評価ではありません。結果は香りの好みを言葉にするための一つの目安としてお使いください。
@@ -32,8 +31,8 @@ export function SiteFooter() {
           </Link>
         </nav>
         <p className={styles.copy}>
-          <span className="data">CHOKOSEN PHARMACY</span>
-          <span className={styles.copyName}>香水診断 調香箋</span>
+          <span className={`brush ${styles.copyName}`}>調香箋</span>
+          <span className="data">香水診断</span>
         </p>
       </div>
     </footer>

@@ -18,13 +18,13 @@ export function ResultBand() {
     <div className={`${styles.band} ${isResult ? styles.result : ''}`} suppressHydrationWarning>
       {isResult ? (
         <p className={styles.text}>
-          <span className={`data ${styles.k}`}>RESULT</span>
-          <span>診断結果 — あなたの調香箋</span>
+          <span className={styles.k}>診断結果</span>
+          <span>あなたの調香箋</span>
         </p>
       ) : (
         <>
           <p className={styles.text}>
-            <span className={`data ${styles.k}`}>SPECIMEN</span>
+            <span className={styles.k}>見本</span>
             <span>この箋は誰かの調香箋です。</span>
           </p>
           <Link href="/shindan" className={styles.cta} onClick={() => clearAnswers()}>

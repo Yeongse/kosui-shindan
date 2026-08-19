@@ -1,14 +1,43 @@
-/* ---------- Hero ---------- */
+/* ---------- Hero（料紙） ---------- */
 .hero {
+  position: relative;
+  background-color: var(--c-paper-2);
+  background-image:
+    var(--img-hero),
+    radial-gradient(ellipse 60% 50% at 85% 15%, rgba(143, 122, 163, 0.16), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 95%, rgba(91, 135, 145, 0.12), transparent 60%),
+    var(--img-washi);
+  background-size: cover, auto, auto, 512px 512px;
+  background-position: center, center, center, top left;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  border-bottom: 1px solid var(--c-kin-20);
+}
+
+.heroInner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 32px clamp(24px, 6vw, 80px);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px clamp(20px, 4vw, 56px);
   align-items: center;
-  padding-block: clamp(32px, 7vh, 88px) clamp(40px, 8vh, 96px);
+  padding-block: clamp(36px, 8vh, 96px) clamp(44px, 9vh, 104px);
+}
+
+/* 縦書きの一文（短冊のように） */
+.tateCopy {
+  font-size: clamp(14px, 1.4vw, 17px);
+  letter-spacing: 0.22em;
+  line-height: 1;
+  color: var(--c-sumi);
+  height: auto;
+  white-space: nowrap;
+  padding: 18px 12px;
+  background: var(--c-paper-3);
+  border: 1px solid var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
+  animation: fadeIn 0.6s var(--ease) both;
 }
 
 .heroText {
-  animation: fadeIn 0.6s var(--ease) both; /* §9.1 初回ロード時のみ */
+  animation: fadeIn 0.6s var(--ease) both;
 }
 
 @keyframes fadeIn {
@@ -22,122 +51,142 @@
 
 .eyebrow {
   margin-bottom: 18px;
+  color: var(--c-shu);
+  letter-spacing: 0.3em;
 }
 
 .h1 {
-  font-size: var(--fs-display);
-  letter-spacing: 0.02em;
-  line-height: 1.4;
-  color: var(--c-white);
+  font-size: clamp(28px, 4.2vw, 50px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.45;
+  color: var(--c-sumi);
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .sub {
   margin-top: 22px;
-  max-width: 44ch;
+  max-width: 42ch;
   font-size: 15.5px;
-  color: var(--c-white-70);
+  color: var(--c-usuzumi);
 }
 
 .cta {
   margin-top: 34px;
 }
 
-.heroVisual {
+/* 色紙仕立ての絵 */
+.shikishi {
+  width: clamp(220px, 26vw, 340px);
+  aspect-ratio: 1 / 1;
+  padding: 10px;
+  background: var(--c-paper-3);
+  border: 1px solid var(--c-kin-20);
+  box-shadow:
+    0 1px 0 var(--c-paper-3),
+    0 2px 0 var(--c-kin-20),
+    0 24px 48px -30px rgba(42, 36, 32, 0.35);
+  transform: rotate(1.2deg);
+}
+
+.shikishiArt {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--c-paper-2);
+}
+
+.shikishiFallback {
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: flex-start;
-  gap: 18px;
-  justify-self: end;
-}
-
-.vertical {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-size: 12.5px;
-  letter-spacing: 0.18em;
-  line-height: 1;
-  color: var(--c-white-50);
-  padding-top: 8px;
-  height: 340px;
-  white-space: nowrap;
-}
-
-.rule {
-  margin-inline: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
 }
 
 /* ---------- Sections ---------- */
 .section {
-  padding-top: 64px;
+  padding-top: 72px;
 }
 
 .h2 {
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h2);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   line-height: 1.5;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
+  padding-left: 14px;
+  border-left: 3px solid var(--c-shu);
 }
 
 .h3 {
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h3);
-  letter-spacing: 0.04em;
-  margin: 36px 0 14px;
+  letter-spacing: 0.06em;
+  margin: 40px 0 14px;
 }
 
 .lead {
-  color: var(--c-white-70);
+  color: var(--c-usuzumi);
   margin-bottom: 22px;
   max-width: 62ch;
 }
 
 .prose p + p {
-  margin-top: 1.4em;
+  margin-top: 1.5em;
 }
 
 .inlineCta {
-  margin-top: 30px;
+  margin-top: 32px;
 }
 
-/* §A */
+/* §A — 漢数字の番号 */
 .whatList {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--c-verdigris-40);
+  border-top: 1px solid var(--c-sumi-20);
 }
 
 .whatItem {
   display: grid;
-  grid-template-columns: 3ch 1fr;
+  grid-template-columns: 2.2em 1fr;
   gap: 16px;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--c-verdigris-40);
+  padding: 22px 0;
+  border-bottom: 1px solid var(--c-sumi-20);
 }
 
 .whatNo {
-  padding-top: 3px;
+  font-family: var(--ff-brush);
+  font-size: 22px;
+  line-height: 1.3;
+  color: var(--c-shu);
 }
 
 .whatTitle {
-  font-size: 16.5px;
+  font-size: 17px;
   font-weight: 500;
   line-height: 1.6;
+  letter-spacing: 0.02em;
 }
 
 .whatBody {
   margin-top: 6px;
   font-size: 14.5px;
-  color: var(--c-white-70);
+  color: var(--c-usuzumi);
 }
 
-/* §C タイプ目録（カードグリッド禁止 → 2列の目録） */
+/* §C タイプ目録（2列） */
 .typeList {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 32px;
-  border-top: 1px solid var(--c-verdigris-40);
+  border-top: 1px solid var(--c-sumi-20);
 }
 
 .typeItem {
@@ -145,7 +194,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid var(--c-verdigris-40);
+  border-bottom: 1px solid var(--c-sumi-20);
 }
 
 .typeDot {
@@ -153,6 +202,7 @@
   height: 12px;
   border-radius: 50%;
   flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(42, 36, 32, 0.15);
 }
 
 .typeLink {
@@ -163,25 +213,24 @@
   min-width: 0;
 }
 .typeLink:hover .typeName {
-  color: var(--c-amber);
+  color: var(--c-shu);
 }
 
 .typeName {
-  font-size: 18px;
-  letter-spacing: 0.08em;
+  font-size: 22px;
+  letter-spacing: 0.1em;
   transition: color var(--dur-base) var(--ease);
 }
 
 .typeKana {
   font-size: 12.5px;
-  color: var(--c-white-50);
+  color: var(--c-nibi);
 }
 
 .typeMeta {
-  font-family: var(--ff-data);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  color: var(--c-verdigris);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--c-usuzumi);
   margin-left: 4px;
 }
 
@@ -201,36 +250,51 @@
 /* 末尾 CTA */
 .finalCta {
   margin-top: 88px;
-  padding-top: 48px;
-  border-top: 1px solid var(--c-verdigris-40);
+}
+
+.finalPanel {
+  padding: clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px);
+  background: var(--c-paper-3);
+  border: 1px solid var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 26px;
   text-align: center;
 }
 
 .finalLine {
-  font-size: clamp(18px, 3vw, 24px);
-  letter-spacing: 0.06em;
+  font-size: clamp(20px, 3.2vw, 28px);
+  letter-spacing: 0.1em;
+  color: var(--c-sumi);
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 720px) {
-  .hero {
-    grid-template-columns: 1fr;
-    padding-top: 12px;
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: auto minmax(0, 1fr);
   }
-  .heroVisual {
+  .shikishi {
+    grid-column: 2;
     justify-self: start;
+    width: 200px;
+  }
+}
+
+@media (max-width: 720px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    padding-top: 20px;
+  }
+  .tateCopy {
+    display: none; /* モバイルは縦書き装飾を省略 */
+  }
+  .shikishi {
     order: -1;
-    gap: 14px;
-  }
-  .heroVisual svg {
-    max-width: 96px;
-  }
-  .vertical {
-    display: none; /* モバイルは縦書き装飾を省略（1画面1箇所ルールと可読性のため） */
+    grid-column: 1;
+    width: 150px;
+    padding: 6px;
   }
   .typeList {
     grid-template-columns: 1fr;
@@ -238,9 +302,8 @@
 }
 
 @media (max-width: 420px) {
-  /* 「あなたに似合う香水がわかる。」（14字）を1行に収める */
   .h1 {
-    font-size: 24px;
-    letter-spacing: 0;
+    font-size: 26px;
+    letter-spacing: 0.02em;
   }
 }

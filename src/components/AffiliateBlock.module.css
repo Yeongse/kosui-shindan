@@ -1,8 +1,9 @@
 .section {
-  margin-top: 64px;
-  padding: 26px 24px 22px;
-  background: var(--c-glass);
-  border-radius: var(--radius);
+  margin-top: 72px;
+  padding: 28px 26px 24px;
+  background: var(--c-paper-3);
+  border: 1px solid var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
 }
 
 .headRow {
@@ -14,22 +15,23 @@
 
 .heading {
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h2);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
 }
 
 .pr {
   font-size: 11px;
+  letter-spacing: 0.1em;
   padding: 2px 7px;
-  border: 1px solid var(--c-verdigris-40);
-  border-radius: 2px;
+  border: 1px solid var(--c-sumi-20);
+  color: var(--c-usuzumi);
 }
 
 .lead {
   margin-top: 12px;
   font-size: 14.5px;
-  color: var(--c-white-70);
+  color: var(--c-usuzumi);
 }
 
 .list {
@@ -40,7 +42,7 @@
 
 .item {
   padding: 16px 0;
-  border-top: 1px solid var(--c-verdigris-40);
+  border-top: 1px solid var(--c-sumi-20);
 }
 
 .query {
@@ -50,7 +52,10 @@
 }
 
 .qNo {
-  font-size: 11.5px;
+  font-family: var(--ff-brush);
+  font-size: 18px;
+  color: var(--c-shu);
+  letter-spacing: 0;
 }
 
 .queryText {
@@ -62,26 +67,26 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px 22px;
-  margin: 10px 0 0 calc(2ch + 12px + 0.2em);
+  margin: 10px 0 0 calc(1.2em + 12px);
 }
 
 .link {
   font-size: 14px;
-  color: var(--c-amber);
+  color: var(--c-ai);
   text-decoration: underline;
-  text-decoration-color: var(--c-amber-20);
-  text-underline-offset: 0.25em;
+  text-decoration-color: rgba(46, 74, 98, 0.3);
+  text-underline-offset: 0.28em;
   transition: text-decoration-color var(--dur-base) var(--ease);
 }
 .link:hover {
-  text-decoration-color: var(--c-amber);
+  text-decoration-color: var(--c-ai);
 }
 
 .note {
   margin-top: 14px;
   font-size: 12px;
-  color: var(--c-white-50);
-  line-height: 1.7;
+  color: var(--c-usuzumi);
+  line-height: 1.8;
 }
 
 @media (max-width: 480px) {

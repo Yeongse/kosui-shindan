@@ -3,6 +3,7 @@
 import type { ScentType } from '@/data/schema';
 import { MARKETPLACE_LABEL, queryDisplay, searchUrl, type Marketplace } from '@/lib/affiliate';
 import { track } from '@/lib/analytics';
+import { toKanji } from '@/lib/kanji';
 import styles from './AffiliateBlock.module.css';
 
 /**
@@ -17,7 +18,7 @@ export function AffiliateBlock({ type }: { type: ScentType }) {
         <h2 id="find-heading" className={styles.heading}>
           この香りを探す
         </h2>
-        <span className={`data ${styles.pr}`} title="アフィリエイトリンクを含みます">
+        <span className={styles.pr} title="アフィリエイトリンクを含みます">
           PR
         </span>
       </div>
@@ -28,7 +29,7 @@ export function AffiliateBlock({ type }: { type: ScentType }) {
         {type.searchQueries.map((q, qi) => (
           <li key={q} className={styles.item}>
             <p className={styles.query}>
-              <span className={`data ${styles.qNo}`}>{String(qi + 1).padStart(2, '0')}</span>
+              <span className={styles.qNo}>{toKanji(qi + 1)}</span>
               <span className={styles.queryText}>「{queryDisplay(q)}」で香水を探す</span>
             </p>
             <div className={styles.links}>

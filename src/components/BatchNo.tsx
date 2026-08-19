@@ -7,7 +7,7 @@ export function BatchNo({ className }: { className?: string }) {
   const { batchNo } = useResultMode();
   return (
     <span className={className} suppressHydrationWarning>
-      {batchNo}
+      {batchNo === 'SPECIMEN' ? '見本' : `第${batchNo}号`}
     </span>
   );
 }

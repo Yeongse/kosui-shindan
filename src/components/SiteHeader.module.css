@@ -1,21 +1,22 @@
 .header {
   position: relative;
   z-index: 10;
+  border-top: 3px solid var(--c-shu);
 }
 
 .inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 72px;
-  padding-block: 12px;
+  min-height: 76px;
+  padding-block: 14px;
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  color: var(--c-white);
+  color: var(--c-sumi);
 }
 
 .logoText {
@@ -25,29 +26,27 @@
 }
 
 .logoSmall {
-  font-family: var(--ff-data);
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
-  color: var(--c-verdigris);
-  margin-bottom: 3px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--c-usuzumi);
+  margin-bottom: 2px;
 }
 
 .logoMain {
-  font-family: var(--ff-display);
-  font-size: 19px;
-  letter-spacing: 0.12em;
+  font-size: 23px;
+  letter-spacing: 0.14em;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 26px;
 }
 
 .navLink {
-  font-size: 13.5px;
-  color: var(--c-white-70);
-  letter-spacing: 0.04em;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--c-usuzumi);
   padding-block: 4px;
   border-bottom: 1px solid transparent;
   transition:
@@ -56,16 +55,17 @@
 }
 
 .navLink:hover {
-  color: var(--c-white);
-  border-bottom-color: var(--c-verdigris);
+  color: var(--c-sumi);
+  border-bottom-color: var(--c-kin);
 }
 
 @media (max-width: 480px) {
   .nav {
-    gap: 14px;
+    gap: 16px;
   }
   .navLink {
     font-size: 12.5px;
+    letter-spacing: 0.04em;
   }
   .navLinkWide {
     display: none;

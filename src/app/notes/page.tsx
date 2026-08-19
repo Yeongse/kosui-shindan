@@ -23,7 +23,7 @@ export default function NotesIndexPage() {
       <SiteHeader />
       <main className={`container ${styles.main}`}>
         <Breadcrumbs crumbs={[{ name: '香りノート解説', path: '/notes' }]} />
-        <p className="data">NOTES — 8 ACCORDS</p>
+        <p className="data">香りの解説 — 八つの香調</p>
         <h1 className={styles.h1}>香りノート解説 — 香水の8つの香調（系統）</h1>
         <p className={styles.lead}>
           「ムスク系の香水とは」「グルマン系はどんな匂いか」。香水診断の結果に出てくる8つの香調について、特徴・代表ノート・似合う人を系統ごとに解説します。自分の系統は12問の無料診断でわかります。
@@ -42,7 +42,7 @@ export default function NotesIndexPage() {
                   </h2>
                   <p className={styles.desc}>{n.lead}</p>
                   <p className={styles.types}>
-                    <span className="data">TYPES</span>{' '}
+                    <span className="data">該当タイプ</span>{' '}
                     <Link href={`/type/${cool.slug}`} className="link">
                       {cool.name}（{cool.kana}）
                     </Link>

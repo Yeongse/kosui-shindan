@@ -6,34 +6,36 @@
   gap: 10px 20px;
   min-height: 56px;
   padding: 10px 0 14px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--c-verdigris-40);
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--c-sumi-20);
 }
 
 .text {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  font-size: 14px;
-  color: var(--c-white-70);
+  font-size: 14.5px;
+  color: var(--c-usuzumi);
 }
 
 .result .text {
-  color: var(--c-white);
+  color: var(--c-sumi);
 }
 
 .k {
-  font-size: 11px;
+  font-size: 11.5px;
+  color: var(--c-shu);
+  letter-spacing: 0.18em;
 }
 
 .cta {
   font-size: 13.5px;
-  color: var(--c-amber);
+  color: var(--c-shu);
   text-decoration: underline;
-  text-decoration-color: var(--c-amber-20);
-  text-underline-offset: 0.25em;
+  text-decoration-color: var(--c-shu-12);
+  text-underline-offset: 0.28em;
   transition: text-decoration-color var(--dur-base) var(--ease);
 }
 .cta:hover {
-  text-decoration-color: var(--c-amber);
+  text-decoration-color: var(--c-shu);
 }

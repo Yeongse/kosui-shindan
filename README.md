@@ -6,18 +6,28 @@
 
 ## スタック
 
-- Next.js 16 (App Router, Turbopack) + TypeScript strict + CSS Modules（§11.1）
+- Next.js 16 (App Router, Turbopack) + TypeScript strict + CSS Modules
 - 状態: React useReducer + sessionStorage（回答）/ localStorage（履歴3件）。外部状態管理なし
 - アニメーション: CSS transition/keyframes + SVG。framer-motion 等なし
-- OG画像: `next/og`（satori）Edge Route、サブセット woff をバンドル
+- OG画像: `next/og`（satori）Edge Route、サブセット woff（明朝 + 筆文字）をバンドル
 - テスト: Vitest（scoring / 分布 / digest / コンテンツ検収）+ Playwright（完走E2E）
-- DB なし。個人情報は一切収集しない
+- 解析: Cloudflare Web Analytics（Cookie 不使用・同意バナーなし）。DB なし。個人情報は収集しない
+
+## デザイン — 「平安の料紙」
+
+暗い薬瓶の世界観（spec §7）から、ユーザー指示で **生成りの和紙・墨・朱・金砂子・飛雲・縦書き** に全面変更した。
+トークンは `src/styles/tokens.css`（旧トークン名は互換エイリアスで残している）。
+
+- 書体: 本文・見出し = Shippori Mincho B1、タイプ名・番号などの一点 = Yuji Syuku（筆）
+- 数字は漢数字（其の一／問一／一・二・三・四）。Batch No. は「調合番号 第YYMMDD-HHMM号」、直リンクは「見本」
+- 画像スロット（`/public/img/...`）は **無くても崩れない**（地色・SVG にフォールバック）。
+  生成プロンプトと配置パスは [docs/image-prompts.md](./docs/image-prompts.md)
 
 ## セットアップ
 
 ```bash
 npm install
-cp .env.example .env.local   # NEXT_PUBLIC_SITE_URL / アフィリエイトID / GA4 を設定
+cp .env.example .env.local   # NEXT_PUBLIC_SITE_URL / アフィリエイトID / Cloudflare ビーコン を設定
 npm run dev
 ```
 
@@ -68,7 +78,7 @@ src/
     seo.ts                metadata テンプレート・JSON-LD・絶対URL
     share.ts              シェアURL・縦長画像 canvas 生成
     affiliate.ts          楽天/Amazon 検索リンク組立
-    analytics.ts          GA4 イベント（§12.7）
+    analytics.ts          計測イベントの薄いフック（現状 no-op）
     storage.ts            sessionStorage / localStorage
   proxy.ts                /type/[slug]?d= → /type/[slug]/d/[digest] のリライト
   styles/tokens.css       デザイントークン（§7）
@@ -83,11 +93,11 @@ e2e/                      Playwright
   1. **一様ランダム**（§13.1）: 10万試行で全16タイプが 2〜22%
   2. **人間モデル**: `src/data/human-prior.ts` の選択肢事前分布（人気の偏り）と、回答者の潜在特性（温度嗜好・濃度嗜好）による一貫性を掛けたサンプラーで、全16タイプが 3〜16%
 - 重みを変えたいときは `PATCHES='[{"q":3,"key":"C","temp":0}]' npm run analyze:distribution` で試算し、`questions.ts` に反映後 `npm run test`。
-- **運用**: GA4 の `answer(q_no, key)` が溜まったら、実測の選択率で `human-prior.ts` を置き換えて再キャリブレーションする。
+- **運用**: 回答の選択率が実測できるようになったら、`human-prior.ts` を実測値で置き換えて再キャリブレーションする。
 
 ## OG 画像フォントの再生成
 
-`src/app/api/og/fonts/*.woff` は Shippori Mincho B1 / IBM Plex Mono / Zen Kaku Gothic New を、
+`src/app/api/og/fonts/*.woff` は Shippori Mincho B1（全文言）と Yuji Syuku（タイプ名・見出し語のみ）を、
 データ層に現れる文字（タイプ名・読み・ノート名・ガイド題名・固定ラベル + ASCII/かな）だけにサブセットしたもの。
 **ガイド記事やノートの題名を追加・変更したら再生成すること**（未収録の漢字は OG 画像で描画されない）。
 
@@ -101,7 +111,7 @@ OG_FONT_SRC=/path/to/ttf PYFTSUBSET=.venv/bin/pyftsubset npm run og:fonts
 
 ## デプロイ（Vercel + Cloudflare DNS）
 
-1. Vercel にプロジェクトを作成し、環境変数を設定: `NEXT_PUBLIC_SITE_URL=https://kosui-shindan.com`, `NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID`, `NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG`, `NEXT_PUBLIC_GA4_ID`
+1. Vercel にプロジェクトを作成し、環境変数を設定: `NEXT_PUBLIC_SITE_URL=https://kosui-shindan.com`, `NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID`, `NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG`, `NEXT_PUBLIC_CF_BEACON_TOKEN`（Cloudflare Web Analytics）
 2. Cloudflare は DNS のみ（プロキシ OFF / グレー雲）。`kosui-shindan.com` と `www` を Vercel に向け、Vercel 側で www → apex の 301 を設定（§1.1）
 3. `kousui-shindan.com` を取得できた場合は Vercel でドメイン追加 → apex へ 301
 4. 旧URL（`/q` `/types` `/r/[code]`）は `next.config.ts` の redirects で 301 済み
@@ -130,4 +140,5 @@ OG_FONT_SRC=/path/to/ttf PYFTSUBSET=.venv/bin/pyftsubset npm run og:fonts
 - **`?d=` の扱い（§6/§10.2）**: SSG を保ちつつ OG に d を伝播するため、`proxy.ts` で `/type/[slug]/d/[digest]` に内部リライト（URLバー表示は `?d=` のまま、canonical はクエリなし）
 - **Edge Runtime**: Next.js 16 では非推奨警告が出るが、§10.2 の指定どおり `/api/og` は Edge で動作させている。将来 `runtime = 'nodejs'` に切り替える場合はフォント読込を `fs` 経由に変更する
 - **X の intent URL**: `x.com/intent/post` を使用（旧 twitter.com は転送されるため）
-- **落款印**: OG 画像側は太字サブセットを省いて通常ウェイトで描画（バンドルサイズ優先）。ページ内 SVG は 700
+- **デザイン（§7）**: ユーザー指示により「明治の薬瓶」→「平安の料紙」に全面変更。§7.2 の配色・§7.0 の一部禁止事項（朱をCTAに使用）は意図的に外れている
+- **計測（§12.7）**: GA4 と同意バナーは撤去し Cloudflare Web Analytics に置換。`track()` は no-op の差し替え点として残置

@@ -1,49 +1,49 @@
 .footer {
   margin-top: 96px;
-  border-top: 1px solid var(--c-verdigris-40);
 }
 
 .inner {
-  padding-block: 40px 48px;
+  padding-block: 20px 56px;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  border-top: 1px dashed var(--c-sumi-20); /* 和綴じの糸 */
 }
 
 .disclaimer {
   font-size: 12.5px;
-  line-height: 1.8;
-  color: var(--c-white-50);
+  line-height: 1.9;
+  color: var(--c-usuzumi);
   max-width: 60ch;
 }
 
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 22px;
+  gap: 8px 24px;
 }
 
 .link {
   font-size: 13px;
-  color: var(--c-white-70);
+  letter-spacing: 0.04em;
+  color: var(--c-usuzumi);
   text-decoration: underline;
-  text-decoration-color: var(--c-verdigris-40);
-  text-underline-offset: 0.25em;
+  text-decoration-color: var(--c-sumi-20);
+  text-underline-offset: 0.28em;
 }
 .link:hover {
-  color: var(--c-white);
-  text-decoration-color: var(--c-white);
+  color: var(--c-sumi);
+  text-decoration-color: var(--c-sumi);
 }
 
 .copy {
   display: flex;
   align-items: baseline;
   gap: 14px;
-  color: var(--c-white-50);
 }
 
 .copyName {
-  font-family: var(--ff-display);
-  font-size: 13px;
-  letter-spacing: 0.1em;
+  font-size: 18px;
+  letter-spacing: 0.16em;
+  color: var(--c-sumi);
 }

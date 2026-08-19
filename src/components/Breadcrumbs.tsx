@@ -25,7 +25,7 @@ export function Breadcrumbs({ crumbs }: { crumbs: Crumb[] }) {
                 )}
                 {!last && (
                   <span aria-hidden="true" className={styles.sep}>
-                    /
+                    ／
                   </span>
                 )}
               </li>

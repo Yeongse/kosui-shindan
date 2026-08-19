@@ -6,6 +6,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ShindanCta } from '@/components/ShindanCta';
 import { GUIDES } from '@/data/guides';
 import { buildMetadata, META } from '@/lib/seo';
+import { toKanji } from '@/lib/kanji';
 import styles from './page.module.css';
 
 export const metadata: Metadata = buildMetadata({
@@ -21,7 +22,7 @@ export default function GuideIndexPage() {
       <SiteHeader />
       <main className={`container ${styles.main}`}>
         <Breadcrumbs crumbs={[{ name: '香水の選び方ガイド', path: '/guide' }]} />
-        <p className="data">GUIDE — HOW TO CHOOSE & WEAR</p>
+        <p className="data">指南 — 香水の選び方・つけ方</p>
         <h1 className={styles.h1}>香水の選び方・つけ方ガイド</h1>
         <p className={styles.lead}>
           最初の1本の選び方、オードトワレとオードパルファンの違い、つける場所や適量、季節での使い分けまで。香水診断の結果を実際の1本につなげるための記事です。
@@ -29,7 +30,7 @@ export default function GuideIndexPage() {
         <ol className={styles.list}>
           {GUIDES.map((g, i) => (
             <li key={g.slug} className={styles.item}>
-              <span className={`data ${styles.no}`}>{String(i + 1).padStart(2, '0')}</span>
+              <span className={styles.no}>{toKanji(i + 1)}</span>
               <div>
                 <h2 className={styles.title}>
                   <Link href={`/guide/${g.slug}`} className={styles.titleLink}>

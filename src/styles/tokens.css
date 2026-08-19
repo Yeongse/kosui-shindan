@@ -1,50 +1,82 @@
 /*
- * §7 デザインシステム — トークン（唯一の真実）
- * 「明治の生薬問屋 × 現代の調香ラボ」。紙と硝子と液体の質感だけで世界を作る。
+ * デザイントークン — 「平安の料紙」
+ * 和紙（生成り）に墨で書き、朱で印を押し、金銀の砂子を撒く。飛雲と霞で区切る。
+ * 色名は襲の色目・伝統色から。画像は /public/img 以下（無くても破綻しない）。
  */
 :root {
-  /* §7.2 カラートークン */
-  --c-bottle: #101b16; /* 薬瓶 — ベース背景 */
-  --c-glass: #1b2a22; /* 暗硝子 — サーフェス */
-  --c-white: #ede8dc; /* 蒸留白 — 本文テキスト */
-  --c-amber: #c9973b; /* 琥珀液 — 主アクセント */
-  --c-verdigris: #5e7d6b; /* 緑青 — 副アクセント */
-  --c-paper: #f2ede0; /* 箋紙 — 調香箋カード内部のみ */
-  --c-sumi: #26221c; /* 墨 — 箋紙上のテキスト */
-  --c-rakkan: #9e2b25; /* 落款朱 — 印影専用 */
+  /* 紙 */
+  --c-paper: #f3eadb; /* 生成り — 地 */
+  --c-paper-2: #ece1cc; /* 淡香（うすこう） — 面 */
+  --c-paper-3: #fbf6ec; /* 胡粉 — 明部・カード */
+  --c-paper-deep: #e2d4b8; /* 朽葉寄りの紙 — 罫・影 */
 
-  /* 派生（透過） */
-  --c-white-70: rgba(237, 232, 220, 0.7);
-  --c-white-50: rgba(237, 232, 220, 0.5);
-  --c-white-30: rgba(237, 232, 220, 0.3);
-  --c-verdigris-40: rgba(94, 125, 107, 0.4);
-  --c-verdigris-20: rgba(94, 125, 107, 0.2);
-  --c-amber-20: rgba(201, 151, 59, 0.2);
-  --c-sumi-60: rgba(38, 34, 28, 0.6);
-  --c-sumi-30: rgba(38, 34, 28, 0.3);
-  --c-sumi-12: rgba(38, 34, 28, 0.12);
+  /* 墨 */
+  --c-sumi: #2a2420; /* 墨 — 本文 */
+  --c-usuzumi: #6b6157; /* 薄墨 — 補助 */
+  --c-nibi: #9b9085; /* 鈍色 — 最弱 */
+  --c-sumi-12: rgba(42, 36, 32, 0.12);
+  --c-sumi-20: rgba(42, 36, 32, 0.2);
+  --c-sumi-40: rgba(42, 36, 32, 0.4);
 
-  /* §7.3 タイポグラフィ（next/font が --font-* を注入する） */
+  /* 朱・金 */
+  --c-shu: #b0432d; /* 朱 — 印・主CTA */
+  --c-shu-deep: #933524;
+  --c-shu-12: rgba(176, 67, 45, 0.12);
+  --c-kin: #b3903e; /* 金 — 砂子・細罫 */
+  --c-kin-pale: #d9c38a;
+  --c-kin-20: rgba(179, 144, 62, 0.25);
+
+  /* 藍・紫・萌黄 */
+  --c-ai: #2e4a62; /* 藍 — リンク */
+  --c-asagi: #5b8791; /* 浅葱 */
+  --c-fuji: #8f7aa3; /* 藤 — 飛雲 */
+  --c-moegi: #7d9a5a; /* 萌黄 */
+
+  /* 互換（旧トークン名を参照している箇所のため） */
+  --c-bottle: var(--c-paper);
+  --c-glass: var(--c-paper-2);
+  --c-white: var(--c-sumi);
+  --c-white-70: var(--c-usuzumi);
+  --c-white-50: var(--c-nibi);
+  --c-white-30: var(--c-sumi-20);
+  --c-amber: var(--c-shu);
+  --c-amber-20: var(--c-shu-12);
+  --c-verdigris: var(--c-usuzumi);
+  --c-verdigris-40: var(--c-sumi-20);
+  --c-verdigris-20: var(--c-sumi-12);
+  --c-rakkan: var(--c-shu);
+  --c-sumi-60: var(--c-usuzumi);
+  --c-sumi-30: var(--c-sumi-40);
+
+  /* 書体 */
   --ff-display: var(--font-display), 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-  --ff-body: var(--font-body), 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
-  --ff-data: var(--font-data), 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --ff-brush: var(--font-brush), 'Yuji Syuku', 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
+  --ff-body: var(--font-display), 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --ff-data: var(--font-display), 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
 
-  --fs-display: clamp(28px, 6vw, 56px);
-  --fs-h2: 22px;
+  --fs-display: clamp(30px, 6vw, 58px);
+  --fs-h2: 23px;
   --fs-h3: 18px;
   --fs-body: 16px;
   --fs-small: 14px;
   --fs-data: 12.5px;
-  --lh-body: 1.9;
-  --ls-data: 0.08em;
+  --lh-body: 2;
+  --ls-data: 0.12em;
 
   /* レイアウト */
   --w-content: 720px;
-  --w-wide: 1040px;
+  --w-wide: 1080px;
   --gutter: clamp(20px, 5vw, 48px);
   --radius: 2px;
 
-  /* §9 モーション */
+  /* 画像（無い場合は地色のみ） */
+  --img-washi: url('/img/paper/washi-tile.jpg');
+  --img-hero: url('/img/paper/hero-ryoshi.jpg');
+  --img-kumo: url('/img/paper/kumo-band.png');
+  --img-sunago: url('/img/paper/sunago-corner.png');
+  --img-shikishi: url('/img/paper/shikishi.jpg');
+
+  /* モーション */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 120ms;
   --dur-base: 250ms;

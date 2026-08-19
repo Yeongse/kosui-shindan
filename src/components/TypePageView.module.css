@@ -4,56 +4,67 @@
 
 .h1 {
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: clamp(19px, 3.2vw, 24px);
-  line-height: 1.6;
-  letter-spacing: 0.03em;
-  color: var(--c-white-70);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--c-usuzumi);
   margin-bottom: 26px;
 }
 
 .cardWrap {
-  max-width: 560px;
+  max-width: 580px;
 }
 
-/* 2. 本文（紙面の外、--c-bottle 背景に --c-white テキスト） */
+/* 2. 本文 */
 .body {
-  margin-top: 44px;
+  margin-top: 48px;
 }
 
 .bodyText {
   font-size: 16.5px;
-  line-height: 2;
-  letter-spacing: 0.01em;
+  line-height: 2.1;
+  letter-spacing: 0.02em;
 }
 .bodyText + .bodyText {
-  margin-top: 1.4em;
+  margin-top: 1.5em;
+}
+.bodyText:first-child::first-letter {
+  font-family: var(--ff-brush);
+  font-size: 2.1em;
+  line-height: 1;
+  float: left;
+  margin: 0.18em 0.12em 0 0;
+  color: var(--c-shu);
 }
 
 /* 3. まとう場面 / 相性 / 隠し香調 */
 .meta {
-  margin-top: 40px;
+  margin-top: 44px;
 }
 
 .dl {
-  border-top: 1px solid var(--c-verdigris-40);
+  border-top: 1px solid var(--c-sumi-20);
 }
 
 .dlRow {
   display: grid;
-  grid-template-columns: 8em 1fr;
+  grid-template-columns: 7em 1fr;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid var(--c-verdigris-40);
+  border-bottom: 1px solid var(--c-sumi-20);
 }
 
 .dt {
   padding-top: 4px;
+  color: var(--c-shu);
+  letter-spacing: 0.18em;
+  font-size: 13px;
 }
 
 .dd {
   font-size: 15.5px;
-  line-height: 1.85;
+  line-height: 1.95;
 }
 
 .dd p + p {
@@ -61,30 +72,32 @@
 }
 
 .reason {
-  color: var(--c-white-50);
+  color: var(--c-usuzumi);
   font-size: 14px;
 }
 
 /* 5. 選び方 */
 .section {
-  margin-top: 64px;
+  margin-top: 72px;
 }
 
 .h2 {
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h2);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   line-height: 1.5;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
+  padding-left: 14px;
+  border-left: 3px solid var(--c-shu);
 }
 
 .prose p {
   font-size: 16px;
-  line-height: 1.95;
+  line-height: 2.05;
 }
 .prose p + p {
-  margin-top: 1.4em;
+  margin-top: 1.5em;
 }
 
 /* 7. 関連 */

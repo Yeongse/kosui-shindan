@@ -46,7 +46,7 @@ export function ConcentrationLine() {
   const c = concentrationOf(last.int);
   return (
     <p className={styles.concentration} suppressHydrationWarning>
-      <span className={`data ${styles.k}`}>濃度の目安</span>
+      <span className={styles.k}>濃度の目安</span>
       <span>{CONCENTRATION_LABEL[c]}</span>
     </p>
   );

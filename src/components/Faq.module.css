@@ -1,22 +1,24 @@
 .section {
-  margin-top: 64px;
+  margin-top: 72px;
 }
 
 .heading {
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h2);
-  letter-spacing: 0.04em;
-  margin-bottom: 20px;
+  letter-spacing: 0.06em;
+  margin-bottom: 22px;
+  padding-left: 14px;
+  border-left: 3px solid var(--c-shu);
 }
 
 .list {
-  border-top: 1px solid var(--c-verdigris-40);
+  border-top: 1px solid var(--c-sumi-20);
 }
 
 .item {
   padding: 20px 0 22px;
-  border-bottom: 1px solid var(--c-verdigris-40);
+  border-bottom: 1px solid var(--c-sumi-20);
 }
 
 .q {
@@ -25,19 +27,22 @@
   align-items: baseline;
   font-weight: 500;
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.8;
 }
 
 .qNo {
   flex-shrink: 0;
-  padding-top: 2px;
+  font-family: var(--ff-brush);
+  font-size: 18px;
+  color: var(--c-shu);
+  letter-spacing: 0;
 }
 
 .a {
-  margin: 10px 0 0 calc(3ch + 14px + 0.24em);
+  margin: 10px 0 0 calc(1.2em + 14px);
   font-size: 15px;
-  line-height: 1.9;
-  color: var(--c-white-70);
+  line-height: 2;
+  color: var(--c-usuzumi);
 }
 
 @media (max-width: 480px) {

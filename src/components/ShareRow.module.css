@@ -1,20 +1,22 @@
 .section {
-  margin-top: 64px;
+  margin-top: 72px;
   position: relative;
 }
 
 .heading {
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: var(--fs-h2);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   margin-bottom: 18px;
+  padding-left: 14px;
+  border-left: 3px solid var(--c-shu);
 }
 
 .row {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
+  gap: 10px;
 }
 
 .btn {
@@ -23,17 +25,19 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 74px;
+  min-height: 78px;
   padding: 10px 6px;
-  border-radius: var(--radius);
-  box-shadow: inset 0 0 0 1px var(--c-verdigris-40);
-  font-size: 13px;
-  color: var(--c-white);
+  background: var(--c-paper-3);
+  border: 1px solid var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  color: var(--c-sumi);
   transition: background-color var(--dur-base) var(--ease);
   text-align: center;
 }
 .btn:hover {
-  background: var(--c-glass);
+  background: #fffdf7;
 }
 .btn:disabled {
   opacity: 0.6;
@@ -42,13 +46,14 @@
 
 .k {
   font-size: 11px;
-  color: var(--c-amber);
+  letter-spacing: 0.14em;
+  color: var(--c-shu);
 }
 
 .note {
   margin-top: 12px;
   font-size: 12.5px;
-  color: var(--c-white-50);
+  color: var(--c-usuzumi);
 }
 
 .toastWrap {
@@ -58,10 +63,10 @@
 
 .toast {
   display: inline-block;
-  font-family: var(--ff-display);
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  color: var(--c-amber);
+  font-family: var(--ff-brush);
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  color: var(--c-shu);
   animation: toastIn 0.25s var(--ease) both;
 }
 

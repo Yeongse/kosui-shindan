@@ -11,6 +11,8 @@ import { getNoteBySlug, NOTE_SLUGS } from '@/data/notes';
 import { GUIDES } from '@/data/guides';
 import { typesByAccord } from '@/data/types';
 import { articleJsonLd, noteMetadata } from '@/lib/seo';
+import { Art } from '@/components/Art';
+import { ACCORD_LIQUID } from '@/data/palette';
 import styles from './page.module.css';
 
 export const dynamicParams = false;
@@ -49,10 +51,18 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
           ]}
         />
         <p className="data">
-          NOTE — {n.nameEn.toUpperCase()} / {n.accord}
+          香りの解説 — {n.name} / {n.nameEn}
         </p>
         <h1 className={styles.h1}>{n.h1}</h1>
         <ArticleMeta publishedAt={n.publishedAt} updatedAt={n.updatedAt} />
+        <div className={styles.heroArt} aria-hidden="true">
+          <Art
+            src={`/img/notes/${n.slug}.jpg`}
+            alt=""
+            className={styles.heroArtInner}
+            fallback={<div className={styles.heroArtFallback} style={{ background: `linear-gradient(120deg, ${ACCORD_LIQUID[n.accord]}22, transparent 70%)` }} />}
+          />
+        </div>
         <p className={styles.lead}>{n.lead}</p>
 
         <ArticleBody sections={n.sections} />
@@ -79,9 +89,9 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
                 <span className={styles.dot} style={{ background: t.liquidColor }} aria-hidden="true" />
                 <div>
                   <Link href={`/type/${t.slug}`} className={styles.typeLink}>
-                    <span className={styles.typeName}>{t.name}</span>
+                    <span className={`brush ${styles.typeName}`}>{t.name}</span>
                     <span className={styles.typeKana}>（{t.kana}）</span>
-                    <span className={`data ${styles.typeCode}`}>{t.code}</span>
+                    <span className={styles.typeCode}>{t.code}</span>
                   </Link>
                   <p className={styles.typeCatch}>{t.catch}</p>
                   <p className={styles.typeNotes}>

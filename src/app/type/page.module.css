@@ -4,9 +4,9 @@
 
 .h1 {
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: clamp(24px, 4vw, 34px);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   line-height: 1.5;
   margin-top: 10px;
 }
@@ -14,21 +14,21 @@
 .lead {
   margin-top: 16px;
   max-width: 62ch;
-  color: var(--c-white-70);
+  color: var(--c-usuzumi);
 }
 
-/* 表紙をめくる目録の趣で、2列 */
+/* 目録（2列） */
 .catalog {
   margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 40px;
-  border-top: 1px solid var(--c-verdigris-40);
+  border-top: 1px solid var(--c-sumi-20);
 }
 
 .group {
-  padding: 22px 0 18px;
-  border-bottom: 1px solid var(--c-verdigris-40);
+  padding: 24px 0 20px;
+  border-bottom: 1px solid var(--c-sumi-20);
 }
 
 .groupHead {
@@ -36,29 +36,31 @@
   align-items: baseline;
   gap: 12px;
   font-family: var(--ff-display);
-  font-weight: 400;
+  font-weight: 500;
   font-size: 15px;
-  letter-spacing: 0.1em;
-  margin-bottom: 12px;
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
 }
 
 .groupCode {
   font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--c-shu);
 }
 
 .groupLink {
-  color: var(--c-white-70);
-  border-bottom: 1px solid var(--c-verdigris-40);
+  color: var(--c-usuzumi);
+  border-bottom: 1px solid var(--c-kin-20);
   transition: color var(--dur-base) var(--ease);
 }
 .groupLink:hover {
-  color: var(--c-white);
+  color: var(--c-sumi);
 }
 
 .rows {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .row {
@@ -72,7 +74,8 @@
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  margin-top: 8px;
+  margin-top: 10px;
+  box-shadow: inset 0 0 0 1px rgba(42, 36, 32, 0.15);
 }
 
 .rowBody {
@@ -86,33 +89,31 @@
   flex-wrap: wrap;
 }
 .rowLink:hover .name {
-  color: var(--c-amber);
+  color: var(--c-shu);
 }
 
 .name {
-  font-family: var(--ff-display);
-  font-size: 22px;
+  font-size: 26px;
   letter-spacing: 0.1em;
   transition: color var(--dur-base) var(--ease);
 }
 
 .kana {
   font-size: 12.5px;
-  color: var(--c-white-50);
+  color: var(--c-nibi);
 }
 
 .temp {
-  font-family: var(--ff-data);
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.1em;
-  color: var(--c-verdigris);
+  color: var(--c-usuzumi);
   margin-left: 4px;
 }
 
 .catch {
   margin-top: 2px;
   font-size: 14px;
-  color: var(--c-white-70);
+  color: var(--c-usuzumi);
 }
 
 .notes {
@@ -121,18 +122,17 @@
 }
 
 .notesLink {
-  color: var(--c-verdigris);
+  color: var(--c-ai);
   text-decoration: underline;
-  text-decoration-color: var(--c-verdigris-40);
-  text-underline-offset: 0.25em;
-  transition: color var(--dur-base) var(--ease);
+  text-decoration-color: rgba(46, 74, 98, 0.3);
+  text-underline-offset: 0.28em;
 }
 .notesLink:hover {
-  color: var(--c-white);
+  text-decoration-color: var(--c-ai);
 }
 
 .cta {
-  margin-top: 48px;
+  margin-top: 52px;
 }
 
 @media (max-width: 720px) {

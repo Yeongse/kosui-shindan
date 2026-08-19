@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { HeroBottle } from '@/components/HeroBottle';
+import { Art } from '@/components/Art';
 import { ShindanCta } from '@/components/ShindanCta';
 import { Faq } from '@/components/Faq';
 import { JsonLd } from '@/components/JsonLd';
@@ -12,6 +13,7 @@ import { GUIDES } from '@/data/guides';
 import { ACCORD_NAME_JA } from '@/data/palette';
 import { LP_FAQ, LP_PHILOSOPHY, LP_PHILOSOPHY_HEADING, LP_WHAT_YOU_GET } from '@/data/site-copy';
 import { buildMetadata, META, quizJsonLd, breadcrumbJsonLd } from '@/lib/seo';
+import { toKanji } from '@/lib/kanji';
 import styles from './page.module.css';
 
 export const metadata: Metadata = buildMetadata({
@@ -21,8 +23,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 /**
- * §8.1 LP
- * ファーストビュー3秒以内に「①香水の診断である ②無料・90秒 ③何が得られるか」を伝える。
+ * LP — ファーストビュー3秒以内に「①香水の診断である ②無料・90秒 ③何が得られるか」を伝える。
+ * 料紙（飛雲・金砂子）の上に、縦書きの一文と横組みの h1。右に色紙仕立ての絵。
  */
 export default function HomePage() {
   const featuredGuides = GUIDES.slice(0, 6);
@@ -31,31 +33,46 @@ export default function HomePage() {
       <SiteHeader />
       <main>
         {/* ---------- Hero ---------- */}
-        <section className={`container container--wide ${styles.hero}`}>
-          <div className={styles.heroText}>
-            <p className={`data ${styles.eyebrow}`}>無料・登録不要・約90秒</p>
-            <h1 className={`display ${styles.h1}`}>
-              12の質問で、
-              <br />
-              あなたに似合う香水がわかる。
-            </h1>
-            <p className={styles.sub}>
-              結果は16タイプの「調香箋」。トップ・ミドル・ラストの具体的なノートと、香水を探すときにそのまま使える検索ワードまでわかります。
-            </p>
-            <div className={styles.cta}>
-              <ShindanCta size="lg" note="あなたの回答を、一滴ずつ蒸留します。" />
-            </div>
-          </div>
-          <div className={styles.heroVisual}>
-            <HeroBottle />
-            {/* 縦書きは1画面1箇所（§7.3）。装飾テキスト扱いで h1 にはしない。 */}
-            <p className={`display ${styles.vertical}`} aria-hidden="true">
+        <section className={styles.hero}>
+          <div className={`container container--wide ${styles.heroInner}`}>
+            <p className={`brush tate ${styles.tateCopy}`} aria-hidden="true">
               あなたという人間を、一枚の処方箋に翻訳する。
             </p>
+
+            <div className={styles.heroText}>
+              <p className={`data ${styles.eyebrow}`}>無料・登録不要・約九十秒</p>
+              <h1 className={`display ${styles.h1}`}>
+                12の質問で、
+                <br />
+                <span className={styles.nowrap}>あなたに似合う</span>
+                <wbr />
+                <span className={styles.nowrap}>香水がわかる。</span>
+              </h1>
+              <p className={styles.sub}>
+                結果は16タイプの「調香箋」。トップ・ミドル・ラストの具体的なノートと、香水を探すときにそのまま使える検索ワードまでわかります。
+              </p>
+              <div className={styles.cta}>
+                <ShindanCta size="lg" note="あなたの回答を、一滴ずつ蒸留します。" />
+              </div>
+            </div>
+
+            <div className={`${styles.shikishi} sunago`}>
+              <Art
+                src="/img/hero/key-visual.jpg"
+                alt="香炉から立つ一筋の煙と、薫物の小箱を描いた大和絵風の絵"
+                className={styles.shikishiArt}
+                loading="eager"
+                fallback={
+                  <div className={styles.shikishiFallback}>
+                    <HeroBottle />
+                  </div>
+                }
+              />
+            </div>
           </div>
         </section>
 
-        <hr className={`rule container container--wide ${styles.rule}`} />
+        <div className="kumo" aria-hidden="true" />
 
         {/* ---------- §A この診断でわかること ---------- */}
         <section className={`container ${styles.section}`} aria-labelledby="what-heading">
@@ -65,7 +82,7 @@ export default function HomePage() {
           <ol className={styles.whatList}>
             {LP_WHAT_YOU_GET.map((w, i) => (
               <li key={w.title} className={styles.whatItem}>
-                <span className={`data ${styles.whatNo}`}>{String(i + 1).padStart(2, '0')}</span>
+                <span className={styles.whatNo}>{toKanji(i + 1)}</span>
                 <div>
                   <h3 className={styles.whatTitle}>{w.title}</h3>
                   <p className={styles.whatBody}>{w.body}</p>
@@ -101,12 +118,12 @@ export default function HomePage() {
           <ul className={styles.typeList}>
             {TYPES.map((t) => {
               const accord = t.code.split('-')[0] as keyof typeof ACCORD_NAME_JA;
-              const temp = t.code.endsWith('-C') ? 'cool' : 'warm';
+              const temp = t.code.endsWith('-C') ? '冷' : '温';
               return (
                 <li key={t.code} className={styles.typeItem}>
                   <span className={styles.typeDot} style={{ background: t.liquidColor }} aria-hidden="true" />
                   <Link href={`/type/${t.slug}`} className={styles.typeLink}>
-                    <span className={`display ${styles.typeName}`}>{t.name}</span>
+                    <span className={`brush ${styles.typeName}`}>{t.name}</span>
                     <span className={styles.typeKana}>（{t.kana}）</span>
                     <span className={styles.typeMeta}>
                       {ACCORD_NAME_JA[accord]}系・{temp}
@@ -164,8 +181,10 @@ export default function HomePage() {
 
         {/* ---------- 末尾 CTA ---------- */}
         <section className={`container ${styles.finalCta}`}>
-          <p className={`display ${styles.finalLine}`}>まずは、自分の系統の名前を知るところから。</p>
-          <ShindanCta size="lg" align="center" note="12問・約90秒・登録不要。回答はブラウザの中だけで処理されます。" />
+          <div className={`${styles.finalPanel} sunago`}>
+            <p className={`brush ${styles.finalLine}`}>まずは、自分の系統の名前を知るところから。</p>
+            <ShindanCta size="lg" align="center" note="12問・約90秒・登録不要。" />
+          </div>
         </section>
       </main>
       <SiteFooter />

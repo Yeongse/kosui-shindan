@@ -1,5 +1,6 @@
 import { JsonLd } from './JsonLd';
 import { faqJsonLd } from '@/lib/seo';
+import { toKanji } from '@/lib/kanji';
 import styles from './Faq.module.css';
 
 /**
@@ -28,7 +29,7 @@ export function Faq({
         {items.map((f, i) => (
           <div key={i} className={styles.item}>
             <dt className={styles.q}>
-              <span className={`data ${styles.qNo}`}>Q{String(i + 1).padStart(2, '0')}</span>
+              <span className={styles.qNo}>問{toKanji(i + 1)}</span>
               <span>{f.q}</span>
             </dt>
             <dd className={styles.a}>{f.a}</dd>

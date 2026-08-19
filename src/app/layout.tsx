@@ -1,35 +1,28 @@
 import type { Metadata, Viewport } from 'next';
-import { IBM_Plex_Mono, Shippori_Mincho_B1, Zen_Kaku_Gothic_New } from 'next/font/google';
+import { Shippori_Mincho_B1, Yuji_Syuku } from 'next/font/google';
 import { JsonLd } from '@/components/JsonLd';
-import { Analytics } from '@/components/Analytics';
+import { CloudflareAnalytics } from '@/components/CloudflareAnalytics';
 import { META, SITE_NAME, SITE_URL, websiteJsonLd } from '@/lib/seo';
 import './globals.css';
 
 /**
- * §7.3 タイポグラフィ: Display=Shippori Mincho B1 / Body=Zen Kaku Gothic New / Data=IBM Plex Mono
- * next/font でセルフホスト（サブセット化 + display: swap）。
+ * 書体: 明朝（Shippori Mincho B1）を本文・見出しに、筆文字（Yuji Syuku）をタイプ名などの一点に。
+ * next/font でセルフホスト（display: swap）。
  */
 const display = Shippori_Mincho_B1({
-  weight: ['400', '700'],
+  weight: ['400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
   preload: false,
   variable: '--font-display',
 });
 
-const body = Zen_Kaku_Gothic_New({
-  weight: ['400', '500', '700'],
+const brush = Yuji_Syuku({
+  weight: '400',
   subsets: ['latin'],
   display: 'swap',
   preload: false,
-  variable: '--font-body',
-});
-
-const data = IBM_Plex_Mono({
-  weight: ['400', '500'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-data',
+  variable: '--font-brush',
 });
 
 export const metadata: Metadata = {
@@ -42,18 +35,18 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#101B16',
+  themeColor: '#F3EADB',
   width: 'device-width',
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${display.variable} ${body.variable} ${data.variable}`}>
+    <html lang="ja" className={`${display.variable} ${brush.variable}`}>
       <body>
         {children}
         <JsonLd data={websiteJsonLd()} />
-        <Analytics />
+        <CloudflareAnalytics />
       </body>
     </html>
   );

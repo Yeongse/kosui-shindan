@@ -26,7 +26,7 @@ export function HeroBottle() {
       {/* 瓶の内側の暗さ */}
       <path
         d="M52 78 L108 78 L120 96 L120 232 Q120 244 108 244 L52 244 Q40 244 40 232 L40 96 Z"
-        fill="var(--c-glass)"
+        fill="var(--c-paper-2)"
       />
 
       {/* 液体（揺れる） */}
@@ -34,11 +34,11 @@ export function HeroBottle() {
         <g className={styles.liquid}>
           <path
             d="M20 150 Q50 144 80 150 T140 150 L140 260 L20 260 Z"
-            fill="var(--c-amber)"
-            opacity="0.92"
+            fill="var(--c-kin-pale)"
+            opacity="0.9"
           />
           {/* 液面のハイライト */}
-          <path d="M20 150 Q50 144 80 150 T140 150" fill="none" stroke="#f0d391" strokeOpacity="0.55" strokeWidth="1.5" />
+          <path d="M20 150 Q50 144 80 150 T140 150" fill="none" stroke="#ffffff" strokeOpacity="0.6" strokeWidth="1.5" />
         </g>
       </g>
 
@@ -52,17 +52,17 @@ export function HeroBottle() {
       <path
         d="M62 30 L98 30 L98 62 L108 78 L120 96 L120 232 Q120 244 108 244 L52 244 Q40 244 40 232 L40 96 L52 78 L62 62 Z"
         fill="none"
-        stroke="var(--c-white)"
-        strokeOpacity="0.75"
+        stroke="var(--c-sumi)"
+        strokeOpacity="0.7"
         strokeWidth="1.4"
         strokeLinejoin="round"
       />
       {/* 栓 */}
-      <rect x="58" y="16" width="44" height="14" rx="2" fill="var(--c-white)" fillOpacity="0.9" />
-      <rect x="62" y="30" width="36" height="6" fill="var(--c-white)" fillOpacity="0.35" />
+      <rect x="58" y="16" width="44" height="14" rx="2" fill="var(--c-sumi)" fillOpacity="0.8" />
+      <rect x="62" y="30" width="36" height="6" fill="var(--c-sumi)" fillOpacity="0.25" />
 
       {/* ラベル（薬包紙） */}
-      <rect x="54" y="118" width="52" height="60" fill="var(--c-paper)" fillOpacity="0.96" />
+      <rect x="54" y="118" width="52" height="60" fill="var(--c-paper-3)" fillOpacity="1" />
       <text
         x="80"
         y="140"

@@ -7,7 +7,7 @@
  *
  * - 収録グリフ: ASCII + ひらがな + カタカナ + 記号少々 + データ層に現れる全ての漢字
  *   （タイプ名・読み・ノート名・ガイド題名・ノート題名・固定ラベル）
- * - 出力: src/app/api/og/fonts/{display,mono,body}.woff と og-glyphs.txt
+ * - 出力: src/app/api/og/fonts/{display,brush}.woff と og-glyphs.txt（明朝 + 筆文字）
  * - データ層（ガイド追加など）を変更したら再実行すること。
  */
 import { execFileSync } from 'node:child_process';
@@ -59,13 +59,20 @@ const textFile = path.join(OUT, 'og-glyphs.txt');
 writeFileSync(textFile, text, 'utf8');
 console.log(`glyphs: ${chars.size}`);
 
-const jobs: [string, string][] = [
-  ['ShipporiMinchoB1-Regular.ttf', 'display.woff'],
-  ['IBMPlexMono-Regular.ttf', 'mono.woff'],
-  ['ZenKakuGothicNew-Regular.ttf', 'body.woff'],
+// 筆文字はタイプ名（漢字二字×16）と見出し語だけに絞る（サイズ優先）
+const brushChars = new Set<string>();
+for (const t of TYPES_BASE) Array.from(t.name).forEach((c) => brushChars.add(c));
+Array.from('香水診断調香箋見本').forEach((c) => brushChars.add(c));
+const brushTextFile = path.join(OUT, 'og-glyphs-brush.txt');
+writeFileSync(brushTextFile, Array.from(brushChars).join(''), 'utf8');
+console.log(`brush glyphs: ${brushChars.size}`);
+
+const jobs: [string, string, string][] = [
+  ['ShipporiMinchoB1-Regular.ttf', 'display.woff', textFile],
+  ['YujiSyuku-Regular.ttf', 'brush.woff', brushTextFile],
 ];
 
-for (const [src, out] of jobs) {
+for (const [src, out, glyphFile] of jobs) {
   const from = path.join(SRC, src);
   if (!existsSync(from)) {
     console.error(`missing ${from}`);
@@ -75,7 +82,7 @@ for (const [src, out] of jobs) {
     PYFTSUBSET,
     [
       from,
-      `--text-file=${textFile}`,
+      `--text-file=${glyphFile}`,
       '--flavor=woff',
       '--layout-features=*',
       '--no-hinting',

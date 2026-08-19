@@ -1,6 +1,18 @@
 import { ACCORD_CODES, type AccordCode, type ScentType } from '@/data/schema';
-import { COLORS } from '@/data/palette';
 import { absUrl } from './seo';
+
+/** 縦長画像の配色（料紙） */
+const P = {
+  paper: '#F3EADB',
+  paper3: '#FBF6EC',
+  sumi: '#2A2420',
+  usuzumi: '#6B6157',
+  nibi: '#9B9085',
+  shu: '#B0432D',
+  kin: '#B3903E',
+  fuji: '#8F7AA3',
+  asagi: '#5B8791',
+};
 
 /**
  * §10 シェア仕様 — intent URL 組立・縦長画像(1080×1920) canvas 生成
@@ -48,6 +60,45 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
   ctx.arcTo(x, y + h, x, y, r);
   ctx.arcTo(x, y, x + w, y, r);
   ctx.closePath();
+}
+
+/** 飛雲 */
+function drawKumo(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, color: string, alpha: number) {
+  const k = w / 400;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(k, k);
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(20, 70);
+  ctx.bezierCurveTo(10, 40, 60, 20, 110, 34);
+  ctx.bezierCurveTo(130, 8, 200, 4, 230, 30);
+  ctx.bezierCurveTo(270, 10, 340, 20, 350, 52);
+  ctx.bezierCurveTo(390, 56, 392, 90, 350, 94);
+  ctx.bezierCurveTo(300, 110, 200, 104, 150, 96);
+  ctx.bezierCurveTo(100, 108, 30, 100, 20, 70);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+/** 金砂子（決定的な疑似乱数で散らす） */
+function drawSunago(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, n: number, seed: number) {
+  let s = seed;
+  const rnd = () => {
+    s = (s * 9301 + 49297) % 233280;
+    return s / 233280;
+  };
+  ctx.save();
+  ctx.fillStyle = P.kin;
+  ctx.globalAlpha = 0.55;
+  for (let i = 0; i < n; i++) {
+    ctx.beginPath();
+    ctx.arc(x + rnd() * w, y + rnd() * h, 1.5 + rnd() * 3.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
 }
 
 function drawRadar(
@@ -154,20 +205,25 @@ export async function generateStoryImage({
   if (!ctx) throw new Error('canvas unsupported');
 
   const display = cssVar('--ff-display', "'Shippori Mincho B1', serif");
-  const body = cssVar('--ff-body', "'Zen Kaku Gothic New', sans-serif");
-  const mono = cssVar('--ff-data', "'IBM Plex Mono', monospace");
-  await ensureFonts([`120px ${display}`, `700 60px ${display}`, `30px ${body}`, `24px ${mono}`]);
+  const brush = cssVar('--ff-brush', "'Yuji Syuku', serif");
+  const body = display;
+  const mono = display;
+  await ensureFonts([`180px ${brush}`, `120px ${display}`, `700 60px ${display}`, `30px ${body}`, `24px ${mono}`]);
 
-  // 背景（薬瓶）
-  ctx.fillStyle = COLORS.bottle;
+  // 背景（料紙）
+  ctx.fillStyle = P.paper;
   ctx.fillRect(0, 0, W, H);
+  drawKumo(ctx, -80, 40, 620, P.fuji, 0.16);
+  drawKumo(ctx, 560, 1660, 620, P.asagi, 0.14);
+  drawSunago(ctx, 760, 0, 320, 260, 90, 7);
+  drawSunago(ctx, 0, 1640, 340, 280, 80, 19);
 
   // 上部ラベル
-  ctx.fillStyle = COLORS.verdigris;
-  ctx.font = `24px ${mono}`;
+  ctx.fillStyle = P.usuzumi;
+  ctx.font = `26px ${display}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillText('CHOKOSEN PHARMACY  —  香水診断・調香箋', W / 2, 150);
+  ctx.fillText('香 水 診 断 　 調 香 箋', W / 2, 150);
 
   // 箋紙
   const px = 90;
@@ -175,45 +231,46 @@ export async function generateStoryImage({
   const pw = W - px * 2;
   const ph = 1400;
   ctx.save();
-  ctx.shadowColor = 'rgba(0,0,0,0.55)';
+  ctx.shadowColor = 'rgba(42,36,32,0.35)';
   ctx.shadowBlur = 60;
   ctx.shadowOffsetY = 30;
-  ctx.fillStyle = COLORS.paper;
-  roundRect(ctx, px, py, pw, ph, 4);
+  ctx.fillStyle = P.paper3;
+  roundRect(ctx, px, py, pw, ph, 2);
   ctx.fill();
   ctx.restore();
-  // 内枠
-  ctx.strokeStyle = 'rgba(38,34,28,0.12)';
+  // 金の二重枠
+  ctx.strokeStyle = 'rgba(179,144,62,0.4)';
   ctx.lineWidth = 2;
+  ctx.strokeRect(px + 1, py + 1, pw - 2, ph - 2);
   ctx.strokeRect(px + 22, py + 22, pw - 44, ph - 44);
 
   // 箋のヘッダ
-  ctx.fillStyle = 'rgba(38,34,28,0.6)';
-  ctx.font = `22px ${mono}`;
+  ctx.fillStyle = P.usuzumi;
+  ctx.font = `22px ${display}`;
   ctx.textAlign = 'left';
-  ctx.fillText('CHOKOSEN PHARMACY', px + 60, py + 90);
+  ctx.fillText('香水診断 調香箋', px + 60, py + 90);
   ctx.textAlign = 'right';
-  ctx.fillText(`Batch No. ${batchNo}`, px + pw - 60, py + 90);
-  ctx.strokeStyle = 'rgba(38,34,28,0.3)';
+  ctx.fillText(batchNo === 'SPECIMEN' ? '調合番号 見本' : `調合番号 第${batchNo}号`, px + pw - 60, py + 90);
+  ctx.strokeStyle = 'rgba(42,36,32,0.3)';
   ctx.beginPath();
   ctx.moveTo(px + 60, py + 116);
   ctx.lineTo(px + pw - 60, py + 116);
   ctx.stroke();
 
-  // タイプ名（縦に二文字を積む）
+  // タイプ名（縦に二文字を積む・筆）
   const nameX = px + 190;
   const nameTop = py + 200;
-  ctx.fillStyle = COLORS.sumi;
-  ctx.font = `180px ${display}`;
+  ctx.fillStyle = P.sumi;
+  ctx.font = `180px ${brush}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
   const chars = Array.from(type.name);
   chars.forEach((c, i) => ctx.fillText(c, nameX, nameTop + i * 200));
   // 読み・コード（縦）
   ctx.font = `28px ${display}`;
-  ctx.fillStyle = 'rgba(38,34,28,0.6)';
+  ctx.fillStyle = P.usuzumi;
   Array.from(type.kana).forEach((c, i) => ctx.fillText(c, nameX + 135, nameTop + 10 + i * 34));
-  ctx.font = `22px ${mono}`;
+  ctx.font = `22px ${display}`;
   ctx.save();
   ctx.translate(nameX + 135, nameTop + 10 + type.kana.length * 34 + 30);
   ctx.rotate(Math.PI / 2);
@@ -226,24 +283,24 @@ export async function generateStoryImage({
   const rightX = px + 400;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = COLORS.sumi;
+  ctx.fillStyle = P.sumi;
   ctx.font = `40px ${display}`;
   const catchLines = wrapText(ctx, type.catch, pw - 400 - 60);
   catchLines.forEach((l, i) => ctx.fillText(l, rightX, py + 250 + i * 56));
 
   // 調香表
   const rows: [string, string][] = [
-    ['Top', type.notes.top.join('、')],
-    ['Middle', type.notes.middle.join('、')],
-    ['Last', type.notes.last.join('、')],
+    ['トップ', type.notes.top.join('、')],
+    ['ミドル', type.notes.middle.join('、')],
+    ['ラスト', type.notes.last.join('、')],
   ];
   let ry = py + 250 + catchLines.length * 56 + 60;
-  ctx.strokeStyle = 'rgba(38,34,28,0.12)';
+  ctx.strokeStyle = 'rgba(42,36,32,0.12)';
   rows.forEach(([k, v]) => {
-    ctx.fillStyle = 'rgba(38,34,28,0.6)';
-    ctx.font = `22px ${mono}`;
+    ctx.fillStyle = P.shu;
+    ctx.font = `20px ${display}`;
     ctx.fillText(k, rightX, ry);
-    ctx.fillStyle = COLORS.sumi;
+    ctx.fillStyle = P.sumi;
     ctx.font = `28px ${body}`;
     const lines = wrapText(ctx, v, pw - 400 - 60 - 130);
     lines.forEach((l, i) => ctx.fillText(l, rightX + 130, ry + i * 38));
@@ -256,7 +313,7 @@ export async function generateStoryImage({
   });
 
   // レーダー
-  drawRadar(ctx, scores, px + 300, py + ph - 330, 190, type.liquidColor, COLORS.sumi, mono);
+  drawRadar(ctx, scores, px + 300, py + ph - 330, 190, type.liquidColor, P.sumi, display);
 
   // 落款印
   const sx = px + pw - 60 - 190;
@@ -264,13 +321,13 @@ export async function generateStoryImage({
   ctx.save();
   ctx.translate(sx + 95, sy + 95);
   ctx.rotate((-3 * Math.PI) / 180);
-  ctx.fillStyle = COLORS.rakkan;
+  ctx.fillStyle = P.shu;
   roundRect(ctx, -95, -95, 190, 190, 5);
   ctx.fill();
-  ctx.strokeStyle = COLORS.paper;
+  ctx.strokeStyle = P.paper3;
   ctx.lineWidth = 3;
   ctx.strokeRect(-83, -83, 166, 166);
-  ctx.fillStyle = COLORS.paper;
+  ctx.fillStyle = P.paper3;
   ctx.font = `700 70px ${display}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -281,11 +338,11 @@ export async function generateStoryImage({
   // 下部
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = COLORS.white;
+  ctx.fillStyle = P.sumi;
   ctx.font = `34px ${display}`;
   ctx.fillText('12の質問で、あなたに似合う香水がわかる。', W / 2, H - 200);
-  ctx.fillStyle = COLORS.verdigris;
-  ctx.font = `24px ${mono}`;
+  ctx.fillStyle = P.nibi;
+  ctx.font = `24px ${display}`;
   ctx.fillText(`香水診断 調香箋  ${siteLabel}`, W / 2, H - 140);
 
   return new Promise<Blob>((resolve, reject) => {

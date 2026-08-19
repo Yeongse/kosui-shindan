@@ -10,13 +10,14 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-behavior: auto;
 }
 
 body {
   margin: 0;
-  background: var(--c-bottle);
-  color: var(--c-white);
+  background-color: var(--c-paper);
+  background-image: var(--img-washi);
+  background-size: 512px 512px;
+  color: var(--c-sumi);
   font-family: var(--ff-body);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
@@ -66,13 +67,13 @@ svg {
   max-width: 100%;
 }
 
-/* ---------- フォーカスリング（キーボード操作可視） ---------- */
+/* ---------- フォーカスリング ---------- */
 :focus-visible {
-  outline: 2px solid var(--c-amber);
+  outline: 2px solid var(--c-shu);
   outline-offset: 3px;
 }
 
-/* ---------- 共通ユーティリティ（最小限） ---------- */
+/* ---------- 共通ユーティリティ ---------- */
 .container {
   width: 100%;
   max-width: var(--w-content);
@@ -84,17 +85,29 @@ svg {
   max-width: var(--w-wide);
 }
 
+/* 小さな添え字（旧 .data）。明朝・薄墨・字間広め */
 .data {
   font-family: var(--ff-data);
   font-size: var(--fs-data);
   letter-spacing: var(--ls-data);
-  color: var(--c-verdigris);
+  color: var(--c-usuzumi);
 }
 
 .display {
   font-family: var(--ff-display);
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.4;
+}
+
+.brush {
+  font-family: var(--ff-brush);
+  font-weight: 400;
+}
+
+/* 縦書き */
+.tate {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
 .visually-hidden {
@@ -109,52 +122,53 @@ svg {
   border: 0;
 }
 
-/* テキストリンク: 下線は罫の色、hoverで本文色 */
+/* テキストリンク: 藍、細い下線 */
 .link {
+  color: var(--c-ai);
   text-decoration: underline;
-  text-decoration-color: var(--c-verdigris);
-  text-underline-offset: 0.2em;
+  text-decoration-color: rgba(46, 74, 98, 0.35);
+  text-underline-offset: 0.28em;
   text-decoration-thickness: 1px;
   transition: text-decoration-color var(--dur-base) var(--ease);
 }
 .link:hover {
-  text-decoration-color: var(--c-white);
+  text-decoration-color: var(--c-ai);
 }
 
-/* 主CTA: --c-amber 塗り、角丸2px（§8.1） */
+/* 主CTA: 朱塗り。内側に金の細線 */
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.6em;
-  min-height: 52px;
-  padding: 0 28px;
-  background: var(--c-amber);
-  color: var(--c-bottle);
-  font-family: var(--ff-body);
+  min-height: 54px;
+  padding: 0 30px;
+  background: var(--c-shu);
+  color: var(--c-paper-3);
+  font-family: var(--ff-display);
   font-weight: 500;
   font-size: 16px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
   border-radius: var(--radius);
+  box-shadow: inset 0 0 0 1px var(--c-shu), inset 0 0 0 3px rgba(251, 246, 236, 0.55);
   transition: background-color var(--dur-base) var(--ease);
 }
 .btn:hover {
-  background: #d6a64c;
+  background: var(--c-shu-deep);
 }
 .btn:active {
-  background: #b98833;
+  background: #7e2d1f;
 }
 
 .btn--ghost {
   background: transparent;
-  color: var(--c-white);
-  box-shadow: inset 0 0 0 1px var(--c-verdigris);
+  color: var(--c-sumi);
+  box-shadow: inset 0 0 0 1px var(--c-sumi-40);
 }
-.btn--ghost:hover {
-  background: var(--c-glass);
-}
+.btn--ghost:hover,
 .btn--ghost:active {
-  background: var(--c-glass);
+  background: var(--c-paper-3);
 }
 
 /* HTMLサイトマップの一覧 */
@@ -165,11 +179,44 @@ svg {
   font-size: 15px;
 }
 
-/* 区切り罫（--c-verdigris 1px） */
+/* 区切り罫 */
 .rule {
   border: 0;
-  border-top: 1px solid var(--c-verdigris-40);
+  border-top: 1px solid var(--c-sumi-20);
   margin: 0;
+}
+
+/* 飛雲の帯（画像が無ければ淡い霞のグラデーション） */
+.kumo {
+  height: 72px;
+  background-color: transparent;
+  background-image: var(--img-kumo), linear-gradient(90deg, transparent, rgba(143, 122, 163, 0.12) 35%, rgba(91, 135, 145, 0.1) 65%, transparent);
+  background-repeat: no-repeat, no-repeat;
+  background-size: auto 100%, 100% 100%;
+  background-position: center, center;
+  pointer-events: none;
+}
+
+/* 金砂子（角に撒く） */
+.sunago {
+  position: relative;
+}
+.sunago::after {
+  content: '';
+  position: absolute;
+  right: -24px;
+  top: -24px;
+  width: 220px;
+  height: 220px;
+  background: var(--img-sunago) no-repeat center / contain;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* 二重罫（料紙の界線） */
+.kaisen {
+  border-top: 1px solid var(--c-kin-20);
+  box-shadow: 0 2px 0 0 var(--c-paper), 0 3px 0 0 var(--c-kin-20);
 }
 
 /* ---------- reduced motion ---------- */

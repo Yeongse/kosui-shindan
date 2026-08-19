@@ -59,7 +59,7 @@ export function Vial({ level, total, color, drop, size = 56, className, inline =
         {/* 瓶の内側 */}
         <path
           d="M18 34 L42 34 L47 42 L47 90 Q47 94 43 94 L17 94 Q13 94 13 90 L13 42 Z"
-          fill="var(--c-glass)"
+          fill="var(--c-paper-3)"
         />
 
         {/* 液体（scaleY で液面を制御） */}
@@ -100,13 +100,13 @@ export function Vial({ level, total, color, drop, size = 56, className, inline =
         <path
           d="M23 14 L37 14 L37 26 L42 34 L47 42 L47 90 Q47 94 43 94 L17 94 Q13 94 13 90 L13 42 L18 34 L23 26 Z"
           fill="none"
-          stroke="var(--c-white)"
-          strokeOpacity="0.7"
+          stroke="var(--c-sumi)"
+          strokeOpacity="0.75"
           strokeWidth="1.2"
           strokeLinejoin="round"
         />
         {/* 口 */}
-        <rect x="21" y="9" width="18" height="5" rx="1" fill="var(--c-white)" fillOpacity="0.85" />
+        <rect x="21" y="9" width="18" height="5" rx="1" fill="var(--c-sumi)" fillOpacity="0.8" />
       </svg>
       <span className={`data ${styles.count}`}>
         {String(Math.min(level, total)).padStart(2, '0')}/{total}

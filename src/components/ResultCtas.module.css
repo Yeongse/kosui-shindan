@@ -2,22 +2,24 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 56px;
+  margin-top: 64px;
   padding-top: 40px;
-  border-top: 1px solid var(--c-verdigris-40);
+  border-top: 1px dashed var(--c-sumi-20);
 }
 
 .concentration {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  margin-top: 14px;
+  margin-top: 16px;
   font-size: 14.5px;
-  color: var(--c-white-70);
+  color: var(--c-usuzumi);
 }
 
 .k {
-  font-size: 11px;
+  font-size: 12px;
+  color: var(--c-shu);
+  letter-spacing: 0.18em;
 }
 
 @media (max-width: 480px) {

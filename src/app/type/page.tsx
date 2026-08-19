@@ -28,7 +28,7 @@ export default function TypeIndexPage() {
       <SiteHeader />
       <main className={`container ${styles.main}`}>
         <Breadcrumbs crumbs={[{ name: '香水タイプ一覧', path: '/type' }]} />
-        <p className="data">香層図鑑 — INDEX OF 16 TYPES</p>
+        <p className="data">香層図鑑 — 十六の香水タイプ</p>
         <h1 className={styles.h1}>香水診断・全16タイプ一覧</h1>
         <p className={styles.lead}>
           8つの香調（系統）と、温かい／冷たいの温度で分かれる16の香水タイプ。タイプ名を選ぶと、代表ノート、似合う人、その系統の香水の選び方を読めます。自分のタイプは12問の無料診断でわかります。
@@ -40,7 +40,7 @@ export default function TypeIndexPage() {
             return (
               <li key={accord} className={styles.group}>
                 <h2 className={styles.groupHead}>
-                  <span className={`data ${styles.groupCode}`}>{accord}</span>
+                  <span className={styles.groupCode}>{accord}</span>
                   <Link href={`/notes/${noteSlugByAccord[accord]}`} className={styles.groupLink}>
                     {ACCORD_NAME_JA[accord]}系
                   </Link>
@@ -51,9 +51,9 @@ export default function TypeIndexPage() {
                       <span className={styles.dot} style={{ background: t.liquidColor }} aria-hidden="true" />
                       <div className={styles.rowBody}>
                         <Link href={`/type/${t.slug}`} className={styles.rowLink}>
-                          <span className={styles.name}>{t.name}</span>
+                          <span className={`brush ${styles.name}`}>{t.name}</span>
                           <span className={styles.kana}>（{t.kana}）</span>
-                          <span className={styles.temp}>{t.code.endsWith('-C') ? 'cool' : 'warm'}</span>
+                          <span className={styles.temp}>{t.code.endsWith('-C') ? '冷' : '温'}</span>
                         </Link>
                         <p className={styles.catch}>{t.catch}</p>
                         <p className={styles.notes}>

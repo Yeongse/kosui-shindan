@@ -13,10 +13,10 @@ test('LP → 12 answers → result → X share intent → type index', async ({ 
   // 12問（選択→350ms自動遷移）。回答は決定的な固定パターン。
   const pattern = ['A', 'D', 'D', 'B', 'D', 'D', 'D', 'C', 'A', 'A', 'D', 'D'];
   for (let i = 0; i < 12; i++) {
-    await expect(page.getByText(`No.${String(i + 1).padStart(2, '0')} / 12`)).toBeVisible();
+    await expect(page.locator(`[data-qno="${i + 1}"]`)).toBeVisible();
     await page.locator(`button[data-key="${pattern[i]}"]`).click();
     if (i < 11) {
-      await expect(page.getByText(`No.${String(i + 2).padStart(2, '0')} / 12`)).toBeVisible({ timeout: 3000 });
+      await expect(page.locator(`[data-qno="${i + 2}"]`)).toBeVisible({ timeout: 3000 });
     }
   }
 
@@ -25,10 +25,10 @@ test('LP → 12 answers → result → X share intent → type index', async ({ 
   await page.waitForURL(/\/type\/gekko\?d=[0-9a-f]{16}$/, { timeout: 10_000 });
 
   // 結果モード（本人）: 帯・Batch No.
-  await expect(page.getByText('診断結果 — あなたの調香箋')).toBeVisible();
+  await expect(page.getByText('あなたの調香箋')).toBeVisible();
   await expect(page.locator('#shindan-card')).toBeVisible();
-  const batch = await page.locator('#shindan-card').getByText(/Batch No\./).textContent();
-  expect(batch).toMatch(/Batch No\. \d{6}-\d{4}/);
+  const batch = await page.locator('#shindan-card').getByText(/調合番号/).textContent();
+  expect(batch).toMatch(/調合番号 第\d{6}-\d{4}号/);
 
   // 縦書きタイプ名・調香表
   await expect(page.locator('#shindan-card h2')).toHaveText('月虹');
@@ -54,7 +54,7 @@ test('LP → 12 answers → result → X share intent → type index', async ({ 
 test('shared link (未診断者) shows SPECIMEN and swaps CTA', async ({ page }) => {
   await page.goto('/type/gekko?d=050f110003030203');
   await expect(page.getByText('この箋は誰かの調香箋です。')).toBeVisible();
-  await expect(page.locator('#shindan-card')).toContainText('SPECIMEN');
+  await expect(page.locator('#shindan-card')).toContainText('見本');
   await expect(page.getByRole('link', { name: '自分のタイプを診断する（無料・90秒）' }).first()).toBeVisible();
   // canonical はクエリなし
   const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
@@ -67,9 +67,9 @@ test('shared link (未診断者) shows SPECIMEN and swaps CTA', async ({ page })
 
 test('keyboard-only: number keys answer questions', async ({ page }) => {
   await page.goto('/shindan');
-  await expect(page.getByText('No.01 / 12')).toBeVisible();
+  await expect(page.locator('[data-qno="1"]')).toBeVisible();
   await page.keyboard.press('2');
-  await expect(page.getByText('No.02 / 12')).toBeVisible({ timeout: 3000 });
+  await expect(page.locator('[data-qno="2"]')).toBeVisible({ timeout: 3000 });
   await page.keyboard.press('c');
-  await expect(page.getByText('No.03 / 12')).toBeVisible({ timeout: 3000 });
+  await expect(page.locator('[data-qno="3"]')).toBeVisible({ timeout: 3000 });
 });

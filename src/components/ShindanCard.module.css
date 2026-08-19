@@ -1,21 +1,35 @@
 .card {
   position: relative;
-  background: var(--c-paper);
+  background-color: var(--c-paper-3);
+  background-image: var(--img-shikishi);
+  background-size: cover;
+  background-position: center;
   color: var(--c-sumi);
-  padding: 22px 26px 26px;
-  border-radius: var(--radius);
+  padding: 10px;
+  border: 1px solid var(--c-kin-20);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.35) inset,
-    0 24px 60px -30px rgba(0, 0, 0, 0.7);
+    0 1px 0 var(--c-paper-3),
+    0 2px 0 var(--c-kin-20),
+    0 30px 60px -36px rgba(42, 36, 32, 0.45);
 }
 
-/* 紙の縁（薬包紙の折り目のような二重線） */
-.card::after {
+/* 金砂子（右上） */
+.card::before {
   content: '';
   position: absolute;
-  inset: 8px;
-  border: 1px solid var(--c-sumi-12);
+  right: -10px;
+  top: -10px;
+  width: 180px;
+  height: 180px;
+  background: var(--img-sunago) no-repeat center / contain;
   pointer-events: none;
+  opacity: 0.9;
+}
+
+.inner {
+  position: relative;
+  padding: 18px 22px 22px;
+  border: 1px solid var(--c-kin-20);
 }
 
 .animate {
@@ -33,26 +47,20 @@
   }
 }
 
-.mono {
-  font-family: var(--ff-data);
-  font-size: 11.5px;
-  letter-spacing: 0.08em;
-  color: var(--c-sumi-60);
-}
-
 .head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 16px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--c-sumi-30);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--c-sumi-20);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--c-usuzumi);
 }
 
-.pharmacy {
+.pharmacyMain {
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .batch {
@@ -66,21 +74,19 @@
   padding-top: 22px;
 }
 
-/* 縦書きタイプ名（1画面1箇所） */
+/* 縦書きタイプ名（筆） */
 .nameBlock {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: flex-start;
 }
 
 .name {
   writing-mode: vertical-rl;
   text-orientation: upright;
-  font-family: var(--ff-display);
-  font-weight: 400;
-  font-size: clamp(44px, 9vw, 72px);
+  font-size: clamp(52px, 9.5vw, 80px);
   line-height: 1;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   margin: 0;
   color: var(--c-sumi);
 }
@@ -88,28 +94,30 @@
 .nameMeta {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-top: 6px;
+  gap: 10px;
+  padding-top: 8px;
 }
 
 .kana {
   writing-mode: vertical-rl;
-  font-family: var(--ff-display);
   font-size: 13px;
-  letter-spacing: 0.3em;
-  color: var(--c-sumi-60);
+  letter-spacing: 0.32em;
+  color: var(--c-usuzumi);
 }
 
 .code {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--c-nibi);
 }
 
 .accord {
   writing-mode: vertical-rl;
-  font-size: 10px;
-  color: var(--c-sumi-30);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--c-nibi);
 }
 
 .main {
@@ -119,32 +127,65 @@
   gap: 18px;
 }
 
+.catchRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
 .catch {
   font-family: var(--ff-display);
+  font-weight: 500;
   font-size: 18px;
-  letter-spacing: 0.06em;
-  line-height: 1.6;
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+  padding-top: 4px;
+}
+
+/* 丸窓の絵 */
+.window {
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px var(--c-kin-20), 0 0 0 4px var(--c-paper-3), 0 0 0 5px var(--c-kin-20);
+}
+
+.windowArt {
+  width: 100%;
+  height: 100%;
+}
+
+.windowFallback {
+  width: 100%;
+  height: 100%;
+  opacity: 0.35;
 }
 
 .notes {
   width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 14.5px;
 }
 
 .notes th {
   text-align: left;
-  font-weight: 400;
-  width: 5.5em;
+  font-weight: 500;
+  width: 5em;
   padding: 8px 0;
   vertical-align: baseline;
   border-bottom: 1px solid var(--c-sumi-12);
+  color: var(--c-shu);
+  letter-spacing: 0.14em;
+  font-size: 12.5px;
 }
 
 .notes td {
   padding: 8px 0;
   border-bottom: 1px solid var(--c-sumi-12);
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .notes tr:last-child th,
@@ -170,25 +211,26 @@
 }
 
 @media (max-width: 560px) {
-  .card {
-    padding: 18px 18px 22px;
+  .inner {
+    padding: 16px 14px 18px;
   }
   .body {
-    grid-template-columns: auto 1fr;
     gap: 16px;
   }
   .name {
-    font-size: 48px;
+    font-size: 52px;
+  }
+  .window {
+    width: 64px;
+    height: 64px;
   }
   .radar svg {
     width: 128px;
     height: 128px;
   }
-  .pharmacy {
-    font-size: 10px;
-  }
-  .pharmacySuffix {
-    display: none;
+  .head {
+    font-size: 11px;
+    letter-spacing: 0.1em;
   }
 }
 

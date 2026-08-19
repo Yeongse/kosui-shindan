@@ -63,7 +63,7 @@ export function Distill({
         <g className={styles.topVial}>
           <path
             d="M84 40 L116 40 L124 52 L124 110 Q124 116 118 116 L82 116 Q76 116 76 110 L76 52 Z"
-            fill="var(--c-glass)"
+            fill="var(--c-paper-3)"
           />
           <g clipPath="url(#distill-top-clip)">
             <rect x="76" y="40" width="48" height="76" className={styles.topLiquid} />
@@ -71,7 +71,7 @@ export function Distill({
           <path
             d="M92 22 L108 22 L108 34 L116 40 L124 52 L124 110 Q124 116 118 116 L82 116 Q76 116 76 110 L76 52 L84 40 L92 34 Z"
             fill="none"
-            stroke="var(--c-white)"
+            stroke="var(--c-sumi)"
             strokeOpacity="0.75"
             strokeWidth="1.3"
             strokeLinejoin="round"
@@ -85,7 +85,7 @@ export function Distill({
         <g className={styles.bottomVial}>
           <path
             d="M74 200 L126 200 L138 218 L138 298 Q138 306 130 306 L70 306 Q62 306 62 298 L62 218 Z"
-            fill="var(--c-glass)"
+            fill="var(--c-paper-3)"
           />
           <g clipPath="url(#distill-bottom-clip)">
             <rect x="62" y="200" width="76" height="106" className={styles.bottomLiquid} />
@@ -93,31 +93,31 @@ export function Distill({
           <path
             d="M86 176 L114 176 L114 190 L126 200 L138 218 L138 298 Q138 306 130 306 L70 306 Q62 306 62 298 L62 218 L74 200 L86 190 Z"
             fill="none"
-            stroke="var(--c-white)"
+            stroke="var(--c-sumi)"
             strokeOpacity="0.8"
             strokeWidth="1.4"
             strokeLinejoin="round"
           />
           {/* ラベル（スタンプ） */}
           <g className={styles.label}>
-            <rect x="74" y="232" width="52" height="56" fill="var(--c-paper)" />
+            <rect x="74" y="232" width="52" height="56" fill="var(--c-paper-3)" stroke="var(--c-kin)" strokeOpacity="0.5" strokeWidth="0.6" />
             <text
               x="100"
               y="252"
               textAnchor="middle"
-              fontFamily="var(--ff-data)"
+              fontFamily="var(--ff-display)"
               fontSize="6"
               letterSpacing="1.5"
               fill="var(--c-sumi)"
             >
-              CHOKOSEN
+              調香箋
             </text>
             <text
               x="100"
               y="272"
               textAnchor="middle"
-              fontFamily="var(--ff-display)"
-              fontSize="16"
+              fontFamily="var(--ff-brush)"
+              fontSize="17"
               letterSpacing="3"
               fill="var(--c-sumi)"
             >
