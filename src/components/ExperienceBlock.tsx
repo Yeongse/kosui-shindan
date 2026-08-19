@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type { ScentType } from '@/data/schema';
 import { track } from '@/lib/analytics';
 import styles from './AffiliateBlock.module.css';
@@ -44,7 +45,14 @@ export function ExperienceBlock({ type }: { type: ScentType }) {
           </a>
         </div>
       </div>
-      <p className={styles.note}>体験の予約・決済は各予約サイトで行われます。当サイトはリンク経由の予約で紹介料を受け取ることがあります。</p>
+      <p className={styles.note}>
+        体験の予約・決済は各予約サイトで行われます。当サイトはリンク経由の予約で紹介料を受け取ることがあります。
+        はじめての方は{' '}
+        <Link href="/guide/perfume-making-experience" className="link">
+          香水作り・調香体験の流れと選び方
+        </Link>
+        {' '}もどうぞ。
+      </p>
     </section>
   );
 }

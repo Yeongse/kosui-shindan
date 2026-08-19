@@ -70,7 +70,7 @@ src/
     type-seo/part-*.ts    16タイプの SEO本文・FAQ・関連リンク（固有書き下ろし）
     types.ts              上2つの合成（唯一の参照点）
     notes/ notes.ts       ノート解説 8本
-    guides/ guides.ts     ガイド記事 10本（part-3.ts を足して配列に加えれば公開）
+    guides/ guides.ts     ガイド記事 16本（part-N.ts を足して配列に加えれば公開）
     palette.ts            色トークン・液体色・混色
     site-copy.ts          LP/aboutの固定コピー・FAQ 5問
     human-prior.ts        キャリブレーション用の「選択肢の選ばれやすさ」事前分布
@@ -131,8 +131,8 @@ OG_FONT_SRC=/path/to/ttf PYFTSUBSET=.venv/bin/pyftsubset npm run og:fonts
 
 ## コンテンツ追加の運用
 
-- ガイド記事: `src/data/guides/part-3.ts` を作り `guides.ts` の配列に追加するだけで公開される。公開前に固有の実体験・具体例を1箇所以上追記する（§12.3）。追加後 `npm run og:fonts` と `npm run verify`
-- 残りの予定記事: `long-lasting` / `similar-scent-search` / `perfume-terms` / `first-date-scent` / `nioi-kaori-difference`
+- ガイド記事: `src/data/guides/part-N.ts` を作り `guides.ts` の配列に追加するだけで公開される。公開前に固有の実体験・具体例を1箇所以上追記する（§12.3）。追加後 `npm run og:fonts` と `npm run verify`
+- §12.3 の15本＋「香水作り・調香体験とは」の計16本を公開済み。以降は月2本ペースで追記（§14 M10）
 - コンテンツ検収（絵文字ゼロ・「！」ゼロ・howToChoose 700〜1000字・重複率30%未満・関連リンク実在）は `npm run test` に含まれる
 
 ## 仕様からの逸脱記録
