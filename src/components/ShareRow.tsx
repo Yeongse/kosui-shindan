@@ -34,14 +34,14 @@ const IconLink = () => (
 /** シェア: X / LINE / 画像を保存 / リンクをコピー */
 export function ShareRow({
   type,
-  digest,
-  scores,
+  scores: fallbackScores,
 }: {
   type: ScentType;
-  digest: string | null;
+  /** 静的HTML用のタイプ代表値。`?d=` があれば本人のスコアで共有画像を作る */
   scores: Record<AccordCode, number>;
 }) {
-  const { batchNo } = useResultMode();
+  const { batchNo, digest, scores: personal } = useResultMode();
+  const scores = personal ?? fallbackScores;
   const [toast, setToast] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const url = shareUrlFor(type, digest);

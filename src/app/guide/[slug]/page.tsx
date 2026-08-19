@@ -95,7 +95,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           headline: g.title,
           description: g.seoDescription,
           path,
-          image: `/api/og?label=${encodeURIComponent(shortTitle)}`,
+          image: `/og/guide-${g.slug}.png`,
           publishedAt: g.publishedAt,
           updatedAt: g.updatedAt,
         })}

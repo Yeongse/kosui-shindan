@@ -4,7 +4,7 @@ import { ACCORD_NAME_JA } from '@/data/palette';
 import { TYPE_BY_CODE } from '@/data/types';
 import { NOTE_BY_SLUG } from '@/data/notes';
 import { GUIDE_BY_SLUG } from '@/data/guides';
-import { decodeDigest, rankAccords, representativeScores } from '@/lib/scoring';
+import { rankAccords, representativeScores } from '@/lib/scoring';
 import { articleJsonLd, CONTENT_PUBLISHED_AT, CONTENT_UPDATED_AT } from '@/lib/seo';
 import { isDefined } from '@/lib/util';
 import { SiteHeader } from './SiteHeader';
@@ -20,27 +20,15 @@ import { ExperienceBlock } from './ExperienceBlock';
 import { ShareRow } from './ShareRow';
 import { Faq } from './Faq';
 import { TypeCard } from './TypeCard';
+import { HiddenAccord } from './HiddenAccord';
 import styles from './TypePageView.module.css';
-
-const NOTE_SLUG_BY_ACCORD: Record<AccordCode, string> = {
-  CIT: 'citrus',
-  GRN: 'green',
-  FLR: 'floral',
-  FRT: 'fruity',
-  GRM: 'gourmand',
-  WDY: 'woody',
-  AMB: 'amber',
-  MSK: 'musk',
-};
 
 /**
  * 結果ページ 兼 タイプ解説記事。診断完了者には「結果」、検索流入者には「解説記事」。
- * digest（?d=）があれば個人スコアでバランスを描き、無ければタイプ代表値。
+ * 静的HTMLはタイプ代表値で描画し、`?d=`（個人スコア）はクライアントで差し替える。
  */
-export function TypePageView({ type, digest }: { type: ScentType; digest: string | null }) {
-  const decoded = decodeDigest(digest);
-  const scores = decoded ?? representativeScores(type.code);
-  const validDigest = decoded ? (digest as string) : null;
+export function TypePageView({ type }: { type: ScentType }) {
+  const scores = representativeScores(type.code);
   const ranked = rankAccords(scores);
   const primary = type.code.split('-')[0] as AccordCode;
   const secondary = (ranked.find((c) => c !== primary) ?? ranked[1]) as AccordCode;
@@ -53,7 +41,7 @@ export function TypePageView({ type, digest }: { type: ScentType; digest: string
   const bodyParas = type.body.split(/\n{2,}/).map((p) => p.trim()).filter((p) => p.length > 0);
 
   return (
-    <ResultModeProvider typeCode={type.code} digest={validDigest}>
+    <ResultModeProvider typeCode={type.code}>
       <SiteHeader />
       <main className={`container container--app ${styles.main}`}>
         <Breadcrumbs
@@ -88,10 +76,7 @@ export function TypePageView({ type, digest }: { type: ScentType; digest: string
           <div className={styles.kv}>
             <h2 className={styles.kvKey}>隠し香調</h2>
             <p className={styles.kvVal}>
-              {`あなたの箋には${ACCORD_NAME_JA[secondary]}が一滴だけ混ざっています。`}{' '}
-              <Link href={`/notes/${NOTE_SLUG_BY_ACCORD[secondary]}`} className="link">
-                {`${ACCORD_NAME_JA[secondary]}系の香水とは`}
-              </Link>
+              <HiddenAccord primary={primary} fallbackSecondary={secondary} />
             </p>
           </div>
         </section>
@@ -157,7 +142,7 @@ export function TypePageView({ type, digest }: { type: ScentType; digest: string
         <Faq heading={`${type.name}タイプの香水について、よくある質問`} items={type.faq} />
 
         {/* 9. シェア */}
-        <ShareRow type={type} digest={validDigest} scores={scores} />
+        <ShareRow type={type} scores={scores} />
 
         {/* 10. CTA */}
         <ResultCtas />
@@ -168,7 +153,7 @@ export function TypePageView({ type, digest }: { type: ScentType; digest: string
           headline: type.h1,
           description: type.seoDescription,
           path: `/type/${type.slug}`,
-          image: `/api/og?type=${type.code}`,
+          image: `/og/type-${type.slug}.png`,
           publishedAt: CONTENT_PUBLISHED_AT,
           updatedAt: CONTENT_UPDATED_AT,
         })}

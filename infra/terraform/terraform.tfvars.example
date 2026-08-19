@@ -1,0 +1,10 @@
+# cp terraform.tfvars.example terraform.tfvars して値を入れる
+# APIトークンは tfvars に書かず、環境変数 CLOUDFLARE_API_TOKEN で渡すこと
+
+account_id = "0123456789abcdef0123456789abcdef"
+
+# 既定値のままでよい項目（必要なときだけ上書き）
+# domain               = "kosui-shindan.com"
+# worker_name          = "kosui-shindan"
+# redirect_www         = true
+# enable_web_analytics = true

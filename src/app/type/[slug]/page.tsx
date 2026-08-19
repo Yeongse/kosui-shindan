@@ -5,9 +5,9 @@ import { getTypeBySlug, TYPE_SLUGS } from '@/data/types';
 import { typeMetadata } from '@/lib/seo';
 
 /**
- * §6 /type/[slug] — 診断結果 兼 タイプ解説記事（SSG 16ページ）。
- * `?d=` 付きアクセスは proxy.ts で /type/[slug]/d/[digest] に内部リライトされ、
- * そちらで個人スコア付きの OG 画像・レーダーを描画する（canonical はこのURL）。
+ * /type/[slug] — 診断結果 兼 タイプ解説記事（静的生成 16ページ）。
+ * `?d=`（個人スコア）はクライアント側で読み取り、香りのバランス等を差し替える。
+ * canonical は常にクエリなしの /type/[slug]。
  */
 export const dynamicParams = false;
 
@@ -26,5 +26,5 @@ export default async function TypePage({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const t = getTypeBySlug(slug);
   if (!t) notFound();
-  return <TypePageView type={t} digest={null} />;
+  return <TypePageView type={t} />;
 }

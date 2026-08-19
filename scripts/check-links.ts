@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /**
- * §13.3 SEO検収 — 内部リンクグラフの検証（ビルド済み HTML を対象）
- *   npm run build && npx tsx scripts/check-links.ts
+ * §13.3 SEO検収 — 内部リンクグラフの検証（静的出力 out/ を対象）
+ *   npm run build && npm run check:links
  *
  * 検証項目:
  *  1. sitemap に含まれる全ページが、他ページから1本以上の内部リンクを受けている（孤立ページ0）
@@ -12,24 +12,28 @@
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import path from 'node:path';
 
-const APP_DIR = path.resolve(__dirname, '../.next/server/app');
+const APP_DIR = path.resolve(__dirname, '../out');
 const SITE = 'https://kosui-shindan.com';
 
 if (!existsSync(APP_DIR)) {
-  console.error('.next/server/app が見つかりません。先に `npm run build` を実行してください。');
+  console.error('out/ が見つかりません。先に `npm run build` を実行してください。');
   process.exit(1);
 }
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const f of readdirSync(dir)) {
     const p = path.join(dir, f);
-    if (statSync(p).isDirectory()) walk(p, out);
-    else if (f.endsWith('.html')) out.push(p);
+    if (statSync(p).isDirectory()) {
+      if (f === '_next') continue;
+      walk(p, out);
+    } else if (f.endsWith('.html')) {
+      out.push(p);
+    }
   }
   return out;
 }
 
-/** .next/server/app/type/gekko.html → /type/gekko */
+/** out/type/gekko.html → /type/gekko */
 function routeOf(file: string): string {
   const rel = path.relative(APP_DIR, file).replace(/\\/g, '/').replace(/\.html$/, '');
   if (rel === 'index') return '/';
@@ -42,7 +46,7 @@ const pages = new Map<string, string>();
 for (const f of files) pages.set(routeOf(f), readFileSync(f, 'utf8'));
 
 // sitemap.xml
-const sitemapFile = path.join(APP_DIR, 'sitemap.xml.body');
+const sitemapFile = path.join(APP_DIR, 'sitemap.xml');
 const sitemapXml = existsSync(sitemapFile) ? readFileSync(sitemapFile, 'utf8') : '';
 const sitemapUrls = Array.from(sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)).map((m) => m[1]!.replace(SITE, '') || '/');
 
@@ -51,7 +55,7 @@ const broken: string[] = [];
 const badAnchors: string[] = [];
 const BAD = /^(こちら|詳細|詳しくはこちら|more|read more|click here|link)$/i;
 
-const knownDynamic = [/^\/api\/og/, /^\/type\/[a-z]+\/d\/[0-9a-f]{16}$/, /^\/sitemap\.xml$/, /^\/robots\.txt$/];
+const knownDynamic = [/^\/sitemap\.xml$/, /^\/robots\.txt$/];
 
 for (const [route, html] of pages) {
   const re = /<a\b[^>]*\bhref="([^"#?]+)(?:\?[^"#]*)?(?:#[^"]*)?"[^>]*>([\s\S]*?)<\/a>/g;

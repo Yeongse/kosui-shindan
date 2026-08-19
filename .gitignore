@@ -40,3 +40,19 @@ yarn-error.log*
 # local tooling
 /scratch-shots
 /.venv
+
+# next static export
+/out
+
+# ビルド時に生成する OG 画像（npm run og:build）
+/public/og
+
+# terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+!*.tfvars.example
+.terraformrc
+terraform.rc

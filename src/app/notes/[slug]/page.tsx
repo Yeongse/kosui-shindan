@@ -101,7 +101,7 @@ export default async function NotePage({ params }: { params: Promise<{ slug: str
           headline: n.h1,
           description: n.seoDescription,
           path,
-          image: `/api/og?type=${n.accord}-C&label=${encodeURIComponent(`${n.name}系の香水とは`)}`,
+          image: `/og/note-${n.slug}.png`,
           publishedAt: n.publishedAt,
           updatedAt: n.updatedAt,
         })}

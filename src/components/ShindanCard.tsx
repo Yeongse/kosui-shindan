@@ -1,8 +1,11 @@
+'use client';
+
 import type { AccordCode, ScentType } from '@/data/schema';
 import { ACCORD_NAME_JA } from '@/data/palette';
 import { Art } from './Art';
 import { AccordBars } from './AccordBars';
 import { ResultLabel } from './ResultLabel';
+import { useResultMode } from './ResultMode';
 import { Stamp } from './Stamp';
 import styles from './ShindanCard.module.css';
 
@@ -12,15 +15,18 @@ import styles from './ShindanCard.module.css';
  */
 export function ShindanCard({
   type,
-  scores,
+  scores: fallbackScores,
   animate = true,
   id = 'shindan-card',
 }: {
   type: ScentType;
+  /** 静的HTML用のタイプ代表値。`?d=` があればマウント後に本人のスコアへ差し替わる */
   scores: Record<AccordCode, number>;
   animate?: boolean;
   id?: string;
 }) {
+  const { scores: personal } = useResultMode();
+  const scores = personal ?? fallbackScores;
   const [accord, temp] = type.code.split('-') as [AccordCode, 'W' | 'C'];
   const tags = [
     `${ACCORD_NAME_JA[accord]}系`,
@@ -84,7 +90,9 @@ export function ShindanCard({
 
       <div className={styles.balance}>
         <h3 className={styles.sectionTitle}>香りのバランス</h3>
-        <AccordBars scores={scores} primary={accord} />
+        <div suppressHydrationWarning>
+          <AccordBars scores={scores} primary={accord} />
+        </div>
       </div>
     </article>
   );

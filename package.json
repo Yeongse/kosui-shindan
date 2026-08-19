@@ -5,7 +5,7 @@
   "description": "香水診断 調香箋（CHOKOSEN） — 12の質問で、あなたに似合う香水がわかる。",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "tsx scripts/build-og.ts && next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -18,7 +18,9 @@
     "shots": "tsx scripts/shots.ts",
     "favicon": "tsx scripts/make-favicon.ts",
     "img:optimize": "tsx scripts/optimize-images.ts",
-    "verify": "npm run typecheck && npm run test && npm run build && npm run check:links && npm run test:e2e"
+    "verify": "npm run typecheck && npm run test && npm run build && npm run check:links && npm run test:e2e",
+    "og:build": "tsx scripts/build-og.ts",
+    "serve": "tsx scripts/serve-out.ts"
   },
   "dependencies": {
     "next": "^16.3.1",

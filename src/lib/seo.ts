@@ -75,7 +75,7 @@ interface BuildMetaOptions {
 
 export function buildMetadata(o: BuildMetaOptions): Metadata {
   const canonical = absUrl(o.path);
-  const ogImage = o.ogImage ? absUrl(o.ogImage) : absUrl('/api/og');
+  const ogImage = o.ogImage ? absUrl(o.ogImage) : absUrl('/og/default.png');
   return {
     title: { absolute: o.title },
     description: o.description,
@@ -102,13 +102,12 @@ export function buildMetadata(o: BuildMetaOptions): Metadata {
   };
 }
 
-export function typeMetadata(t: ScentType, digest?: string): Metadata {
-  const og = digest ? `/api/og?type=${t.code}&d=${digest}` : `/api/og?type=${t.code}`;
+export function typeMetadata(t: ScentType): Metadata {
   return buildMetadata({
     title: `${t.seoTitle}｜${SITE_NAME}`,
     description: t.seoDescription,
     path: `/type/${t.slug}`, // ?d= 付きでも canonical はクエリなし（§12.2）
-    ogImage: og,
+    ogImage: `/og/type-${t.slug}.png`,
     type: 'article',
     publishedTime: CONTENT_PUBLISHED_AT,
     modifiedTime: CONTENT_UPDATED_AT,
@@ -120,7 +119,7 @@ export function noteMetadata(n: NoteArticle): Metadata {
     title: n.seoTitle,
     description: n.seoDescription,
     path: `/notes/${n.slug}`,
-    ogImage: `/api/og?type=${n.accord}-C&label=${encodeURIComponent(`${n.name}系の香水とは`)}`,
+    ogImage: `/og/note-${n.slug}.png`,
     type: 'article',
     publishedTime: n.publishedAt,
     modifiedTime: n.updatedAt,
@@ -132,7 +131,7 @@ export function guideMetadata(g: GuideArticle): Metadata {
     title: `${g.title}｜${SITE_NAME}`,
     description: g.seoDescription,
     path: `/guide/${g.slug}`,
-    ogImage: `/api/og?label=${encodeURIComponent(g.title.split('｜')[0] ?? g.title)}`,
+    ogImage: `/og/guide-${g.slug}.png`,
     type: 'article',
     publishedTime: g.publishedAt,
     modifiedTime: g.updatedAt,

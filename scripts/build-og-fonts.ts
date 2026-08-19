@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 /**
- * OG画像用フォントのサブセット生成（§10.2「サブセット化したwoffをEdge Functionにバンドル」）
+ * OG画像用フォントのサブセット生成（ビルド時のOG画像生成に使う）
  *
  * 使い方:
  *   OG_FONT_SRC=<TTFのあるディレクトリ> PYFTSUBSET=<pyftsubsetのパス> npx tsx scripts/build-og-fonts.ts
  *
  * - 収録グリフ: ASCII + ひらがな + カタカナ + 記号少々 + データ層に現れる全ての漢字
  *   （タイプ名・読み・ノート名・ガイド題名・ノート題名・固定ラベル）
- * - 出力: src/app/api/og/fonts/{display,body}.woff と og-glyphs.txt（現代明朝 + 角ゴ）
+ * - 出力: assets/og-fonts/{display,body}.woff と og-glyphs.txt（現代明朝 + 角ゴ）
  * - データ層（ガイド追加など）を変更したら再実行すること。
  */
 import { execFileSync } from 'node:child_process';
@@ -20,7 +20,7 @@ import { OG_FIXED_STRINGS } from '../src/lib/og-labels';
 
 const SRC = process.env.OG_FONT_SRC ?? '';
 const PYFTSUBSET = process.env.PYFTSUBSET ?? 'pyftsubset';
-const OUT = path.resolve(__dirname, '../src/app/api/og/fonts');
+const OUT = path.resolve(__dirname, '../assets/og-fonts');
 
 if (!SRC) {
   console.error('OG_FONT_SRC (directory containing the source TTFs) is required');

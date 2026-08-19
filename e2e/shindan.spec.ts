@@ -58,10 +58,37 @@ test('shared link (未診断者) shows SPECIMEN and swaps CTA', async ({ page })
   // canonical はクエリなし
   const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');
   expect(canonical).toMatch(/\/type\/gekko$/);
-  // OG は d を伝播
+  // OG はビルド時生成の静的画像
   const og = await page.locator('meta[property="og:image"]').getAttribute('content');
-  expect(og).toContain('type=FLR-C');
-  expect(og).toContain('d=050f110003030203');
+  expect(og).toContain('/og/type-gekko.png');
+
+  // ?d= はクライアントで解決され、シェアURLに引き継がれる
+  const href = await page.locator('a[data-share="x"]').getAttribute('href');
+  expect(decodeURIComponent(href ?? '')).toContain('/type/gekko?d=050f110003030203');
+});
+
+test('静的出力: 404ページ・旧URLリダイレクト・sitemap/robots', async ({ page, request }) => {
+  const notFound = await request.get('/type/does-not-exist', { maxRedirects: 0 });
+  expect(notFound.status()).toBe(404);
+  expect(await notFound.text()).toContain('ページが見つかりません');
+
+  const old = await request.get('/q', { maxRedirects: 0 });
+  expect(old.status()).toBe(301);
+  expect(old.headers()['location']).toBe('/shindan');
+
+  const sitemap = await request.get('/sitemap.xml');
+  expect(sitemap.status()).toBe(200);
+  expect(await sitemap.text()).toContain('https://kosui-shindan.com/type/gekko');
+
+  const robots = await request.get('/robots.txt');
+  expect(await robots.text()).toContain('Sitemap: https://kosui-shindan.com/sitemap.xml');
+
+  const og = await request.get('/og/type-gekko.png');
+  expect(og.status()).toBe(200);
+  expect(og.headers()['content-type']).toContain('image/png');
+
+  await page.goto('/type/gekko');
+  await expect(page.locator('#shindan-card')).toBeVisible();
 });
 
 test('選択肢の縦位置は設問の長さに関わらず一定', async ({ page }) => {

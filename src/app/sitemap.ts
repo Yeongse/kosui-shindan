@@ -7,6 +7,9 @@ import { absUrl, CONTENT_UPDATED_AT } from '@/lib/seo';
 /**
  * §12.5 sitemap.xml — 全SSGページ・絶対URL。/shindan は除外。
  */
+/** 静的書き出し（output: 'export'）のためビルド時に固定生成する */
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date(CONTENT_UPDATED_AT);
   const statics: MetadataRoute.Sitemap = [

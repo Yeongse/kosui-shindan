@@ -6,11 +6,12 @@
 
 ## スタック
 
-- Next.js 16 (App Router, Turbopack) + TypeScript strict + CSS Modules
+- Next.js 16 (App Router, Turbopack) + TypeScript strict + CSS Modules。**完全静的**（`output: 'export'`）
+- ホスティング: Cloudflare Workers の静的アセット。構成は Terraform（`infra/terraform`）
 - 状態: React useReducer + sessionStorage（回答）/ localStorage（履歴3件）。外部状態管理なし
 - アニメーション: CSS transition/keyframes + SVG。framer-motion 等なし
-- OG画像: `next/og`（satori）Edge Route、サブセット woff（明朝 + 筆文字）をバンドル
-- テスト: Vitest（scoring / 分布 / digest / コンテンツ検収）+ Playwright（完走E2E）
+- OG画像: `next/og`（satori）で**ビルド時に生成**し `public/og/*.png` として配信（41枚）
+- テスト: Vitest（scoring / 分布 / digest / コンテンツ検収）+ Playwright（静的出力に対する E2E）
 - 解析: Cloudflare Web Analytics（Cookie 不使用・同意バナーなし）。DB なし。個人情報は収集しない
 
 ## デザイン — 現代の診断サイト × 和モダン（v5）
@@ -38,7 +39,9 @@ npm run dev
 | `npm run dev` / `build` / `start` | 開発 / 本番ビルド / 本番起動 |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run test` | Vitest（scoring スナップショット・分布 10万試行×2モデル・digest 往復・コンテンツ検収） |
-| `npm run test:e2e` | Playwright（390px幅で LP→12問→結果→Xシェア→図鑑。要 `npm run build`） |
+| `npm run test:e2e` | Playwright（390px幅・静的出力 out/ に対して実行。要 `npm run build`） |
+| `npm run serve` | `out/` を Cloudflare と同じURL解決でローカル配信（:3199） |
+| `npm run og:build` | OG画像 41枚を `public/og/` に生成（`npm run build` の前段で自動実行） |
 | `npm run check:links` | ビルド済みHTMLから内部リンクグラフを検証（孤立ページ0・リンク切れ0・アンカーテキスト・robots・§12.1 内部リンク規則） |
 | `npm run analyze:distribution` | 16タイプの出現分布（一様ランダム / 人間モデル）を表示。`PATCHES` 環境変数で重み案を試算 |
 | `npm run og:fonts` | OG画像用フォントのサブセット再生成（後述） |
@@ -56,11 +59,9 @@ src/
     shindan/              診断フロー（noindex）
     type/                 香水タイプ一覧（香層図鑑）
     type/[slug]/          結果 兼 タイプ解説（SSG 16）
-    type/[slug]/d/[digest]/  ?d= 付きの内部リライト先（proxy.ts）。OGに d を伝播、canonical はクエリなし
     notes/ notes/[slug]/  香りノート解説（8）
     guide/ guide/[slug]/  ガイド記事（10、データ層に追加するだけで増える）
     about/ privacy/ sitemap/  静的ページ・HTMLサイトマップ
-    api/og/route.tsx      動的OG画像（Edge）。fonts/ にサブセット woff
     sitemap.ts robots.ts not-found.tsx
   components/             ShindanFlow（設問）/ Loading / ShindanCard（結果カード）/ AccordBars / TypeCard / ShareRow / Art（画像スロット）ほか
   data/
@@ -82,10 +83,14 @@ src/
     affiliate.ts          楽天/Amazon 検索リンク組立
     analytics.ts          計測イベントの薄いフック（現状 no-op）
     storage.ts            sessionStorage / localStorage
-  proxy.ts                /type/[slug]?d= → /type/[slug]/d/[digest] のリライト
+  lib/og.tsx              OG画像のレンダリング（ビルド時に scripts/build-og.ts から使う）
   styles/tokens.css       デザイントークン（§7）
-scripts/                  検収・分析・フォント生成
-e2e/                      Playwright
+scripts/                  ビルド補助・検収・分析（build-og / optimize-images / favicon / check-links ほか）
+e2e/                      Playwright（静的出力に対して実行）
+assets/                   原本（画像PNG・OGフォント）。配信物は public/ に生成する
+infra/
+  cloudflare/             _headers / _redirects（Cloudflare の静的アセット設定）
+  terraform/              Cloudflare の構成（Worker・ドメイン・リダイレクト・解析）
 ```
 
 ## 診断ロジックとキャリブレーション
@@ -97,9 +102,12 @@ e2e/                      Playwright
 - 重みを変えたいときは `PATCHES='[{"q":3,"key":"C","temp":0}]' npm run analyze:distribution` で試算し、`questions.ts` に反映後 `npm run test`。
 - **運用**: 回答の選択率が実測できるようになったら、`human-prior.ts` を実測値で置き換えて再キャリブレーションする。
 
-## OG 画像フォントの再生成
+## OG 画像の再生成
 
-`src/app/api/og/fonts/*.woff` は Shippori Mincho B1（全文言）と Yuji Syuku（タイプ名・見出し語のみ）を、
+OG画像は `npm run build` の前段（`npm run og:build`）で 41枚（タイプ16・ノート8・ガイド16・既定1）を
+`public/og/` に生成する。デザインは `src/lib/og.tsx`。
+
+フォントのサブセット `assets/og-fonts/*.woff` は Shippori Mincho B1（全文言）と Yuji Syuku（タイプ名・見出し語のみ）を、
 データ層に現れる文字（タイプ名・読み・ノート名・ガイド題名・固定ラベル + ASCII/かな）だけにサブセットしたもの。
 **ガイド記事やノートの題名を追加・変更したら再生成すること**（未収録の漢字は OG 画像で描画されない）。
 
@@ -109,20 +117,32 @@ python3 -m venv .venv && .venv/bin/pip install fonttools brotli
 OG_FONT_SRC=/path/to/ttf PYFTSUBSET=.venv/bin/pyftsubset npm run og:fonts
 ```
 
-`/api/og?label=` は `src/lib/og-labels.ts` のホワイトリスト（ノート題名・ガイド短題名）に一致する文字列だけを受け付ける。
+## デプロイ（Cloudflare / Terraform）
 
-## デプロイ（Vercel + Cloudflare DNS）
+静的書き出し（`output: 'export'`）した `out/` を、Cloudflare Workers の静的アセットとして配信する。サーバーは持たない。
 
-1. Vercel にプロジェクトを作成し、環境変数を設定: `NEXT_PUBLIC_SITE_URL=https://kosui-shindan.com`, `NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID`, `NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG`, `NEXT_PUBLIC_CF_BEACON_TOKEN`（Cloudflare Web Analytics）
-2. Cloudflare は DNS のみ（プロキシ OFF / グレー雲）。`kosui-shindan.com` と `www` を Vercel に向け、Vercel 側で www → apex の 301 を設定（§1.1）
-3. `kousui-shindan.com` を取得できた場合は Vercel でドメイン追加 → apex へ 301
-4. 旧URL（`/q` `/types` `/r/[code]`）は `next.config.ts` の redirects で 301 済み
+```bash
+npm run build                       # out/ を作る（OG画像生成 → next build）
+cd infra/terraform && terraform apply
+```
+
+手順とAPIトークンの権限は [infra/terraform/README.md](./infra/terraform/README.md)。Terraform が作るもの:
+Worker（静的アセット）／独自ドメイン接続／`www` → apex の301／常時HTTPS／Cloudflare Web Analytics。
+
+URL解決（`infra/cloudflare/_headers` `_redirects`）はローカルでも再現できる:
+
+```bash
+npm run build && npm run serve      # http://localhost:3199
+```
+
+**環境変数はビルド時に焼き込まれる**（`NEXT_PUBLIC_*`）。アフィリエイトIDなどを変えたら `.env.local` を直して
+ビルドし直す。Cloudflare 側に環境変数を置いても反映されない。
 
 ## リリース手順と Search Console（§12.5）
 
-1. `npm run verify` が全て通ることを確認（typecheck / 39 tests / build / 内部リンク検証 / E2E）
+1. `npm run verify` が全て通ることを確認（typecheck / tests / build / 内部リンク検証 / E2E）
 2. `npm run shots` で 390px と 1280px の見た目を確認（`npm run shots -- 390`）
-3. デプロイ後、`https://kosui-shindan.com/sitemap.xml` と `/robots.txt` を確認
+3. `cd infra/terraform && terraform apply` でデプロイ後、`https://kosui-shindan.com/sitemap.xml` と `/robots.txt` を確認
 4. **Google Search Console** に `kosui-shindan.com`（ドメインプロパティ）を追加し、Cloudflare DNS に TXT レコードで所有権確認
 5. サイトマップ `https://kosui-shindan.com/sitemap.xml` を送信
 6. URL検査で `/`, `/type/gekko`, `/notes/musk`, `/guide/how-to-choose` をインデックス登録リクエスト
@@ -139,8 +159,10 @@ OG_FONT_SRC=/path/to/ttf PYFTSUBSET=.venv/bin/pyftsubset npm run og:fonts
 
 - **設問の重み（§4）**: 初期値では分布テスト（§13.1）を満たさなかったため、文言は変えずに重みのみ調整。さらに人間の選択の偏りを考慮した第2段階の調整を実施。詳細は `src/data/questions.ts` 冒頭
 - **ディレクトリ（§11.2）**: `types.ts` を `types.base.ts`（基本コピー）+ `type-seo/`（SEO本文）の合成にした（16タイプ×1500字を1ファイルに置くと編集不能なため）。`guides.ts` `notes.ts` も同様に分割
-- **`?d=` の扱い（§6/§10.2）**: SSG を保ちつつ OG に d を伝播するため、`proxy.ts` で `/type/[slug]/d/[digest]` に内部リライト（URLバー表示は `?d=` のまま、canonical はクエリなし）
-- **Edge Runtime**: Next.js 16 では非推奨警告が出るが、§10.2 の指定どおり `/api/og` は Edge で動作させている。将来 `runtime = 'nodejs'` に切り替える場合はフォント読込を `fs` 経由に変更する
+- **完全静的化（§6/§10.2/§11.1）**: Cloudflare の静的ホスティングに載せるため、Edge の `/api/og`・middleware・動的ルートを廃止した。
+  - OG画像は**ビルド時に生成**（`public/og/*.png`）。このため `?d=` によるOG画像の個人化は行わない（共有リンクのプレビューはタイプ代表値。ページ本体とダウンロードする縦長画像は従来どおり個人のスコアで描画される）
+  - `?d=` は**ブラウザ側で解決**する。静的HTMLはタイプ代表値で描画し、マウント後に香りのバランス・隠し香調・共有URLを本人の値へ差し替える（本文・見出しは静的HTMLに含まれるので検索には影響しない）
+  - 旧URLの301は Cloudflare 側（`infra/cloudflare/_redirects`）で行う
 - **X の intent URL**: `x.com/intent/post` を使用（旧 twitter.com は転送されるため）
 - **デザイン（§7）**: ユーザー指示により spec の世界観（暗い薬瓶・縦書き・蒸留瓶）を離れ、現代の診断サイトの文法（白カード・パステル・丸ゴ・進捗バー・キャラ絵）に全面変更。§7.0 の「角丸カードのグリッド」「棒状プログレス」はジャンル標準として採用。絵文字不使用・「！」不使用は維持
 - **計測（§12.7）**: GA4 と同意バナーは撤去し Cloudflare Web Analytics に置換。`track()` は no-op の差し替え点として残置
