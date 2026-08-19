@@ -8,7 +8,7 @@
   font-size: clamp(19px, 3.2vw, 24px);
   line-height: 1.7;
   letter-spacing: 0.04em;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   margin-bottom: 26px;
 }
 
@@ -35,7 +35,7 @@
   line-height: 1;
   float: left;
   margin: 0.18em 0.12em 0 0;
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 /* 3. まとう場面 / 相性 / 隠し香調 */
@@ -44,7 +44,7 @@
 }
 
 .dl {
-  border-top: 1px solid var(--c-sumi-20);
+  border-top: 1px solid var(--c-line);
 }
 
 .dlRow {
@@ -52,12 +52,12 @@
   grid-template-columns: 7em 1fr;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid var(--c-sumi-20);
+  border-bottom: 1px solid var(--c-line);
 }
 
 .dt {
   padding-top: 4px;
-  color: var(--c-shu);
+  color: var(--c-kin);
   letter-spacing: 0.18em;
   font-size: 13px;
 }
@@ -72,7 +72,7 @@
 }
 
 .reason {
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   font-size: 14px;
 }
 
@@ -89,7 +89,7 @@
   line-height: 1.5;
   margin-bottom: 22px;
   padding-left: 14px;
-  border-left: 3px solid var(--c-shu);
+  border-left: 3px solid var(--c-kin);
 }
 
 .prose p {

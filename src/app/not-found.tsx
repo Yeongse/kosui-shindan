@@ -26,7 +26,7 @@ export default function NotFound() {
         >
           この箋は、棚にありません。
         </h1>
-        <p style={{ marginTop: 18, color: 'var(--c-usuzumi)', maxWidth: '52ch' }}>
+        <p style={{ marginTop: 18, color: 'var(--c-ink-2)', maxWidth: '52ch' }}>
           お探しのページは移動したか、削除された可能性があります。URLをご確認いただくか、以下から目的のページへお進みください。
         </p>
         <ul style={{ marginTop: 22, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 15 }}>

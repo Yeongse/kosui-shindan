@@ -1,17 +1,21 @@
 import { ACCORD_CODES, type AccordCode, type ScentType } from '@/data/schema';
 import { absUrl } from './seo';
 
-/** 縦長画像の配色（料紙） */
+/** 縦長画像の配色（紺紙金泥・tokens.css と同期） */
 const P = {
-  paper: '#F3EADB',
-  paper3: '#FBF6EC',
+  ground: '#13203A',
+  ink: '#EEEAE0',
+  ink2: '#B9B4A7',
+  ink3: '#857F74',
+  paper: '#F1EFE7',
+  paper3: '#F7F5EE',
   sumi: '#2A2420',
   usuzumi: '#6B6157',
   nibi: '#9B9085',
-  shu: '#B0432D',
-  kin: '#B3903E',
-  fuji: '#8F7AA3',
-  asagi: '#5B8791',
+  paperKin: '#8A6D2F',
+  shu: '#C2402A',
+  kin: '#CFAE63',
+  byakugun: '#A6CDD1',
 };
 
 /**
@@ -210,16 +214,16 @@ export async function generateStoryImage({
   const mono = display;
   await ensureFonts([`180px ${brush}`, `120px ${display}`, `700 60px ${display}`, `30px ${body}`, `24px ${mono}`]);
 
-  // 背景（料紙）
-  ctx.fillStyle = P.paper;
+  // 背景（紺紙）
+  ctx.fillStyle = P.ground;
   ctx.fillRect(0, 0, W, H);
-  drawKumo(ctx, -80, 40, 620, P.fuji, 0.16);
-  drawKumo(ctx, 560, 1660, 620, P.asagi, 0.14);
+  drawKumo(ctx, -80, 40, 620, P.kin, 0.14);
+  drawKumo(ctx, 560, 1660, 620, P.byakugun, 0.1);
   drawSunago(ctx, 760, 0, 320, 260, 90, 7);
   drawSunago(ctx, 0, 1640, 340, 280, 80, 19);
 
   // 上部ラベル
-  ctx.fillStyle = P.usuzumi;
+  ctx.fillStyle = P.kin;
   ctx.font = `26px ${display}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
@@ -231,15 +235,15 @@ export async function generateStoryImage({
   const pw = W - px * 2;
   const ph = 1400;
   ctx.save();
-  ctx.shadowColor = 'rgba(42,36,32,0.35)';
+  ctx.shadowColor = 'rgba(0,0,0,0.6)';
   ctx.shadowBlur = 60;
   ctx.shadowOffsetY = 30;
-  ctx.fillStyle = P.paper3;
+  ctx.fillStyle = P.paper;
   roundRect(ctx, px, py, pw, ph, 2);
   ctx.fill();
   ctx.restore();
   // 金の二重枠
-  ctx.strokeStyle = 'rgba(179,144,62,0.4)';
+  ctx.strokeStyle = 'rgba(207,174,99,0.5)';
   ctx.lineWidth = 2;
   ctx.strokeRect(px + 1, py + 1, pw - 2, ph - 2);
   ctx.strokeRect(px + 22, py + 22, pw - 44, ph - 44);
@@ -297,7 +301,7 @@ export async function generateStoryImage({
   let ry = py + 250 + catchLines.length * 56 + 60;
   ctx.strokeStyle = 'rgba(42,36,32,0.12)';
   rows.forEach(([k, v]) => {
-    ctx.fillStyle = P.shu;
+    ctx.fillStyle = P.paperKin;
     ctx.font = `20px ${display}`;
     ctx.fillText(k, rightX, ry);
     ctx.fillStyle = P.sumi;
@@ -338,10 +342,10 @@ export async function generateStoryImage({
   // 下部
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = P.sumi;
+  ctx.fillStyle = P.ink;
   ctx.font = `34px ${display}`;
   ctx.fillText('12の質問で、あなたに似合う香水がわかる。', W / 2, H - 200);
-  ctx.fillStyle = P.nibi;
+  ctx.fillStyle = P.ink3;
   ctx.font = `24px ${display}`;
   ctx.fillText(`香水診断 調香箋  ${siteLabel}`, W / 2, H - 140);
 

@@ -1,11 +1,11 @@
 /* ---------- Hero（料紙） ---------- */
 .hero {
   position: relative;
-  background-color: var(--c-paper-2);
+  background-color: var(--c-ground);
   background-image:
     var(--img-hero),
-    radial-gradient(ellipse 60% 50% at 85% 15%, rgba(143, 122, 163, 0.16), transparent 60%),
-    radial-gradient(ellipse 50% 40% at 10% 95%, rgba(91, 135, 145, 0.12), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 15%, rgba(207, 174, 99, 0.16), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 95%, rgba(166, 205, 209, 0.1), transparent 60%),
     var(--img-washi);
   background-size: cover, auto, auto, 512px 512px;
   background-position: center, center, center, top left;
@@ -26,13 +26,13 @@
   font-size: clamp(14px, 1.4vw, 17px);
   letter-spacing: 0.22em;
   line-height: 1;
-  color: var(--c-sumi);
+  color: var(--c-paper-ink);
   height: auto;
   white-space: nowrap;
   padding: 18px 12px;
-  background: var(--c-paper-3);
+  background: var(--c-paper);
   border: 1px solid var(--c-kin-20);
-  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-paper), 0 2px 0 var(--c-kin-20), 0 18px 40px -24px rgba(0, 0, 0, 0.6);
   animation: fadeIn 0.6s var(--ease) both;
 }
 
@@ -51,7 +51,7 @@
 
 .eyebrow {
   margin-bottom: 18px;
-  color: var(--c-shu);
+  color: var(--c-kin);
   letter-spacing: 0.3em;
 }
 
@@ -60,7 +60,7 @@
   font-weight: 500;
   letter-spacing: 0.04em;
   line-height: 1.45;
-  color: var(--c-sumi);
+  color: var(--c-ink);
 }
 
 .nowrap {
@@ -71,7 +71,7 @@
   margin-top: 22px;
   max-width: 42ch;
   font-size: 15.5px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .cta {
@@ -83,12 +83,12 @@
   width: clamp(220px, 26vw, 340px);
   aspect-ratio: 1 / 1;
   padding: 10px;
-  background: var(--c-paper-3);
+  background: var(--c-paper);
   border: 1px solid var(--c-kin-20);
   box-shadow:
-    0 1px 0 var(--c-paper-3),
+    0 1px 0 var(--c-paper),
     0 2px 0 var(--c-kin-20),
-    0 24px 48px -30px rgba(42, 36, 32, 0.35);
+    0 28px 56px -30px rgba(0, 0, 0, 0.7);
   transform: rotate(1.2deg);
 }
 
@@ -121,7 +121,7 @@
   line-height: 1.5;
   margin-bottom: 24px;
   padding-left: 14px;
-  border-left: 3px solid var(--c-shu);
+  border-left: 3px solid var(--c-kin);
 }
 
 .h3 {
@@ -133,7 +133,7 @@
 }
 
 .lead {
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   margin-bottom: 22px;
   max-width: 62ch;
 }
@@ -150,7 +150,7 @@
 .whatList {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--c-sumi-20);
+  border-top: 1px solid var(--c-line);
 }
 
 .whatItem {
@@ -158,14 +158,14 @@
   grid-template-columns: 2.2em 1fr;
   gap: 16px;
   padding: 22px 0;
-  border-bottom: 1px solid var(--c-sumi-20);
+  border-bottom: 1px solid var(--c-line);
 }
 
 .whatNo {
   font-family: var(--ff-brush);
   font-size: 22px;
   line-height: 1.3;
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 .whatTitle {
@@ -178,7 +178,7 @@
 .whatBody {
   margin-top: 6px;
   font-size: 14.5px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 /* §C タイプ目録（2列） */
@@ -186,7 +186,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 32px;
-  border-top: 1px solid var(--c-sumi-20);
+  border-top: 1px solid var(--c-line);
 }
 
 .typeItem {
@@ -194,7 +194,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid var(--c-sumi-20);
+  border-bottom: 1px solid var(--c-line);
 }
 
 .typeDot {
@@ -202,7 +202,7 @@
   height: 12px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: inset 0 0 0 1px rgba(42, 36, 32, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
 .typeLink {
@@ -213,7 +213,7 @@
   min-width: 0;
 }
 .typeLink:hover .typeName {
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 .typeName {
@@ -224,13 +224,13 @@
 
 .typeKana {
   font-size: 12.5px;
-  color: var(--c-nibi);
+  color: var(--c-ink-3);
 }
 
 .typeMeta {
   font-size: 11.5px;
   letter-spacing: 0.08em;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   margin-left: 4px;
 }
 
@@ -254,9 +254,9 @@
 
 .finalPanel {
   padding: clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px);
-  background: var(--c-paper-3);
+  background: var(--c-surface);
   border: 1px solid var(--c-kin-20);
-  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-ground), 0 2px 0 var(--c-kin-20);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -267,7 +267,7 @@
 .finalLine {
   font-size: clamp(20px, 3.2vw, 28px);
   letter-spacing: 0.1em;
-  color: var(--c-sumi);
+  color: var(--c-ink);
 }
 
 /* ---------- Responsive ---------- */

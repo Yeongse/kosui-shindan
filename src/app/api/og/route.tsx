@@ -15,9 +15,9 @@ import {
 } from '@/lib/og-labels';
 
 /**
- * 動的OG画像 `/api/og` — 料紙の上の色紙。
+ * 動的OG画像 `/api/og` — 紺紙金泥の上に白練の色紙。
  * - パラメータ: type（16コードのホワイトリスト）, d（任意, 16hex）, label（ホワイトリスト内の見出し）
- * - 構図: 生成りの料紙に飛雲、右に色紙（タイプ名は筆文字・縦組み）、調香表、レーダー、朱の落款
+ * - 構図: 紺紙に金泥の飛雲と砂子、右に白練の色紙（タイプ名は筆文字・縦組み）、調香表、レーダー、朱の落款
  * - サブセット化した woff をバンドル。d 不正時はタイプ代表値で描画（500 を返さない）。画像URLの外部参照なし。
  */
 export const runtime = 'edge';
@@ -25,17 +25,22 @@ export const runtime = 'edge';
 const W = 1200;
 const H = 630;
 
+/** 紺紙金泥の配色（tokens.css と同期） */
 const C = {
-  paper: '#F3EADB',
-  paper2: '#ECE1CC',
-  paper3: '#FBF6EC',
+  ground: '#13203A',
+  surface: '#1B2C4B',
+  ink: '#EEEAE0',
+  ink2: '#B9B4A7',
+  ink3: '#857F74',
+  paper: '#F1EFE7',
+  paper3: '#F7F5EE',
   sumi: '#2A2420',
   usuzumi: '#6B6157',
   nibi: '#9B9085',
-  shu: '#B0432D',
-  kin: '#B3903E',
-  fuji: '#8F7AA3',
-  asagi: '#5B8791',
+  paperKin: '#8A6D2F',
+  shu: '#C2402A',
+  kin: '#CFAE63',
+  byakugun: '#A6CDD1',
 };
 
 let fontsPromise: Promise<{ display: ArrayBuffer; brush: ArrayBuffer }> | null = null;
@@ -122,8 +127,8 @@ export async function GET(req: NextRequest) {
 
   const Background = () => (
     <>
-      <Kumo x={-40} y={-20} w={520} color={C.fuji} opacity={0.16} />
-      <Kumo x={760} y={470} w={520} color={C.asagi} opacity={0.14} />
+      <Kumo x={-40} y={-20} w={520} color={C.kin} opacity={0.14} />
+      <Kumo x={760} y={470} w={520} color={C.byakugun} opacity={0.1} />
       <Sunago x={900} y={0} w={300} h={220} n={70} seed={7} />
       <Sunago x={0} y={430} w={320} h={200} n={60} seed={19} />
     </>
@@ -143,15 +148,15 @@ export async function GET(req: NextRequest) {
             width: W,
             height: H,
             display: 'flex',
-            background: C.paper,
+            background: C.ground,
             fontFamily: 'Display',
-            color: C.sumi,
+            color: C.ink,
             position: 'relative',
           }}
         >
           <Background />
 
-          {/* 左: サイト名（縦）と一文 */}
+          {/* 左: サイト名と一文（金泥） */}
           <div
             style={{
               width: 300,
@@ -163,14 +168,14 @@ export async function GET(req: NextRequest) {
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', fontSize: 16, letterSpacing: 6, color: C.usuzumi }}>香水診断</div>
-              <div style={{ display: 'flex', fontFamily: 'Brush', fontSize: 44, letterSpacing: 6, color: C.sumi }}>調香箋</div>
+              <div style={{ display: 'flex', fontSize: 16, letterSpacing: 6, color: C.ink2 }}>香水診断</div>
+              <div style={{ display: 'flex', fontFamily: 'Brush', fontSize: 44, letterSpacing: 6, color: C.kin }}>調香箋</div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <div style={{ display: 'flex', fontSize: 20, lineHeight: 1.6, color: C.sumi, letterSpacing: 2 }}>
+              <div style={{ display: 'flex', fontSize: 20, lineHeight: 1.6, color: C.ink, letterSpacing: 2 }}>
                 {OG_TAGLINE}
               </div>
-              <div style={{ display: 'flex', fontSize: 15, letterSpacing: 2, color: C.nibi }}>{OG_SITE_URL_LABEL}</div>
+              <div style={{ display: 'flex', fontSize: 15, letterSpacing: 2, color: C.ink3 }}>{OG_SITE_URL_LABEL}</div>
             </div>
           </div>
 
@@ -182,9 +187,9 @@ export async function GET(req: NextRequest) {
               top: 36,
               width: 830,
               height: 558,
-              background: C.paper3,
-              border: `1px solid rgba(179,144,62,0.35)`,
-              boxShadow: '0 24px 48px -28px rgba(42,36,32,0.45)',
+              background: C.paper,
+              border: `1px solid rgba(207,174,99,0.45)`,
+              boxShadow: '0 30px 60px -28px rgba(0,0,0,0.7)',
               display: 'flex',
               padding: 10,
             }}
@@ -192,9 +197,10 @@ export async function GET(req: NextRequest) {
             <div
               style={{
                 flex: 1,
-                border: `1px solid rgba(179,144,62,0.35)`,
+                border: `1px solid rgba(207,174,99,0.45)`,
                 display: 'flex',
                 flexDirection: 'column',
+                color: C.sumi,
                 padding: '22px 30px 22px 30px',
                 position: 'relative',
               }}
@@ -257,7 +263,7 @@ export async function GET(req: NextRequest) {
                           borderBottom: '1px solid rgba(42,36,32,0.12)',
                         }}
                       >
-                        <span style={{ fontSize: 14, letterSpacing: 3, width: 64, color: C.shu, paddingTop: 5 }}>{k}</span>
+                        <span style={{ fontSize: 14, letterSpacing: 3, width: 64, color: C.paperKin, paddingTop: 5 }}>{k}</span>
                         <span style={{ color: C.sumi }}>{v}</span>
                       </div>
                     ))}
@@ -311,8 +317,8 @@ export async function GET(req: NextRequest) {
           width: W,
           height: H,
           display: 'flex',
-          background: C.paper,
-          color: C.sumi,
+          background: C.ground,
+          color: C.ink,
           fontFamily: 'Display',
           padding: '56px 64px',
           position: 'relative',
@@ -321,19 +327,19 @@ export async function GET(req: NextRequest) {
         <Background />
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
-            <div style={{ display: 'flex', fontSize: 18, letterSpacing: 5, color: C.usuzumi }}>香水診断</div>
-            <div style={{ display: 'flex', fontFamily: 'Brush', fontSize: 34, letterSpacing: 5 }}>調香箋</div>
+            <div style={{ display: 'flex', fontSize: 18, letterSpacing: 5, color: C.ink2 }}>香水診断</div>
+            <div style={{ display: 'flex', fontFamily: 'Brush', fontSize: 34, letterSpacing: 5, color: C.kin }}>調香箋</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 26, maxWidth: 840 }}>
-            <div style={{ display: 'flex', fontSize: label ? 56 : 84, lineHeight: 1.35, letterSpacing: 4, borderLeft: `6px solid ${C.shu}`, paddingLeft: 24 }}>
+            <div style={{ display: 'flex', fontSize: label ? 56 : 84, lineHeight: 1.35, letterSpacing: 4, borderLeft: `6px solid ${C.kin}`, paddingLeft: 24 }}>
               {title}
             </div>
-            <div style={{ display: 'flex', fontSize: 28, letterSpacing: 2, color: C.usuzumi }}>{OG_TAGLINE}</div>
-            <div style={{ display: 'flex', fontSize: 20, color: C.nibi, letterSpacing: 2 }}>{OG_SUBLINE}</div>
+            <div style={{ display: 'flex', fontSize: 28, letterSpacing: 2, color: C.ink2 }}>{OG_TAGLINE}</div>
+            <div style={{ display: 'flex', fontSize: 20, color: C.ink3, letterSpacing: 2 }}>{OG_SUBLINE}</div>
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 18 }}>
             <span style={{ fontSize: 22, letterSpacing: 4 }}>{OG_SITE_LABEL}</span>
-            <span style={{ fontSize: 16, letterSpacing: 2, color: C.nibi }}>{OG_SITE_URL_LABEL}</span>
+            <span style={{ fontSize: 16, letterSpacing: 2, color: C.ink3 }}>{OG_SITE_URL_LABEL}</span>
           </div>
         </div>
         {/* 右: 朱印 */}

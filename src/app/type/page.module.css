@@ -14,7 +14,7 @@
 .lead {
   margin-top: 16px;
   max-width: 62ch;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 /* 目録（2列） */
@@ -23,12 +23,12 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 40px;
-  border-top: 1px solid var(--c-sumi-20);
+  border-top: 1px solid var(--c-line);
 }
 
 .group {
   padding: 24px 0 20px;
-  border-bottom: 1px solid var(--c-sumi-20);
+  border-bottom: 1px solid var(--c-line);
 }
 
 .groupHead {
@@ -45,16 +45,16 @@
 .groupCode {
   font-size: 11px;
   letter-spacing: 0.14em;
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 .groupLink {
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   border-bottom: 1px solid var(--c-kin-20);
   transition: color var(--dur-base) var(--ease);
 }
 .groupLink:hover {
-  color: var(--c-sumi);
+  color: var(--c-ink);
 }
 
 .rows {
@@ -75,7 +75,7 @@
   height: 12px;
   border-radius: 50%;
   margin-top: 10px;
-  box-shadow: inset 0 0 0 1px rgba(42, 36, 32, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
 .rowBody {
@@ -89,7 +89,7 @@
   flex-wrap: wrap;
 }
 .rowLink:hover .name {
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 .name {
@@ -100,20 +100,20 @@
 
 .kana {
   font-size: 12.5px;
-  color: var(--c-nibi);
+  color: var(--c-ink-3);
 }
 
 .temp {
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   margin-left: 4px;
 }
 
 .catch {
   margin-top: 2px;
   font-size: 14px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .notes {
@@ -122,13 +122,13 @@
 }
 
 .notesLink {
-  color: var(--c-ai);
+  color: var(--c-byakugun);
   text-decoration: underline;
-  text-decoration-color: rgba(46, 74, 98, 0.3);
+  text-decoration-color: var(--c-byakugun-30);
   text-underline-offset: 0.28em;
 }
 .notesLink:hover {
-  text-decoration-color: var(--c-ai);
+  text-decoration-color: var(--c-byakugun);
 }
 
 .cta {

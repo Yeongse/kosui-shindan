@@ -1,16 +1,16 @@
 .card {
   position: relative;
-  background-color: var(--c-paper-3);
+  background-color: var(--c-paper);
   background-image: var(--img-shikishi);
   background-size: cover;
   background-position: center;
-  color: var(--c-sumi);
+  color: var(--c-paper-ink);
   padding: 10px;
   border: 1px solid var(--c-kin-20);
   box-shadow:
-    0 1px 0 var(--c-paper-3),
+    0 1px 0 var(--c-paper),
     0 2px 0 var(--c-kin-20),
-    0 30px 60px -36px rgba(42, 36, 32, 0.45);
+    0 34px 70px -36px rgba(0, 0, 0, 0.75);
 }
 
 /* 金砂子（右上） */
@@ -53,10 +53,10 @@
   align-items: baseline;
   gap: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--c-sumi-20);
+  border-bottom: 1px solid var(--c-paper-line);
   font-size: 12px;
   letter-spacing: 0.16em;
-  color: var(--c-usuzumi);
+  color: var(--c-paper-ink-2);
 }
 
 .pharmacyMain {
@@ -88,7 +88,7 @@
   line-height: 1;
   letter-spacing: 0.12em;
   margin: 0;
-  color: var(--c-sumi);
+  color: var(--c-paper-ink);
 }
 
 .nameMeta {
@@ -102,7 +102,7 @@
   writing-mode: vertical-rl;
   font-size: 13px;
   letter-spacing: 0.32em;
-  color: var(--c-usuzumi);
+  color: var(--c-paper-ink-2);
 }
 
 .code {
@@ -110,14 +110,14 @@
   text-orientation: mixed;
   font-size: 11px;
   letter-spacing: 0.12em;
-  color: var(--c-nibi);
+  color: var(--c-paper-ink-3);
 }
 
 .accord {
   writing-mode: vertical-rl;
   font-size: 11px;
   letter-spacing: 0.2em;
-  color: var(--c-nibi);
+  color: var(--c-paper-ink-3);
 }
 
 .main {
@@ -150,7 +150,7 @@
   height: 84px;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 0 0 1px var(--c-kin-20), 0 0 0 4px var(--c-paper-3), 0 0 0 5px var(--c-kin-20);
+  box-shadow: 0 0 0 1px var(--c-kin-20), 0 0 0 4px var(--c-paper), 0 0 0 5px var(--c-kin-20);
 }
 
 .windowArt {
@@ -176,15 +176,15 @@
   width: 5em;
   padding: 8px 0;
   vertical-align: baseline;
-  border-bottom: 1px solid var(--c-sumi-12);
-  color: var(--c-shu);
+  border-bottom: 1px solid var(--c-paper-line-soft);
+  color: var(--c-paper-kin);
   letter-spacing: 0.14em;
   font-size: 12.5px;
 }
 
 .notes td {
   padding: 8px 0;
-  border-bottom: 1px solid var(--c-sumi-12);
+  border-bottom: 1px solid var(--c-paper-line-soft);
   line-height: 1.75;
 }
 

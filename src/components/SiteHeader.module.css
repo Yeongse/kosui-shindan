@@ -1,7 +1,7 @@
 .header {
   position: relative;
   z-index: 10;
-  border-top: 3px solid var(--c-shu);
+  border-top: 2px solid var(--c-kin);
 }
 
 .inner {
@@ -16,7 +16,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  color: var(--c-sumi);
+  color: var(--c-ink);
 }
 
 .logoText {
@@ -28,13 +28,14 @@
 .logoSmall {
   font-size: 11px;
   letter-spacing: 0.28em;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   margin-bottom: 2px;
 }
 
 .logoMain {
   font-size: 23px;
   letter-spacing: 0.14em;
+  color: var(--c-kin);
 }
 
 .nav {
@@ -46,7 +47,7 @@
 .navLink {
   font-size: 14px;
   letter-spacing: 0.08em;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   padding-block: 4px;
   border-bottom: 1px solid transparent;
   transition:
@@ -55,7 +56,7 @@
 }
 
 .navLink:hover {
-  color: var(--c-sumi);
+  color: var(--c-ink);
   border-bottom-color: var(--c-kin);
 }
 

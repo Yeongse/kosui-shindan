@@ -14,12 +14,12 @@
 .lead {
   margin-top: 16px;
   max-width: 62ch;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .list {
   margin-top: 40px;
-  border-top: 1px solid var(--c-sumi-20);
+  border-top: 1px solid var(--c-line);
 }
 
 .item {
@@ -27,14 +27,14 @@
   grid-template-columns: 2.2em 1fr;
   gap: 16px;
   padding: 24px 0;
-  border-bottom: 1px solid var(--c-sumi-20);
+  border-bottom: 1px solid var(--c-line);
 }
 
 .no {
   font-family: var(--ff-brush);
   font-size: 22px;
   line-height: 1.4;
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 .title {
@@ -46,13 +46,13 @@
 }
 
 .titleLink:hover {
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 .desc {
   margin-top: 8px;
   font-size: 14.5px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .date {

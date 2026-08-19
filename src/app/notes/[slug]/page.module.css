@@ -17,8 +17,8 @@
   width: 100%;
   overflow: hidden;
   border: 1px solid var(--c-kin-20);
-  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
-  background: var(--c-paper-3);
+  box-shadow: 0 1px 0 var(--c-surface), 0 2px 0 var(--c-kin-20);
+  background: var(--c-surface);
 }
 
 .heroArtInner {
@@ -45,15 +45,15 @@
   line-height: 1.5;
   margin-bottom: 18px;
   padding-left: 14px;
-  border-left: 3px solid var(--c-shu);
+  border-left: 3px solid var(--c-kin);
 }
 
 .ctaBox {
   margin-top: 60px;
   padding: 28px 26px;
-  background: var(--c-paper-3);
+  background: var(--c-surface);
   border: 1px solid var(--c-kin-20);
-  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-surface), 0 2px 0 var(--c-kin-20);
 }
 
 .ctaHeading {
@@ -66,7 +66,7 @@
 .ctaText {
   margin: 10px 0 20px;
   font-size: 14.5px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .types {
@@ -74,7 +74,7 @@
 }
 
 .typeList {
-  border-top: 1px solid var(--c-sumi-20);
+  border-top: 1px solid var(--c-line);
 }
 
 .typeItem {
@@ -82,7 +82,7 @@
   grid-template-columns: 12px 1fr;
   gap: 16px;
   padding: 20px 0;
-  border-bottom: 1px solid var(--c-sumi-20);
+  border-bottom: 1px solid var(--c-line);
 }
 
 .dot {
@@ -90,7 +90,7 @@
   height: 12px;
   border-radius: 50%;
   margin-top: 12px;
-  box-shadow: inset 0 0 0 1px rgba(42, 36, 32, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
 .typeLink {
@@ -100,7 +100,7 @@
   flex-wrap: wrap;
 }
 .typeLink:hover .typeName {
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 .typeName {
@@ -111,20 +111,20 @@
 
 .typeKana {
   font-size: 12.5px;
-  color: var(--c-nibi);
+  color: var(--c-ink-3);
 }
 
 .typeCode {
   font-size: 11px;
   letter-spacing: 0.12em;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   margin-left: 4px;
 }
 
 .typeCatch {
   margin-top: 2px;
   font-size: 14px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .typeNotes {

@@ -1,9 +1,9 @@
 .section {
   margin-top: 72px;
   padding: 28px 26px 24px;
-  background: var(--c-paper-3);
+  background: var(--c-surface);
   border: 1px solid var(--c-kin-20);
-  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-surface), 0 2px 0 var(--c-kin-20);
 }
 
 .headRow {
@@ -24,14 +24,14 @@
   font-size: 11px;
   letter-spacing: 0.1em;
   padding: 2px 7px;
-  border: 1px solid var(--c-sumi-20);
-  color: var(--c-usuzumi);
+  border: 1px solid var(--c-line);
+  color: var(--c-ink-2);
 }
 
 .lead {
   margin-top: 12px;
   font-size: 14.5px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .list {
@@ -42,7 +42,7 @@
 
 .item {
   padding: 16px 0;
-  border-top: 1px solid var(--c-sumi-20);
+  border-top: 1px solid var(--c-line);
 }
 
 .query {
@@ -54,7 +54,7 @@
 .qNo {
   font-family: var(--ff-brush);
   font-size: 18px;
-  color: var(--c-shu);
+  color: var(--c-kin);
   letter-spacing: 0;
 }
 
@@ -72,20 +72,20 @@
 
 .link {
   font-size: 14px;
-  color: var(--c-ai);
+  color: var(--c-byakugun);
   text-decoration: underline;
-  text-decoration-color: rgba(46, 74, 98, 0.3);
+  text-decoration-color: var(--c-byakugun-30);
   text-underline-offset: 0.28em;
   transition: text-decoration-color var(--dur-base) var(--ease);
 }
 .link:hover {
-  text-decoration-color: var(--c-ai);
+  text-decoration-color: var(--c-byakugun);
 }
 
 .note {
   margin-top: 14px;
   font-size: 12px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
   line-height: 1.8;
 }
 

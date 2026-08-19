@@ -1,52 +1,72 @@
 /*
- * デザイントークン — 「平安の料紙」
- * 和紙（生成り）に墨で書き、朱で印を押し、金銀の砂子を撒く。飛雲と霞で区切る。
- * 色名は襲の色目・伝統色から。画像は /public/img 以下（無くても破綻しない）。
+ * デザイントークン — 「紺紙金泥」
+ * 深い藍の料紙（紺紙）に金泥で書き、金銀の砂子を撒く。読ませる面だけ白練の紙を一枚載せる。
+ * 朱は落款印にのみ使う（ベージュ地×朱のUIは避ける）。画像は /public/img 以下（無くても破綻しない）。
  */
 :root {
-  /* 紙 */
-  --c-paper: #f3eadb; /* 生成り — 地 */
-  --c-paper-2: #ece1cc; /* 淡香（うすこう） — 面 */
-  --c-paper-3: #fbf6ec; /* 胡粉 — 明部・カード */
-  --c-paper-deep: #e2d4b8; /* 朽葉寄りの紙 — 罫・影 */
+  /* 地（紺紙） */
+  --c-ground: #13203a; /* 紺 — ページ地 */
+  --c-surface: #1b2c4b; /* 紺青 — 面（パネル・行の背景） */
+  --c-surface-2: #24395e; /* 明るい紺 — hover */
+  --c-ground-deep: #0d1729; /* 濃紺 — 影・蒸留演出 */
 
-  /* 墨 */
-  --c-sumi: #2a2420; /* 墨 — 本文 */
-  --c-usuzumi: #6b6157; /* 薄墨 — 補助 */
-  --c-nibi: #9b9085; /* 鈍色 — 最弱 */
-  --c-sumi-12: rgba(42, 36, 32, 0.12);
-  --c-sumi-20: rgba(42, 36, 32, 0.2);
-  --c-sumi-40: rgba(42, 36, 32, 0.4);
+  /* 紺紙の上の文字 */
+  --c-ink: #eeeae0; /* 白練 — 本文 */
+  --c-ink-2: #b9b4a7; /* 生壁色 — 補助 */
+  --c-ink-3: #857f74; /* 灰 — 最弱 */
+  --c-line: rgba(238, 234, 224, 0.16);
+  --c-line-soft: rgba(238, 234, 224, 0.09);
+  --c-line-strong: rgba(238, 234, 224, 0.32);
 
-  /* 朱・金 */
-  --c-shu: #b0432d; /* 朱 — 印・主CTA */
-  --c-shu-deep: #933524;
-  --c-shu-12: rgba(176, 67, 45, 0.12);
-  --c-kin: #b3903e; /* 金 — 砂子・細罫 */
-  --c-kin-pale: #d9c38a;
-  --c-kin-20: rgba(179, 144, 62, 0.25);
-
-  /* 藍・紫・萌黄 */
-  --c-ai: #2e4a62; /* 藍 — リンク */
-  --c-asagi: #5b8791; /* 浅葱 */
+  /* 金泥・白群・朱 */
+  --c-kin: #cfae63; /* 金泥 — 見出しの罫・番号・主CTA */
+  --c-kin-deep: #a88a45;
+  --c-kin-pale: #e6cf93;
+  --c-kin-20: rgba(207, 174, 99, 0.28);
+  --c-kin-12: rgba(207, 174, 99, 0.14);
+  --c-byakugun: #a6cdd1; /* 白群 — リンク */
+  --c-byakugun-30: rgba(166, 205, 209, 0.35);
   --c-fuji: #8f7aa3; /* 藤 — 飛雲 */
-  --c-moegi: #7d9a5a; /* 萌黄 */
+  --c-asagi: #5b8791; /* 浅葱 — 飛雲 */
+  --c-shu: #c2402a; /* 朱 — 落款印・ロゴ印のみ */
 
-  /* 互換（旧トークン名を参照している箇所のため） */
-  --c-bottle: var(--c-paper);
-  --c-glass: var(--c-paper-2);
-  --c-white: var(--c-sumi);
-  --c-white-70: var(--c-usuzumi);
-  --c-white-50: var(--c-nibi);
-  --c-white-30: var(--c-sumi-20);
-  --c-amber: var(--c-shu);
-  --c-amber-20: var(--c-shu-12);
-  --c-verdigris: var(--c-usuzumi);
-  --c-verdigris-40: var(--c-sumi-20);
-  --c-verdigris-20: var(--c-sumi-12);
+  /* 紙（調香箋カード・短冊・色紙など「紙の物体」） */
+  --c-paper: #f1efe7; /* 白練の紙 */
+  --c-paper-2: #e7e3d8; /* 紙の陰 */
+  --c-paper-3: #f7f5ee; /* 紙の明部 */
+  --c-paper-deep: #d9d3c4;
+  --c-paper-ink: #2a2420; /* 紙の上の墨 */
+  --c-paper-ink-2: #6b6157; /* 薄墨 */
+  --c-paper-ink-3: #9b9085; /* 鈍色 */
+  --c-paper-line: rgba(42, 36, 32, 0.2);
+  --c-paper-line-soft: rgba(42, 36, 32, 0.12);
+  --c-paper-kin: #8a6d2f; /* 紙の上の金（暗めで可読） */
+
+  /* 互換（旧名。新規コードでは上の名前を使う） */
+  --c-bottle: var(--c-ground);
+  --c-glass: var(--c-surface);
+  --c-white: var(--c-ink);
+  --c-white-70: var(--c-ink-2);
+  --c-white-50: var(--c-ink-3);
+  --c-white-30: var(--c-line-strong);
+  --c-amber: var(--c-kin);
+  --c-amber-20: var(--c-kin-20);
+  --c-verdigris: var(--c-ink-3);
+  --c-verdigris-40: var(--c-line);
+  --c-verdigris-20: var(--c-line-soft);
   --c-rakkan: var(--c-shu);
-  --c-sumi-60: var(--c-usuzumi);
-  --c-sumi-30: var(--c-sumi-40);
+  --c-sumi: var(--c-paper-ink);
+  --c-usuzumi: var(--c-paper-ink-2);
+  --c-nibi: var(--c-paper-ink-3);
+  --c-sumi-12: var(--c-paper-line-soft);
+  --c-sumi-20: var(--c-paper-line);
+  --c-sumi-40: rgba(42, 36, 32, 0.4);
+  --c-sumi-60: var(--c-paper-ink-2);
+  --c-sumi-30: rgba(42, 36, 32, 0.4);
+  --c-ai: var(--c-byakugun);
+  --c-shu-12: var(--c-kin-12);
+  --c-shu-deep: var(--c-kin-deep);
+  --c-moegi: #7d9a5a;
 
   /* 書体 */
   --ff-display: var(--font-display), 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
@@ -70,11 +90,11 @@
   --radius: 2px;
 
   /* 画像（無い場合は地色のみ） */
-  --img-washi: url('/img/paper/washi-tile.jpg');
-  --img-hero: url('/img/paper/hero-ryoshi.jpg');
+  --img-washi: url('/img/paper/konshi-tile.jpg'); /* 紺紙のテクスチャ（暗い） */
+  --img-hero: url('/img/paper/hero-konshi.jpg'); /* 紺紙に金銀泥の飛雲 */
   --img-kumo: url('/img/paper/kumo-band.png');
   --img-sunago: url('/img/paper/sunago-corner.png');
-  --img-shikishi: url('/img/paper/shikishi.jpg');
+  --img-shikishi: url('/img/paper/shikishi.jpg'); /* 白練の紙（カード用） */
 
   /* モーション */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);

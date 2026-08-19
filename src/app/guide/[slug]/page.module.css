@@ -25,15 +25,15 @@
   line-height: 1.5;
   margin-bottom: 18px;
   padding-left: 14px;
-  border-left: 3px solid var(--c-shu);
+  border-left: 3px solid var(--c-kin);
 }
 
 .ctaBox {
   margin-top: 60px;
   padding: 28px 26px;
-  background: var(--c-paper-3);
+  background: var(--c-surface);
   border: 1px solid var(--c-kin-20);
-  box-shadow: 0 1px 0 var(--c-paper-3), 0 2px 0 var(--c-kin-20);
+  box-shadow: 0 1px 0 var(--c-surface), 0 2px 0 var(--c-kin-20);
 }
 
 .ctaHeading {
@@ -46,7 +46,7 @@
 .ctaText {
   margin: 10px 0 20px;
   font-size: 14.5px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .related {

@@ -71,7 +71,7 @@ export function Distill({
           <path
             d="M92 22 L108 22 L108 34 L116 40 L124 52 L124 110 Q124 116 118 116 L82 116 Q76 116 76 110 L76 52 L84 40 L92 34 Z"
             fill="none"
-            stroke="var(--c-sumi)"
+            stroke="var(--c-ink)"
             strokeOpacity="0.75"
             strokeWidth="1.3"
             strokeLinejoin="round"
@@ -93,7 +93,7 @@ export function Distill({
           <path
             d="M86 176 L114 176 L114 190 L126 200 L138 218 L138 298 Q138 306 130 306 L70 306 Q62 306 62 298 L62 218 L74 200 L86 190 Z"
             fill="none"
-            stroke="var(--c-sumi)"
+            stroke="var(--c-ink)"
             strokeOpacity="0.8"
             strokeWidth="1.4"
             strokeLinejoin="round"

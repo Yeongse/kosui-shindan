@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="6" fill="#F3EADB"/>
+  <rect width="64" height="64" rx="6" fill="#13203A"/>
   <g transform="rotate(-3 32 32)">
-    <rect x="10" y="10" width="44" height="44" rx="2" fill="#B0432D"/>
-    <rect x="14.5" y="14.5" width="35" height="35" fill="none" stroke="#FBF6EC" stroke-width="1.5"/>
-    <text x="32" y="43" text-anchor="middle" font-family="'Shippori Mincho B1','Hiragino Mincho ProN',serif" font-weight="700" font-size="28" fill="#FBF6EC">箋</text>
+    <rect x="10" y="10" width="44" height="44" rx="2" fill="#C2402A"/>
+    <rect x="14.5" y="14.5" width="35" height="35" fill="none" stroke="#F7F5EE" stroke-width="1.5"/>
+    <text x="32" y="43" text-anchor="middle" font-family="'Shippori Mincho B1','Hiragino Mincho ProN',serif" font-weight="700" font-size="28" fill="#F7F5EE">箋</text>
   </g>
 </svg>

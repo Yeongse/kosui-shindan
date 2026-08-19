@@ -1,5 +1,6 @@
-# 画像生成プロンプト一覧（平安の料紙・大和絵）
+# 画像生成プロンプト一覧（紺紙金泥・大和絵）
 
+世界観: **紺紙金泥（こんしきんでい）** — 深い藍に染めた料紙に金泥で書き、金銀の砂子を撒く。読ませる面だけ白練の紙（色紙・短冊・調香箋）を一枚載せる。
 サイトの画像スロットは **無くても崩れない**（地色・SVGのフォールバック）が、揃うほど世界観が立つ。
 優先度: ★★★ 必須 / ★★ 推奨 / ★ あれば
 
@@ -11,7 +12,7 @@
 
 > 平安時代の料紙装飾・大和絵の様式。和紙に岩絵具、抑制された上品な色、柔らかな光、紙の繊維の質感。文字・人物・額縁は入れない。
 
-色の基準（合わせたい地色）: 生成り `#F3EADB` / 胡粉 `#FBF6EC` / 墨 `#2A2420` / 朱 `#B0432D` / 金 `#B3903E`
+色の基準: 紺（ページ地）`#13203A` / 紺青 `#1B2C4B` / 金泥 `#CFAE63` / 白群 `#A6CDD1` / 白練の紙 `#F1EFE7` / 墨 `#2A2420` / 朱（印のみ）`#C2402A`
 
 ---
 
@@ -19,23 +20,26 @@
 
 | 優先 | パス | サイズ | 内容 |
 |---|---|---|---|
-| ★★★ | `public/img/paper/washi-tile.jpg` | 1024×1024 **シームレス** | 生成り（#F3EADB 前後）の和紙の質感だけ。繊維・わずかな濃淡。砂子・模様なし。継ぎ目が出ないこと（tileable）。JPEG 品質 80、200KB 以下目安 |
-| ★★★ | `public/img/paper/hero-ryoshi.jpg` | 2400×1350 | LPヒーローの料紙。右上に淡い藤色〜浅葱の**飛雲**、全体に**金銀の砂子・切箔**をまばらに、下端に薄い**墨流し**。左 60% は文字を載せるため模様をほぼ置かない。地色は #ECE1CC 前後 |
-| ★★ | `public/img/paper/kumo-band.png` | 2400×600 **透過PNG** | 横長の飛雲の帯（セクション区切り・フッター上）。藤 `#8F7AA3` と浅葱 `#5B8791` を 15〜25% の不透明度で、縁はにじむ。金砂子を少し。背景透過 |
-| ★★ | `public/img/paper/sunago-corner.png` | 1200×1200 **透過PNG** | 右上の角から中央へ向かって薄れていく金銀の砂子・野毛・切箔の群れ。背景透過。カードや色紙の角に重ねる |
-| ★★★ | `public/img/paper/shikishi.jpg` | 1600×2000 | 結果カード（調香箋）の色紙の紙。胡粉色 `#FBF6EC` の上質な和紙、上下の縁に金砂子の帯、中央は無地（文字が載る）。継ぎ紙のような色の切り替えは入れない |
+| ★★★ | `public/img/paper/konshi-tile.jpg` | 1024×1024 **シームレス** | 紺紙（藍染の和紙）の質感だけ。地色は `#13203A` 前後、繊維とわずかな濃淡。砂子・模様なし。継ぎ目が出ないこと（tileable）。**明るくしない**（画面全体の地になる）。JPEG 品質 80、200KB 以下目安 |
+| ★★★ | `public/img/paper/hero-konshi.jpg` | 2400×1350 | LPヒーローの紺紙。右上に**金泥・銀泥の飛雲**、全体に**金銀の砂子・切箔・野毛**をまばらに。左 60% は文字（白と金）を載せるため模様をほぼ置かず、暗いまま。地色は `#13203A` 前後 |
+| ★★ | `public/img/paper/kumo-band.png` | 2400×600 **透過PNG** | 横長の飛雲の帯（セクション区切り・フッター上）。**金泥** `#CFAE63` と**銀泥／白群** `#A6CDD1` を 15〜25% の不透明度で、縁はにじむ。背景透過（紺の上に重なる） |
+| ★★ | `public/img/paper/sunago-corner.png` | 1200×1200 **透過PNG** | 右上の角から中央へ向かって薄れていく金銀の砂子・野毛・切箔の群れ。背景透過。紺の地にも白い紙の角にも重ねる |
+| ★★★ | `public/img/paper/shikishi.jpg` | 1600×2000 | 結果カード（調香箋）の紙。**白練 `#F1EFE7`** の上質な和紙、上下の縁にごく薄い金砂子、中央は無地（文字が載る）。クリーム色・黄味に寄せない（青白い白〜灰白） |
 
-プロンプト例（hero-ryoshi）:
-> 接頭辞 + "a wide sheet of Heian ryōshi decorated paper, pale ivory base #ECE1CC, faint indigo and wisteria tobikumo clouds drifting in the upper right, scattered gold and silver sunago flakes and tiny kirihaku squares, a very faint suminagashi ink-marbling along the bottom edge, the left 60% of the sheet kept almost plain for text, flat top-down view, 16:9"
+プロンプト例（hero-konshi）:
+> 接頭辞 + "a wide sheet of deep indigo-dyed Heian paper (konshi), base color #13203A, tobikumo clouds painted in gold and silver pigment drifting in the upper right, scattered gold and silver sunago flakes, tiny kirihaku squares and noge threads, the left 60% kept almost plain and dark for text, flat top-down view, 16:9"
 
-プロンプト例（washi-tile）:
-> "seamless tileable texture of natural ivory washi paper, visible soft fibers, very subtle tonal variation, color around #F3EADB, flat lighting, no pattern, no flakes, 1:1"
+プロンプト例（konshi-tile）:
+> "seamless tileable texture of deep indigo-dyed washi paper, color around #13203A, visible soft fibers, very subtle tonal variation, flat lighting, no pattern, no flakes, 1:1"
+
+プロンプト例（shikishi）:
+> "a sheet of fine off-white washi for a shikishi card, cool neutral white around #F1EFE7 (not cream), faint fibers, a few tiny gold flakes only near the top and bottom edges, center plain, 4:5"
 
 ## 2. LP キービジュアル
 
 | 優先 | パス | サイズ | 内容 |
 |---|---|---|---|
-| ★★★ | `public/img/hero/key-visual.jpg` | 1600×1600 | 色紙に入れる主画像。**青磁の香炉から一筋の煙**が立ち、傍らに薫物（練香）の小箱と匂い袋（組紐）。薄縁の畳か漆の台。背景は生成りの料紙。大和絵の引き算の構図、余白多め。JPEG |
+| ★★★ | `public/img/hero/key-visual.jpg` | 1600×1600 | 色紙（白い紙の額）に入れる主画像。**青磁の香炉から一筋の煙**が立ち、傍らに薫物（練香）の小箱と匂い袋（組紐）。背景は白練の紙 `#F1EFE7`（クリームにしない）。大和絵の引き算の構図、余白多め。JPEG |
 
 プロンプト例:
 > 接頭辞 + "a celadon incense burner with a single thin thread of smoke rising, a small lacquered box of kneaded incense (takimono) and a silk scent sachet with braided cord beside it, placed on a pale tatami edge, generous empty space, yamato-e flatness with soft shading, square composition"
@@ -44,9 +48,9 @@
 
 | 優先 | パス | サイズ | 内容 |
 |---|---|---|---|
-| ★★★ | `public/img/types/{slug}.png` ×16 | 1024×1024 | 丸くトリミングされて表示される。**中央にモチーフ、背景は生成り `#F3EADB` 前後の無地**（透過でも可）。大和絵の簡素な筆致・岩絵具の発色。16枚で筆致と色調を揃える |
+| ★★★ | `public/img/types/{slug}.png` ×16 | 1024×1024 | 白い調香箋カードの丸窓に、丸くトリミングされて表示される。**中央にモチーフ、背景は白練 `#F1EFE7` 前後の無地**（透過でも可）。大和絵の簡素な筆致・岩絵具の発色。16枚で筆致と色調を揃える |
 
-共通接尾辞: "single motif centered, plain pale ivory paper background, circular-crop friendly, square"
+共通接尾辞: "single motif centered, plain off-white paper background (cool neutral, not cream), circular-crop friendly, square"
 
 | slug | タイプ | モチーフ |
 |---|---|---|
@@ -71,7 +75,7 @@
 
 | 優先 | パス | サイズ | 内容 |
 |---|---|---|---|
-| ★★ | `public/img/notes/{slug}.jpg` ×8 | 1600×900 | 記事冒頭の横長扉絵。大和絵の花鳥風月で香調を表す。文字なし |
+| ★★ | `public/img/notes/{slug}.jpg` ×8 | 1600×900 | 記事冒頭の横長扉絵（紺の地に金縁の額で表示）。大和絵の花鳥風月で香調を表す。背景は白練の紙でも、紺紙に金泥で描いた絵巻風でも可。文字なし |
 
 | slug | モチーフ |
 |---|---|

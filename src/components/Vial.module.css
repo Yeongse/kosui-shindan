@@ -60,7 +60,7 @@
 .count {
   font-size: 11px;
   letter-spacing: 0.08em;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -14,7 +14,7 @@
   line-height: 1.5;
   margin-bottom: 20px;
   padding-left: 14px;
-  border-left: 3px solid var(--c-shu);
+  border-left: 3px solid var(--c-kin);
 }
 
 .p {
@@ -47,7 +47,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--c-shu);
+  background: var(--c-kin);
 }
 
 .meta {
@@ -56,5 +56,5 @@
   margin-top: 14px;
   font-size: 12px;
   letter-spacing: 0.1em;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }

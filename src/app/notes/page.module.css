@@ -14,12 +14,12 @@
 .lead {
   margin-top: 16px;
   max-width: 62ch;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .list {
   margin-top: 40px;
-  border-top: 1px solid var(--c-sumi-20);
+  border-top: 1px solid var(--c-line);
 }
 
 .item {
@@ -27,7 +27,7 @@
   grid-template-columns: 12px 1fr;
   gap: 16px;
   padding: 24px 0;
-  border-bottom: 1px solid var(--c-sumi-20);
+  border-bottom: 1px solid var(--c-line);
 }
 
 .dot {
@@ -35,7 +35,7 @@
   height: 12px;
   border-radius: 50%;
   margin-top: 10px;
-  box-shadow: inset 0 0 0 1px rgba(42, 36, 32, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
 .title {
@@ -47,13 +47,13 @@
 }
 
 .titleLink:hover {
-  color: var(--c-shu);
+  color: var(--c-kin);
 }
 
 .desc {
   margin-top: 8px;
   font-size: 14.5px;
-  color: var(--c-usuzumi);
+  color: var(--c-ink-2);
 }
 
 .types {
