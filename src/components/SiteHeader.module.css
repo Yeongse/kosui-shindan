@@ -1,74 +1,92 @@
 .header {
-  position: relative;
-  z-index: 10;
-  border-top: 2px solid var(--c-kin);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--c-border);
 }
 
 .inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 76px;
-  padding-block: 14px;
+  min-height: 60px;
 }
 
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  color: var(--c-ink);
+  gap: 10px;
 }
 
 .logoText {
   display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.logoSmall {
-  font-size: 11px;
-  letter-spacing: 0.28em;
-  color: var(--c-ink-2);
-  margin-bottom: 2px;
+  align-items: baseline;
+  gap: 8px;
+  line-height: 1;
 }
 
 .logoMain {
-  font-size: 23px;
-  letter-spacing: 0.14em;
-  color: var(--c-kin);
+  font-family: var(--ff-display);
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: 0.04em;
+}
+
+.logoSmall {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--c-text-3);
+  letter-spacing: 0.06em;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 18px;
 }
 
 .navLink {
-  font-size: 14px;
-  letter-spacing: 0.08em;
-  color: var(--c-ink-2);
-  padding-block: 4px;
-  border-bottom: 1px solid transparent;
-  transition:
-    color var(--dur-base) var(--ease),
-    border-color var(--dur-base) var(--ease);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--c-text-2);
+  padding: 6px 2px;
+  transition: color var(--dur-base) var(--ease);
 }
-
 .navLink:hover {
-  color: var(--c-ink);
-  border-bottom-color: var(--c-kin);
+  color: var(--c-text);
 }
 
-@media (max-width: 480px) {
+.navCta {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  background: var(--c-rose);
+  color: #fff;
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 13.5px;
+  transition: background-color var(--dur-base) var(--ease);
+}
+.navCta:hover {
+  background: var(--c-rose-deep);
+}
+
+@media (max-width: 560px) {
   .nav {
-    gap: 16px;
+    gap: 12px;
   }
   .navLink {
     font-size: 12.5px;
-    letter-spacing: 0.04em;
   }
   .navLinkWide {
+    display: none;
+  }
+  .logoSmall {
     display: none;
   }
 }

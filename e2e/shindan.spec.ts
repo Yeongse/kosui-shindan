@@ -21,18 +21,17 @@ test('LP → 12 answers → result → X share intent → type index', async ({ 
   }
 
   // 蒸留演出（2.8s）→ 結果ページ
-  await expect(page.getByRole('status', { name: '回答を蒸留しています' })).toBeVisible();
+  await expect(page.getByRole('status', { name: '結果を調合しています' })).toBeVisible();
   await page.waitForURL(/\/type\/gekko\?d=[0-9a-f]{16}$/, { timeout: 10_000 });
 
-  // 結果モード（本人）: 帯・Batch No.
-  await expect(page.getByText('あなたの調香箋')).toBeVisible();
+  // 結果モード（本人）
+  await expect(page.getByText('あなたの調香箋ができました')).toBeVisible();
   await expect(page.locator('#shindan-card')).toBeVisible();
-  const batch = await page.locator('#shindan-card').getByText(/調合番号/).textContent();
-  expect(batch).toMatch(/調合番号 第\d{6}-\d{4}号/);
+  await expect(page.locator('#shindan-card')).toContainText('あなたの香水タイプは');
 
-  // 縦書きタイプ名・調香表
-  await expect(page.locator('#shindan-card h2')).toHaveText('月虹');
-  await expect(page.locator('#shindan-card')).toContainText('ペアー、アルデハイド');
+  // タイプ名・調香ノート
+  await expect(page.locator('#shindan-card h2')).toContainText('月虹');
+  await expect(page.locator('#shindan-card')).toContainText('ペアー・アルデハイド');
 
   // X シェア intent URL
   const x = page.locator('a[data-share="x"]');
@@ -54,7 +53,7 @@ test('LP → 12 answers → result → X share intent → type index', async ({ 
 test('shared link (未診断者) shows SPECIMEN and swaps CTA', async ({ page }) => {
   await page.goto('/type/gekko?d=050f110003030203');
   await expect(page.getByText('この箋は誰かの調香箋です。')).toBeVisible();
-  await expect(page.locator('#shindan-card')).toContainText('見本');
+  await expect(page.locator('#shindan-card')).toContainText('この香水タイプは');
   await expect(page.getByRole('link', { name: '自分のタイプを診断する（無料・90秒）' }).first()).toBeVisible();
   // canonical はクエリなし
   const canonical = await page.locator('link[rel="canonical"]').getAttribute('href');

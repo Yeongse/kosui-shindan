@@ -1,5 +1,5 @@
 .nav {
-  margin-bottom: 28px;
+  margin-bottom: 16px;
 }
 
 .list {
@@ -7,9 +7,9 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 4px 0;
-  font-size: 12.5px;
-  letter-spacing: 0.06em;
-  color: var(--c-ink-2);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-3);
 }
 
 .item {
@@ -18,18 +18,18 @@
 }
 
 .link {
-  color: var(--c-ink-2);
-  transition: color var(--dur-base) var(--ease);
+  color: var(--c-text-3);
 }
 .link:hover {
-  color: var(--c-ink);
+  color: var(--c-text);
 }
 
 .current {
-  color: var(--c-ink);
+  color: var(--c-text-2);
+  font-weight: 700;
 }
 
 .sep {
-  margin-inline: 10px;
-  color: var(--c-kin);
+  margin-inline: 8px;
+  color: var(--c-border-2);
 }

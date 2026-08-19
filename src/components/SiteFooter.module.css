@@ -1,49 +1,52 @@
 .footer {
   margin-top: 96px;
+  border-top: 1px solid var(--c-border);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .inner {
-  padding-block: 20px 56px;
+  padding-block: 36px 48px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  border-top: 1px dashed var(--c-line); /* 和綴じの糸 */
+  gap: 20px;
 }
 
-.disclaimer {
-  font-size: 12.5px;
-  line-height: 1.9;
-  color: var(--c-ink-2);
-  max-width: 60ch;
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.brandName {
+  font-family: var(--ff-display);
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.brandSub {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-text-3);
 }
 
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 24px;
+  gap: 8px 20px;
 }
 
 .link {
   font-size: 13px;
-  letter-spacing: 0.04em;
-  color: var(--c-ink-2);
-  text-decoration: underline;
-  text-decoration-color: var(--c-line);
-  text-underline-offset: 0.28em;
+  font-weight: 500;
+  color: var(--c-text-2);
 }
 .link:hover {
-  color: var(--c-ink);
-  text-decoration-color: var(--c-ink);
+  color: var(--c-text);
 }
 
-.copy {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-}
-
-.copyName {
-  font-size: 18px;
-  letter-spacing: 0.16em;
-  color: var(--c-kin);
+.disclaimer {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--c-text-3);
+  max-width: 60ch;
 }

@@ -22,7 +22,7 @@ export default function SitemapPage() {
       <SiteHeader />
       <main className={`container ${styles.main}`}>
         <Breadcrumbs crumbs={[{ name: 'サイトマップ', path: '/sitemap' }]} />
-        <p className="data">全ページ一覧</p>
+        <p style={{ textAlign: 'center' }}><span className="eyebrow">Sitemap</span></p>
         <h1 className={styles.h1}>サイトマップ</h1>
 
         <section className={styles.section}>

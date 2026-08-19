@@ -1,15 +1,13 @@
 import type { AccordCode, ScentType } from '@/data/schema';
 import { ACCORD_NAME_JA } from '@/data/palette';
-import { Radar } from './Radar';
-import { RakkanSeal } from './RakkanSeal';
-import { BatchNo } from './BatchNo';
 import { Art } from './Art';
+import { AccordBars } from './AccordBars';
+import { ResultLabel } from './ResultLabel';
 import styles from './ShindanCard.module.css';
 
 /**
- * 調香箋カード — 色紙仕立て。
- * 上辺ラベル / 調合番号 / 縦書きタイプ名（筆）+ 読み + コード / キャッチ / 調香表 / 8軸レーダー / 丸窓の絵 / 落款印
- * 0.5s で下から 12px 浮上＋フェード。落款印のみ 0.15s 遅れて押される。以降は一切動かさない。
+ * 結果カード（調香箋）
+ * 丸い絵 → 「あなたの香水タイプは」→ タイプ名 + 読み → キャッチ → タグ → 調香ノート3カード → 香りのバランス
  */
 export function ShindanCard({
   type,
@@ -23,73 +21,68 @@ export function ShindanCard({
   id?: string;
 }) {
   const [accord, temp] = type.code.split('-') as [AccordCode, 'W' | 'C'];
+  const tags = [
+    `${ACCORD_NAME_JA[accord]}系`,
+    temp === 'C' ? 'クール' : 'ウォーム',
+    ...type.notes.last.slice(0, 1),
+    ...type.notes.middle.slice(0, 1),
+  ];
   return (
-    <article id={id} className={`${styles.card} ${animate ? styles.animate : ''}`} aria-label={`調香箋 ${type.name}`}>
-      <div className={styles.inner}>
-        <header className={styles.head}>
-          <p className={styles.pharmacy}>
-            <span className={styles.pharmacyMain}>香水診断 調香箋</span>
-          </p>
-          <p className={styles.batch}>
-            調合番号 <BatchNo />
-          </p>
-        </header>
-
-        <div className={styles.body}>
-          <div className={styles.nameBlock}>
-            <h2 className={`brush ${styles.name}`} lang="ja">
-              {type.name}
-            </h2>
-            <div className={styles.nameMeta}>
-              <span className={styles.kana}>{type.kana}</span>
-              <span className={styles.code}>{type.code}</span>
-              <span className={styles.accord}>
-                {ACCORD_NAME_JA[accord]}・{temp === 'C' ? '冷' : '温'}
-              </span>
-            </div>
-          </div>
-
-          <div className={styles.main}>
-            <div className={styles.catchRow}>
-              <p className={styles.catch}>{type.catch}</p>
-              <div className={styles.window} aria-hidden="true">
-                <Art
-                  src={`/img/types/${type.slug}.png`}
-                  alt=""
-                  className={styles.windowArt}
-                  fallback={<div className={styles.windowFallback} style={{ background: type.liquidColor }} />}
-                />
-              </div>
-            </div>
-
-            <table className={styles.notes}>
-              <caption className="visually-hidden">調香ノート</caption>
-              <tbody>
-                <tr>
-                  <th scope="row">トップ</th>
-                  <td>{type.notes.top.join('、')}</td>
-                </tr>
-                <tr>
-                  <th scope="row">ミドル</th>
-                  <td>{type.notes.middle.join('、')}</td>
-                </tr>
-                <tr>
-                  <th scope="row">ラスト</th>
-                  <td>{type.notes.last.join('、')}</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div className={styles.bottom}>
-              <div className={styles.radar}>
-                <Radar scores={scores} color={type.liquidColor} size={150} ink="var(--c-sumi)" />
-              </div>
-              <div className={styles.seal}>
-                <RakkanSeal name={type.name} size={70} animate={animate} id={`${id}-rakkan`} />
-              </div>
-            </div>
-          </div>
+    <article
+      id={id}
+      className={`card ${styles.card} ${animate ? styles.animate : ''}`}
+      aria-label={`調香箋 ${type.name}`}
+      style={{ ['--type' as string]: type.liquidColor } as React.CSSProperties}
+    >
+      <div className={styles.top}>
+        <div className={styles.avatar}>
+          <Art
+            src={`/img/types/${type.slug}.png`}
+            alt=""
+            className={styles.avatarArt}
+            loading="eager"
+            fallback={<span className={styles.avatarFallback} aria-hidden="true" />}
+          />
         </div>
+        <ResultLabel className={styles.label} />
+        <h2 className={styles.name} lang="ja">
+          {type.name}
+          <span className={styles.kana}>{type.kana}</span>
+        </h2>
+        <p className={styles.catch}>{type.catch}</p>
+        <ul className={styles.tags} aria-label="タグ">
+          {tags.map((t) => (
+            <li key={t} className={styles.tag}>
+              #{t}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className={styles.notes}>
+        <h3 className={styles.sectionTitle}>調香ノート</h3>
+        <div className={styles.noteGrid}>
+          {(
+            [
+              ['トップ', '最初の10分', type.notes.top],
+              ['ミドル', '30分〜2時間', type.notes.middle],
+              ['ラスト', '2時間〜', type.notes.last],
+            ] as const
+          ).map(([k, when, list]) => (
+            <div key={k} className={styles.noteCard}>
+              <p className={styles.noteKey}>
+                {k}
+                <span className={styles.noteWhen}>{when}</span>
+              </p>
+              <p className={styles.noteList}>{list.join('・')}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.balance}>
+        <h3 className={styles.sectionTitle}>香りのバランス</h3>
+        <AccordBars scores={scores} primary={accord} />
       </div>
     </article>
   );

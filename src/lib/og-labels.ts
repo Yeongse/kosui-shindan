@@ -9,7 +9,7 @@ export const OG_SITE_LABEL = '香水診断 調香箋';
 export const OG_SITE_URL_LABEL = 'kosui-shindan.com';
 export const OG_PHARMACY = '香水診断 調香箋';
 export const OG_TAGLINE = '12の質問で、あなたに似合う香水がわかる。';
-export const OG_SUBLINE = '無料・登録不要・約九十秒 ／ 十六タイプの調香箋';
+export const OG_SUBLINE = '全12問・約90秒・無料・登録不要・16タイプ';
 export const OG_DEFAULT_TITLE = '香水診断';
 export const OG_TYPE_SUFFIX = 'タイプに似合う香水';
 

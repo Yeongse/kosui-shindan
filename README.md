@@ -13,18 +13,15 @@
 - テスト: Vitest（scoring / 分布 / digest / コンテンツ検収）+ Playwright（完走E2E）
 - 解析: Cloudflare Web Analytics（Cookie 不使用・同意バナーなし）。DB なし。個人情報は収集しない
 
-## デザイン — 「紺紙金泥」
+## デザイン — 現代の診断サイト（v4）
 
-ユーザー指示で、暗い薬瓶の世界観（spec §7）→ 生成りの和紙 → **紺紙金泥**（深い藍の料紙に金泥、白練の紙を一枚だけ載せる）へ移行した。
-クリーム地×テラコッタ（spec §7.0 の禁止配色＝いわゆる AI 生成サイトの配色）を避けるため、地は紺、アクセントは金と白群、朱は落款印にのみ使う。
-トークンは `src/styles/tokens.css`（旧トークン名は互換エイリアスで残している）。
+ターゲット（20代女性）に合わせ、MBTI系・ラブタイプ診断・COLORIA 香水診断の現物を調査して文法を揃えた（調査結果と確定トンマナは [docs/design-brief.md](./docs/design-brief.md)）。
 
-- 地: 紺 `--c-ground` / 面: 紺青 `--c-surface` / 文字: 白練 `--c-ink` / 強調: 金泥 `--c-kin` / リンク: 白群 `--c-byakugun` / 印: 朱 `--c-shu`
-- 「紙の物体」（調香箋カード・短冊・色紙の額・瓶）だけ白練の紙 `--c-paper` に墨 `--c-paper-ink`
-- 書体: 本文・見出し = Shippori Mincho B1、タイプ名・番号などの一点 = Yuji Syuku（筆）
-- 数字は漢数字（其の一／問一／一・二・三・四）。Batch No. は「調合番号 第YYMMDD-HHMM号」、直リンクは「見本」
-- 画像スロット（`/public/img/...`）は **無くても崩れない**（地色・SVG にフォールバック）。
-  生成プロンプトと配置パスは [docs/image-prompts.md](./docs/image-prompts.md)
+- 白いカード + 淡いローズ／ラベンダーの地、太い丸ゴシック（Zen Maru Gothic）+ 角ゴシック（Zen Kaku Gothic New）
+- 診断・結果は最大 560px の一列（PCでもアプリ感）。設問は「3 / 12」+ 進捗バー + 縦積みの角丸ボタン
+- 結果は丸いキャラ絵 → タイプ名 → タグ → 調香ノート3カード → 香りのバランス（8本のバー%）→ 相性カード → シェア4ボタン
+- 見出しの横バー・等幅ラベル・罫線主体・暗い地・セリフ体・クリーム地×赤茶は使わない
+- 画像スロット（`/public/img/...`）は無くても崩れない。16タイプのキャラ絵が主役なので、生成プロンプトは [docs/image-prompts.md](./docs/image-prompts.md)
 
 ## セットアップ
 
@@ -63,7 +60,7 @@ src/
     about/ privacy/ sitemap/  静的ページ・HTMLサイトマップ
     api/og/route.tsx      動的OG画像（Edge）。fonts/ にサブセット woff
     sitemap.ts robots.ts not-found.tsx
-  components/             Vial（瓶プログレス）/ Distill（蒸留演出）/ ShindanCard / Radar / RakkanSeal / ShareRow ほか
+  components/             ShindanFlow（設問）/ Loading / ShindanCard（結果カード）/ AccordBars / TypeCard / ShareRow / Art（画像スロット）ほか
   data/
     schema.ts             型定義（§11.3）
     questions.ts          設問12問と重み（§4）— 重み調整の逸脱記録はファイル冒頭
@@ -143,5 +140,5 @@ OG_FONT_SRC=/path/to/ttf PYFTSUBSET=.venv/bin/pyftsubset npm run og:fonts
 - **`?d=` の扱い（§6/§10.2）**: SSG を保ちつつ OG に d を伝播するため、`proxy.ts` で `/type/[slug]/d/[digest]` に内部リライト（URLバー表示は `?d=` のまま、canonical はクエリなし）
 - **Edge Runtime**: Next.js 16 では非推奨警告が出るが、§10.2 の指定どおり `/api/og` は Edge で動作させている。将来 `runtime = 'nodejs'` に切り替える場合はフォント読込を `fs` 経由に変更する
 - **X の intent URL**: `x.com/intent/post` を使用（旧 twitter.com は転送されるため）
-- **デザイン（§7）**: ユーザー指示により「明治の薬瓶」→「紺紙金泥」に全面変更。§7.2 の配色は置き換え。§7.0 の禁止（クリーム地×テラコッタ）は遵守
+- **デザイン（§7）**: ユーザー指示により spec の世界観（暗い薬瓶・縦書き・蒸留瓶）を離れ、現代の診断サイトの文法（白カード・パステル・丸ゴ・進捗バー・キャラ絵）に全面変更。§7.0 の「角丸カードのグリッド」「棒状プログレス」はジャンル標準として採用。絵文字不使用・「！」不使用は維持
 - **計測（§12.7）**: GA4 と同意バナーは撤去し Cloudflare Web Analytics に置換。`track()` は no-op の差し替え点として残置

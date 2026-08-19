@@ -15,7 +15,7 @@ export default function ShindanPage() {
   return (
     <>
       <SiteHeader minimal />
-      <main className="container">
+      <main className="container container--app">
         <ShindanFlow />
       </main>
     </>

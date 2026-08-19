@@ -1,16 +1,10 @@
 .section {
-  margin-top: 72px;
-  position: relative;
+  margin-top: 44px;
+  text-align: center;
 }
 
 .heading {
-  font-family: var(--ff-display);
-  font-weight: 500;
-  font-size: var(--fs-h2);
-  letter-spacing: 0.06em;
-  margin-bottom: 18px;
-  padding-left: 14px;
-  border-left: 3px solid var(--c-kin);
+  margin-bottom: 16px;
 }
 
 .row {
@@ -23,64 +17,80 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-height: 78px;
-  padding: 10px 6px;
-  background: var(--c-surface);
-  border: 1px solid var(--c-kin-20);
-  box-shadow: 0 1px 0 var(--c-surface), 0 2px 0 var(--c-kin-20);
-  font-size: 13.5px;
-  letter-spacing: 0.04em;
-  color: var(--c-ink);
-  transition: background-color var(--dur-base) var(--ease);
-  text-align: center;
+  gap: 8px;
+  padding: 14px 6px 12px;
+  border-radius: 16px;
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  box-shadow: var(--c-shadow);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-text-2);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-base) var(--ease);
 }
 .btn:hover {
-  background: var(--c-surface-2);
+  transform: translateY(-2px);
+  box-shadow: var(--c-shadow-lg);
 }
 .btn:disabled {
   opacity: 0.6;
   cursor: default;
 }
 
-.k {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  color: var(--c-kin);
+.icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.x .icon {
+  background: #1e1b2e;
+}
+.line .icon {
+  background: #06c755;
+}
+.image .icon {
+  background: var(--c-rose);
+}
+.copy .icon {
+  background: var(--c-lav);
 }
 
 .note {
   margin-top: 12px;
   font-size: 12.5px;
-  color: var(--c-ink-2);
+  color: var(--c-text-3);
 }
 
 .toastWrap {
-  height: 22px;
-  margin-top: 6px;
+  height: 24px;
+  margin-top: 4px;
 }
 
 .toast {
   display: inline-block;
-  font-family: var(--ff-brush);
-  font-size: 15px;
-  letter-spacing: 0.12em;
-  color: var(--c-kin);
+  padding: 2px 12px;
+  border-radius: var(--r-pill);
+  background: var(--c-text);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
   animation: toastIn 0.25s var(--ease) both;
 }
 
 @keyframes toastIn {
   from {
     opacity: 0;
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
-  }
-}
-
-@media (max-width: 480px) {
-  .row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    transform: translateY(0);
   }
 }

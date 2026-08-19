@@ -2,44 +2,42 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { QUESTIONS, QUESTION_COUNT } from '@/data/questions';
-import { ACCORD_CODES, type OptionKey } from '@/data/schema';
-import { ACCORD_LIQUID, COLORS, mixHex, TYPE_LIQUID } from '@/data/palette';
+import type { OptionKey } from '@/data/schema';
 import { TYPE_BY_CODE } from '@/data/types';
-import { accumulate, dominantAccordOfOption, score } from '@/lib/scoring';
+import { score } from '@/lib/scoring';
 import { clearAnswers, loadAnswers, saveAnswers, saveLastResult } from '@/lib/storage';
 import { track } from '@/lib/analytics';
-import { Vial } from './Vial';
-import { toKanji } from '@/lib/kanji';
-import { Distill } from './Distill';
+import { Loading } from './Loading';
 import styles from './ShindanFlow.module.css';
 
 /**
- * §8.2 設問画面 / §9.2 設問モーション
+ * 診断フロー
  * - 1画面1問。選択と同時に 350ms 後に次問へ自動遷移。戻る可。
+ * - 上部に「3 / 12」と細いプログレスバー。
  * - キーボード: 1-4 / A-D で選択、矢印キーでフォーカス移動。
- * - 回答状態は sessionStorage。回答済みが12件なら新規開始（もう一度診断）。
+ * - 回答状態は sessionStorage。回答済みが12件なら新規開始。
  */
 
 const ADVANCE_DELAY_MS = 350;
+const LOADING_MS = 1800;
 const KEYS: OptionKey[] = ['A', 'B', 'C', 'D'];
 
 interface State {
-  answers: OptionKey[]; // 常に先頭からの連続した回答
-  index: number; // 表示中の設問 0..11
-  phase: 'question' | 'distill';
+  answers: OptionKey[];
+  index: number;
+  phase: 'question' | 'loading';
   hydrated: boolean;
-  drop: { key: number; color: string } | null;
-  pending: OptionKey | null; // 選択直後〜遷移までの間の選択肢
+  pending: OptionKey | null;
 }
 
 type Action =
   | { type: 'hydrate'; answers: OptionKey[] }
-  | { type: 'select'; key: OptionKey; color: string }
+  | { type: 'select'; key: OptionKey }
   | { type: 'advance' }
   | { type: 'back' }
-  | { type: 'distill' };
+  | { type: 'loading' };
 
 function reducer(s: State, a: Action): State {
   switch (a.type) {
@@ -47,23 +45,15 @@ function reducer(s: State, a: Action): State {
       const answers = a.answers.length >= QUESTION_COUNT ? [] : a.answers;
       return { ...s, answers, index: answers.length, hydrated: true };
     }
-    case 'select': {
-      const answers = [...s.answers.slice(0, s.index), a.key];
-      return {
-        ...s,
-        answers,
-        pending: a.key,
-        drop: { key: (s.drop?.key ?? 0) + 1, color: a.color },
-      };
-    }
-    case 'advance': {
+    case 'select':
+      return { ...s, answers: [...s.answers.slice(0, s.index), a.key], pending: a.key };
+    case 'advance':
       if (s.index + 1 >= QUESTION_COUNT) return { ...s, pending: null };
       return { ...s, index: s.index + 1, pending: null };
-    }
     case 'back':
       return { ...s, index: Math.max(0, s.index - 1), pending: null };
-    case 'distill':
-      return { ...s, phase: 'distill', pending: null };
+    case 'loading':
+      return { ...s, phase: 'loading', pending: null };
     default:
       return s;
   }
@@ -76,21 +66,13 @@ export function ShindanFlow() {
     index: 0,
     phase: 'question',
     hydrated: false,
-    drop: null,
     pending: null,
   });
-  const [distillTarget, setDistillTarget] = useState<{
-    fromColor: string;
-    toColor: string;
-    typeName: string;
-    typeCode: string;
-    href: string;
-  } | null>(null);
+  const [target, setTarget] = useState<{ href: string; color: string } | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const advanceTimer = useRef<number | null>(null);
   const startedRef = useRef(false);
 
-  // ---- hydrate from sessionStorage ----
   useEffect(() => {
     dispatch({ type: 'hydrate', answers: loadAnswers() });
   }, []);
@@ -110,28 +92,15 @@ export function ShindanFlow() {
   const question = QUESTIONS[state.index]!;
   const currentAnswer = state.answers[state.index] ?? null;
 
-  // ---- 混色（回答履歴の加重平均） ----
-  const mixedColor = useMemo(() => {
-    const acc = accumulate(state.answers);
-    const parts = ACCORD_CODES.map((c) => ({ hex: ACCORD_LIQUID[c], weight: acc.scores[c] }));
-    const total = parts.reduce((a, p) => a + p.weight, 0);
-    return total > 0 ? mixHex(parts) : COLORS.amber;
-  }, [state.answers]);
-
-  // ---- 選択 ----
   const select = useCallback(
     (key: OptionKey) => {
       if (state.phase !== 'question' || state.pending) return;
-      const opt = question.options.find((o) => o.key === key);
-      if (!opt) return;
-      const dominant = dominantAccordOfOption(opt);
-      dispatch({ type: 'select', key, color: ACCORD_LIQUID[dominant] });
+      dispatch({ type: 'select', key });
       track('answer', { q_no: question.no, key });
 
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current);
       advanceTimer.current = window.setTimeout(() => {
         if (state.index + 1 >= QUESTION_COUNT) {
-          // 12問目 → 蒸留演出へ
           const answers = [...state.answers.slice(0, state.index), key];
           const result = score(answers);
           const t = TYPE_BY_CODE[result.typeCode];
@@ -147,16 +116,8 @@ export function ShindanFlow() {
           clearAnswers();
           track('complete', { type: result.typeCode });
           router.prefetch(href);
-          const acc = accumulate(answers);
-          const parts = ACCORD_CODES.map((c) => ({ hex: ACCORD_LIQUID[c], weight: acc.scores[c] }));
-          setDistillTarget({
-            fromColor: mixHex(parts),
-            toColor: TYPE_LIQUID[result.typeCode],
-            typeName: t.name,
-            typeCode: t.code,
-            href,
-          });
-          dispatch({ type: 'distill' });
+          setTarget({ href, color: t.liquidColor });
+          dispatch({ type: 'loading' });
         } else {
           dispatch({ type: 'advance' });
         }
@@ -169,7 +130,7 @@ export function ShindanFlow() {
     if (advanceTimer.current) window.clearTimeout(advanceTimer.current);
   }, []);
 
-  // ---- キーボード ----
+  // キーボード
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (state.phase !== 'question') return;
@@ -199,52 +160,57 @@ export function ShindanFlow() {
     return () => window.removeEventListener('keydown', onKey);
   }, [select, state.phase]);
 
-  // 設問が変わったら見出しにフォーカスを移す（スクリーンリーダー・キーボード操作用）
   const headingRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     if (!state.hydrated) return;
     headingRef.current?.focus({ preventScroll: true });
   }, [state.index, state.hydrated]);
 
-  const onDistillDone = useCallback(() => {
-    if (distillTarget) router.push(distillTarget.href);
-  }, [distillTarget, router]);
+  const onLoadingDone = useCallback(() => {
+    if (target) router.push(target.href);
+  }, [target, router]);
+
+  const progress = ((state.index + (state.pending ? 1 : 0)) / QUESTION_COUNT) * 100;
 
   return (
     <div className={styles.root}>
-      {state.phase === 'distill' && distillTarget && (
-        <Distill
-          fromColor={distillTarget.fromColor}
-          toColor={distillTarget.toColor}
-          typeName={distillTarget.typeName}
-          typeCode={distillTarget.typeCode}
-          onDone={onDistillDone}
-        />
-      )}
+      {state.phase === 'loading' && target && <Loading color={target.color} durationMs={LOADING_MS} onDone={onLoadingDone} />}
 
       <div className={styles.top}>
         {state.index > 0 ? (
           <button type="button" className={styles.back} onClick={() => dispatch({ type: 'back' })}>
-            <span aria-hidden="true">←</span> 前の問いへ
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 6l-6 6 6 6" />
+            </svg>
+            前の質問
           </button>
         ) : (
           <Link href="/" className={styles.back}>
-            <span aria-hidden="true">←</span> トップへ戻る
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 6l-6 6 6 6" />
+            </svg>
+            トップ
           </Link>
         )}
         <p className={styles.counter} aria-live="polite" data-qno={question.no}>
-          <span className={`brush ${styles.counterMain}`}>其の{toKanji(question.no)}</span>
-          <span className={styles.counterSub}>／ 全{toKanji(QUESTION_COUNT)}問</span>
+          <span className={styles.counterNow}>{question.no}</span>
+          <span className={styles.counterSep}>/</span>
+          <span className={styles.counterTotal}>{QUESTION_COUNT}</span>
         </p>
       </div>
 
-      <div key={question.no} className={styles.question}>
+      <div className={styles.progress} role="progressbar" aria-valuemin={0} aria-valuemax={QUESTION_COUNT} aria-valuenow={state.index} aria-label="進捗">
+        <span className={styles.progressBar} style={{ width: `${progress}%` }} />
+      </div>
+
+      <div key={question.no} className={`card ${styles.question}`}>
+        <p className={styles.qLabel}>Q{question.no}</p>
         <h1 ref={headingRef} tabIndex={-1} className={styles.text}>
           {question.text}
         </h1>
 
         <div ref={listRef} className={styles.options} role="group" aria-label="選択肢">
-          {question.options.map((o) => {
+          {question.options.map((o, i) => {
             const selected = (state.pending ?? currentAnswer) === o.key;
             return (
               <button
@@ -256,10 +222,9 @@ export function ShindanFlow() {
                 aria-pressed={selected}
                 disabled={!!state.pending}
               >
-                <span className={`brush ${styles.key}`} aria-hidden="true">
-                  {toKanji(KEYS.indexOf(o.key) + 1)}
+                <span className={styles.key} aria-hidden="true">
+                  {KEYS[i]}
                 </span>
-                <span className="visually-hidden">{o.key}.</span>
                 <span className={styles.label}>{o.label}</span>
               </button>
             );
@@ -268,10 +233,8 @@ export function ShindanFlow() {
       </div>
 
       <p className={styles.hint}>
-        <kbd>1</kbd>〜<kbd>4</kbd> または <kbd>A</kbd>〜<kbd>D</kbd> の鍵でも選べます
+        <kbd>1</kbd>〜<kbd>4</kbd> または <kbd>A</kbd>〜<kbd>D</kbd> キーでも選べます
       </p>
-
-      <Vial id="shindan-vial" level={state.answers.length} total={QUESTION_COUNT} color={mixedColor} drop={state.drop} />
     </div>
   );
 }

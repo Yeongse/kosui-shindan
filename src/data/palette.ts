@@ -17,16 +17,19 @@ export const COLORS = {
   rakkan: '#9E2B25',
 } as const;
 
-/** 香調8軸の基準液体色（warm系がそのまま使用） */
+/**
+ * 香調8軸の基準色（warm系がそのまま使用。cool系は deriveCool で派生）
+ * v4: パステル寄りの明るい8色（白いカード・淡い地に載せる前提）
+ */
 export const ACCORD_LIQUID: Record<AccordCode, string> = {
-  CIT: '#D8A22E',
-  GRN: '#6E8B5A',
-  FLR: '#C77E93',
-  FRT: '#C25B4E',
-  GRM: '#A9713D',
-  WDY: '#7A5C39',
-  AMB: '#8C5A24',
-  MSK: '#B8B2A0',
+  CIT: '#FFC93C', // レモンイエロー
+  GRN: '#6CCB9A', // ミントグリーン
+  FLR: '#FF7EB3', // ピンク
+  FRT: '#FF8E72', // ピーチコーラル
+  GRM: '#E0A05E', // キャラメル
+  WDY: '#B58A63', // ウッド
+  AMB: '#F2A93B', // アンバーゴールド
+  MSK: '#B9A8F2', // ラベンダーグレー
 };
 
 export const ACCORD_NAME_JA: Record<AccordCode, string> = {

@@ -1,35 +1,5 @@
 .card {
-  position: relative;
-  background-color: var(--c-paper);
-  background-image: var(--img-shikishi);
-  background-size: cover;
-  background-position: center;
-  color: var(--c-paper-ink);
-  padding: 10px;
-  border: 1px solid var(--c-kin-20);
-  box-shadow:
-    0 1px 0 var(--c-paper),
-    0 2px 0 var(--c-kin-20),
-    0 34px 70px -36px rgba(0, 0, 0, 0.75);
-}
-
-/* 金砂子（右上） */
-.card::before {
-  content: '';
-  position: absolute;
-  right: -10px;
-  top: -10px;
-  width: 180px;
-  height: 180px;
-  background: var(--img-sunago) no-repeat center / contain;
-  pointer-events: none;
-  opacity: 0.9;
-}
-
-.inner {
-  position: relative;
-  padding: 18px 22px 22px;
-  border: 1px solid var(--c-kin-20);
+  overflow: hidden;
 }
 
 .animate {
@@ -47,190 +17,160 @@
   }
 }
 
-.head {
+/* 上部: 液体色の淡い地 */
+.top {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--c-paper-line);
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  color: var(--c-paper-ink-2);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 30px 22px 26px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--type) 22%, #fff) 0%, var(--c-card) 100%);
 }
 
-.pharmacyMain {
-  white-space: nowrap;
+.avatar {
+  width: 152px;
+  height: 152px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--type) 38%, #fff);
+  box-shadow: 0 0 0 6px #fff, 0 0 0 7px color-mix(in srgb, var(--type) 50%, #fff);
+  margin-bottom: 8px;
 }
 
-.batch {
-  white-space: nowrap;
+.avatarArt {
+  width: 100%;
+  height: 100%;
 }
 
-.body {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 24px 28px;
-  padding-top: 22px;
+.avatarFallback {
+  position: absolute;
+  inset: 30%;
+  border-radius: 50%;
+  background: var(--type);
+  opacity: 0.85;
 }
 
-/* 縦書きタイプ名（筆） */
-.nameBlock {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c-text-2);
 }
 
 .name {
-  writing-mode: vertical-rl;
-  text-orientation: upright;
-  font-size: clamp(52px, 9.5vw, 80px);
-  line-height: 1;
-  letter-spacing: 0.12em;
-  margin: 0;
-  color: var(--c-paper-ink);
-}
-
-.nameMeta {
+  font-size: clamp(34px, 7vw, 44px);
+  font-weight: 900;
+  line-height: 1.15;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-top: 8px;
+  align-items: center;
+  gap: 2px;
 }
 
 .kana {
-  writing-mode: vertical-rl;
+  font-family: var(--ff-body);
+  font-weight: 500;
   font-size: 13px;
-  letter-spacing: 0.32em;
-  color: var(--c-paper-ink-2);
-}
-
-.code {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-size: 11px;
+  color: var(--c-text-3);
   letter-spacing: 0.12em;
-  color: var(--c-paper-ink-3);
-}
-
-.accord {
-  writing-mode: vertical-rl;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--c-paper-ink-3);
-}
-
-.main {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.catchRow {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
 }
 
 .catch {
   font-family: var(--ff-display);
-  font-weight: 500;
-  font-size: 18px;
-  letter-spacing: 0.08em;
-  line-height: 1.7;
-  padding-top: 4px;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--c-text);
 }
 
-/* 丸窓の絵 */
-.window {
-  flex-shrink: 0;
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px var(--c-kin-20), 0 0 0 4px var(--c-paper), 0 0 0 5px var(--c-kin-20);
-}
-
-.windowArt {
-  width: 100%;
-  height: 100%;
-}
-
-.windowFallback {
-  width: 100%;
-  height: 100%;
-  opacity: 0.35;
-}
-
-.notes {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14.5px;
-}
-
-.notes th {
-  text-align: left;
-  font-weight: 500;
-  width: 5em;
-  padding: 8px 0;
-  vertical-align: baseline;
-  border-bottom: 1px solid var(--c-paper-line-soft);
-  color: var(--c-paper-kin);
-  letter-spacing: 0.14em;
-  font-size: 12.5px;
-}
-
-.notes td {
-  padding: 8px 0;
-  border-bottom: 1px solid var(--c-paper-line-soft);
-  line-height: 1.75;
-}
-
-.notes tr:last-child th,
-.notes tr:last-child td {
-  border-bottom: 0;
-}
-
-.bottom {
+.tags {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
   margin-top: 4px;
 }
 
-.radar {
-  margin-left: -10px;
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  background: #fff;
+  border: 1px solid var(--c-border-2);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-text-2);
 }
 
-.seal {
-  flex-shrink: 0;
-  margin-bottom: 4px;
+/* 調香ノート */
+.notes,
+.balance {
+  padding: 20px 22px 22px;
 }
 
-@media (max-width: 560px) {
-  .inner {
-    padding: 16px 14px 18px;
+.balance {
+  border-top: 1px solid var(--c-border);
+}
+
+.sectionTitle {
+  font-size: 14px;
+  color: var(--c-text-2);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.noteGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.noteCard {
+  padding: 12px 10px 12px;
+  border-radius: 14px;
+  background: var(--c-card-2);
+  border: 1px solid var(--c-border);
+  text-align: center;
+}
+
+.noteKey {
+  font-family: var(--ff-display);
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--c-rose);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.noteWhen {
+  font-family: var(--ff-body);
+  font-weight: 500;
+  font-size: 10.5px;
+  color: var(--c-text-3);
+}
+
+.noteList {
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .noteGrid {
+    grid-template-columns: 1fr;
   }
-  .body {
-    gap: 16px;
+  .noteCard {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    align-items: center;
+    text-align: left;
+    gap: 10px;
   }
-  .name {
-    font-size: 52px;
-  }
-  .window {
-    width: 64px;
-    height: 64px;
-  }
-  .radar svg {
-    width: 128px;
-    height: 128px;
-  }
-  .head {
-    font-size: 11px;
-    letter-spacing: 0.1em;
+  .noteList {
+    margin-top: 0;
   }
 }
 

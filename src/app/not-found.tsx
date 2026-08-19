@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ShindanCta } from '@/components/ShindanCta';
-import { SealMark } from '@/components/SealMark';
+import { LogoMark } from '@/components/LogoMark';
 
 export const metadata: Metadata = {
   title: { absolute: 'ページが見つかりません｜香水診断 調香箋' },
@@ -15,21 +15,16 @@ export default function NotFound() {
   return (
     <>
       <SiteHeader />
-      <main className="container" style={{ paddingTop: 48, paddingBottom: 48 }}>
-        <div style={{ marginBottom: 20 }}>
-          <SealMark size={44} char="無" />
+      <main className="container container--app" style={{ paddingTop: 48, paddingBottom: 48, textAlign: 'center' }}>
+        <div style={{ marginBottom: 16 }}>
+          <LogoMark size={44} />
         </div>
-        <p className="data">404 — 見つかりません</p>
-        <h1
-          className="display"
-          style={{ fontSize: 'clamp(22px, 3.6vw, 30px)', letterSpacing: '0.06em', marginTop: 10, lineHeight: 1.5 }}
-        >
-          この箋は、棚にありません。
-        </h1>
-        <p style={{ marginTop: 18, color: 'var(--c-ink-2)', maxWidth: '52ch' }}>
+        <span className="eyebrow">404</span>
+        <h1 style={{ fontSize: 'clamp(22px, 3.6vw, 30px)', marginTop: 12 }}>ページが見つかりません</h1>
+        <p style={{ marginTop: 18, color: 'var(--c-text-2)', maxWidth: '52ch', marginInline: 'auto' }}>
           お探しのページは移動したか、削除された可能性があります。URLをご確認いただくか、以下から目的のページへお進みください。
         </p>
-        <ul style={{ marginTop: 22, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 15 }}>
+        <ul style={{ marginTop: 22, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 15, alignItems: 'center' }}>
           <li>
             <Link href="/" className="link">
               香水診断 調香箋 トップ
@@ -52,7 +47,7 @@ export default function NotFound() {
           </li>
         </ul>
         <div style={{ marginTop: 40 }}>
-          <ShindanCta note="12問・約90秒。自分の香水タイプを調べる。" />
+          <ShindanCta align="center" note="12問・約90秒。自分の香水タイプを調べる。" />
         </div>
       </main>
       <SiteFooter />

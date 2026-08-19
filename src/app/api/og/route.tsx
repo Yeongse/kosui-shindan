@@ -1,23 +1,15 @@
 import { ImageResponse } from 'next/og';
 import type { NextRequest } from 'next/server';
 import { ACCORD_CODES, type AccordCode } from '@/data/schema';
-import { TYPE_LIQUID } from '@/data/palette';
+import { ACCORD_LIQUID, ACCORD_NAME_JA, TYPE_LIQUID } from '@/data/palette';
 import { getTypeByCode } from '@/data/types';
 import { decodeDigest, representativeScores } from '@/lib/scoring';
-import {
-  allowedOgLabels,
-  OG_DEFAULT_TITLE,
-  OG_PHARMACY,
-  OG_SITE_LABEL,
-  OG_SITE_URL_LABEL,
-  OG_SUBLINE,
-  OG_TAGLINE,
-} from '@/lib/og-labels';
+import { allowedOgLabels, OG_DEFAULT_TITLE, OG_SITE_URL_LABEL, OG_SUBLINE, OG_TAGLINE } from '@/lib/og-labels';
 
 /**
- * 動的OG画像 `/api/og` — 紺紙金泥の上に白練の色紙。
+ * 動的OG画像 `/api/og`
  * - パラメータ: type（16コードのホワイトリスト）, d（任意, 16hex）, label（ホワイトリスト内の見出し）
- * - 構図: 紺紙に金泥の飛雲と砂子、右に白練の色紙（タイプ名は筆文字・縦組み）、調香表、レーダー、朱の落款
+ * - 白いカード + 淡いローズ／ラベンダーの地。タイプ名・読み・キャッチ・タグ・調香ノート・香調バー
  * - サブセット化した woff をバンドル。d 不正時はタイプ代表値で描画（500 を返さない）。画像URLの外部参照なし。
  */
 export const runtime = 'edge';
@@ -25,88 +17,51 @@ export const runtime = 'edge';
 const W = 1200;
 const H = 630;
 
-/** 紺紙金泥の配色（tokens.css と同期） */
 const C = {
-  ground: '#13203A',
-  surface: '#1B2C4B',
-  ink: '#EEEAE0',
-  ink2: '#B9B4A7',
-  ink3: '#857F74',
-  paper: '#F1EFE7',
-  paper3: '#F7F5EE',
-  sumi: '#2A2420',
-  usuzumi: '#6B6157',
-  nibi: '#9B9085',
-  paperKin: '#8A6D2F',
-  shu: '#C2402A',
-  kin: '#CFAE63',
-  byakugun: '#A6CDD1',
+  bg: '#FBF8FC',
+  rose: '#FF5C8D',
+  roseSoft: '#FFE3EC',
+  lav: '#8B7CF6',
+  lavSoft: '#EBE6FF',
+  card: '#FFFFFF',
+  border: '#EFE8F3',
+  text: '#1E1B2E',
+  text2: '#6E6785',
+  text3: '#A19BB3',
 };
 
-let fontsPromise: Promise<{ display: ArrayBuffer; brush: ArrayBuffer }> | null = null;
+let fontsPromise: Promise<{ display: ArrayBuffer; body: ArrayBuffer }> | null = null;
 function loadFonts() {
   if (!fontsPromise) {
     fontsPromise = Promise.all([
       fetch(new URL('./fonts/display.woff', import.meta.url)).then((r) => r.arrayBuffer()),
-      fetch(new URL('./fonts/brush.woff', import.meta.url)).then((r) => r.arrayBuffer()),
-    ]).then(([display, brush]) => ({ display, brush }));
+      fetch(new URL('./fonts/body.woff', import.meta.url)).then((r) => r.arrayBuffer()),
+    ]).then(([display, body]) => ({ display, body }));
   }
   return fontsPromise;
 }
 
-function radarPath(scores: Record<AccordCode, number>, cx: number, cy: number, R: number): string {
-  const max = Math.max(1, ...ACCORD_CODES.map((c) => scores[c]));
-  return (
-    ACCORD_CODES.map((c, i) => {
-      const a = (Math.PI * 2 * i) / 8 - Math.PI / 2;
-      const r = (Math.max(0, scores[c]) / max) * R;
-      return `${i === 0 ? 'M' : 'L'}${(cx + Math.cos(a) * r).toFixed(1)} ${(cy + Math.sin(a) * r).toFixed(1)}`;
-    }).join(' ') + ' Z'
-  );
-}
-
-function ringPoints(cx: number, cy: number, R: number): string {
-  return ACCORD_CODES.map((_, i) => {
-    const a = (Math.PI * 2 * i) / 8 - Math.PI / 2;
-    return `${(cx + Math.cos(a) * R).toFixed(1)},${(cy + Math.sin(a) * R).toFixed(1)}`;
-  }).join(' ');
-}
-
 const CACHE = 'public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000';
 
-/** 飛雲（背景装飾・SVG） */
-function Kumo({ x, y, w, color, opacity }: { x: number; y: number; w: number; color: string; opacity: number }) {
-  const h = w * 0.28;
+function Blobs() {
   return (
-    <svg
-      width={w}
-      height={h}
-      viewBox="0 0 400 112"
-      style={{ position: 'absolute', left: x, top: y, opacity }}
-    >
-      <path
-        d="M20 70 C10 40, 60 20, 110 34 C130 8, 200 4, 230 30 C270 10, 340 20, 350 52 C390 56, 392 90, 350 94 C300 110, 200 104, 150 96 C100 108, 30 100, 20 70 Z"
-        fill={color}
-      />
-    </svg>
+    <>
+      <div style={{ position: 'absolute', left: -120, top: -140, width: 520, height: 520, borderRadius: 260, background: '#FFE3EC', opacity: 0.9, display: 'flex' }} />
+      <div style={{ position: 'absolute', right: -140, bottom: -200, width: 560, height: 560, borderRadius: 280, background: '#EBE6FF', opacity: 0.95, display: 'flex' }} />
+    </>
   );
 }
 
-/** 金砂子（小さな粒を散らす・決定的） */
-function Sunago({ x, y, w, h, n, seed }: { x: number; y: number; w: number; h: number; n: number; seed: number }) {
-  const pts: { cx: number; cy: number; r: number }[] = [];
-  let s = seed;
-  const rnd = () => {
-    s = (s * 9301 + 49297) % 233280;
-    return s / 233280;
-  };
-  for (let i = 0; i < n; i++) pts.push({ cx: rnd() * w, cy: rnd() * h, r: 0.8 + rnd() * 2.2 });
+function Logo() {
   return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} style={{ position: 'absolute', left: x, top: y }}>
-      {pts.map((p, i) => (
-        <circle key={i} cx={p.cx} cy={p.cy} r={p.r} fill={C.kin} fillOpacity={0.55} />
-      ))}
-    </svg>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <svg width="34" height="34" viewBox="0 0 40 40">
+        <rect x="2" y="2" width="36" height="36" rx="11" fill="#FF6B9A" />
+        <path d="M20 9.5 C20 9.5, 12 18.5, 12 23.5 C12 28 15.6 31 20 31 C24.4 31 28 28 28 23.5 C28 18.5 20 9.5 20 9.5 Z" fill="#fff" />
+      </svg>
+      <span style={{ fontFamily: 'Display', fontSize: 24, color: C.text }}>調香箋</span>
+      <span style={{ fontFamily: 'Body', fontSize: 15, color: C.text3 }}>香水診断</span>
+    </div>
   );
 }
 
@@ -121,183 +76,87 @@ export async function GET(req: NextRequest) {
 
   const fonts = await loadFonts();
   const fontConfig = [
-    { name: 'Display', data: fonts.display, weight: 400 as const, style: 'normal' as const },
-    { name: 'Brush', data: fonts.brush, weight: 400 as const, style: 'normal' as const },
+    { name: 'Display', data: fonts.display, weight: 700 as const, style: 'normal' as const },
+    { name: 'Body', data: fonts.body, weight: 400 as const, style: 'normal' as const },
   ];
-
-  const Background = () => (
-    <>
-      <Kumo x={-40} y={-20} w={520} color={C.kin} opacity={0.14} />
-      <Kumo x={760} y={470} w={520} color={C.byakugun} opacity={0.1} />
-      <Sunago x={900} y={0} w={300} h={220} n={70} seed={7} />
-      <Sunago x={0} y={430} w={320} h={200} n={60} seed={19} />
-    </>
-  );
 
   // ---------- タイプ結果カード ----------
   if (type && !label) {
     const scores = decodeDigest(d) ?? representativeScores(type.code);
     const liquid = TYPE_LIQUID[type.code];
-    const isPersonal = !!decodeDigest(d);
-    const chars = Array.from(type.name);
+    const [accord, temp] = type.code.split('-') as [AccordCode, 'W' | 'C'];
+    const total = Math.max(1, ACCORD_CODES.reduce((a, c) => a + Math.max(0, scores[c]), 0));
+    const bars = [...ACCORD_CODES]
+      .map((c) => ({ c, pct: Math.round((Math.max(0, scores[c]) / total) * 100) }))
+      .sort((a, b) => b.pct - a.pct)
+      .slice(0, 4);
+    const maxPct = Math.max(1, ...bars.map((b) => b.pct));
+    const tags = [`#${ACCORD_NAME_JA[accord]}系`, `#${temp === 'C' ? 'クール' : 'ウォーム'}`, `#${type.notes.last[0] ?? ''}`];
 
     return new ImageResponse(
       (
-        <div
-          style={{
-            width: W,
-            height: H,
-            display: 'flex',
-            background: C.ground,
-            fontFamily: 'Display',
-            color: C.ink,
-            position: 'relative',
-          }}
-        >
-          <Background />
-
-          {/* 左: サイト名と一文（金泥） */}
-          <div
-            style={{
-              width: 300,
-              height: H,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              padding: '48px 0 40px 56px',
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', fontSize: 16, letterSpacing: 6, color: C.ink2 }}>香水診断</div>
-              <div style={{ display: 'flex', fontFamily: 'Brush', fontSize: 44, letterSpacing: 6, color: C.kin }}>調香箋</div>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <div style={{ display: 'flex', fontSize: 20, lineHeight: 1.6, color: C.ink, letterSpacing: 2 }}>
-                {OG_TAGLINE}
-              </div>
-              <div style={{ display: 'flex', fontSize: 15, letterSpacing: 2, color: C.ink3 }}>{OG_SITE_URL_LABEL}</div>
-            </div>
-          </div>
-
-          {/* 右: 色紙 */}
+        <div style={{ width: W, height: H, display: 'flex', background: C.bg, position: 'relative', fontFamily: 'Body', color: C.text, overflow: 'hidden' }}>
+          <Blobs />
+          {/* カード */}
           <div
             style={{
               position: 'absolute',
-              left: 330,
-              top: 36,
-              width: 830,
-              height: 558,
-              background: C.paper,
-              border: `1px solid rgba(207,174,99,0.45)`,
-              boxShadow: '0 30px 60px -28px rgba(0,0,0,0.7)',
+              left: 60,
+              top: 50,
+              width: 1080,
+              height: 530,
+              background: C.card,
+              borderRadius: 32,
+              border: `1px solid ${C.border}`,
+              boxShadow: '0 30px 60px -30px rgba(120,80,160,0.35)',
               display: 'flex',
-              padding: 10,
+              padding: '40px 48px',
             }}
           >
-            <div
-              style={{
-                flex: 1,
-                border: `1px solid rgba(207,174,99,0.45)`,
-                display: 'flex',
-                flexDirection: 'column',
-                color: C.sumi,
-                padding: '22px 30px 22px 30px',
-                position: 'relative',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  fontSize: 15,
-                  letterSpacing: 4,
-                  color: C.usuzumi,
-                  paddingBottom: 12,
-                  borderBottom: `1px solid rgba(42,36,32,0.2)`,
-                }}
-              >
-                <span>{OG_PHARMACY}</span>
-                <span>{isPersonal ? `調合番号 第${d?.slice(0, 6).toUpperCase()}号` : '調合番号 見本'}</span>
-              </div>
-
-              <div style={{ display: 'flex', flex: 1, marginTop: 18, gap: 30 }}>
-                {/* 縦書きタイプ名（筆） */}
-                <div style={{ display: 'flex', gap: 16 }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    {chars.map((ch, i) => (
-                      <div key={i} style={{ display: 'flex', fontFamily: 'Brush', fontSize: 150, lineHeight: 1.05, color: C.sumi }}>
-                        {ch}
-                      </div>
-                    ))}
+            {/* 左: 丸 + 名前 */}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 380, gap: 18 }}>
+              <div style={{ width: 190, height: 190, borderRadius: 95, background: liquid, opacity: 0.9, display: 'flex', boxShadow: `0 0 0 8px #fff, 0 0 0 9px ${liquid}` }} />
+              <div style={{ display: 'flex', fontSize: 16, color: C.text2, marginTop: 6 }}>あなたの香水タイプは</div>
+              <div style={{ display: 'flex', fontFamily: 'Display', fontSize: 74, lineHeight: 1, color: C.text }}>{type.name}</div>
+              <div style={{ display: 'flex', fontSize: 16, color: C.text3, letterSpacing: 4 }}>{type.kana}</div>
+            </div>
+            {/* 右: キャッチ・タグ・ノート・バー */}
+            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingLeft: 36, gap: 18, minWidth: 0 }}>
+              <Logo />
+              <div style={{ display: 'flex', fontFamily: 'Display', fontSize: 34, lineHeight: 1.4, color: C.text }}>{type.catch}</div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                {tags.map((t) => (
+                  <div key={t} style={{ display: 'flex', padding: '6px 14px', borderRadius: 999, background: C.lavSoft, color: '#5F4FD6', fontSize: 15, fontFamily: 'Display' }}>
+                    {t}
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingTop: 10 }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', color: C.usuzumi, fontSize: 20, letterSpacing: 2 }}>
-                      {Array.from(type.kana).map((k, i) => (
-                        <span key={i} style={{ lineHeight: 1.25 }}>
-                          {k}
-                        </span>
-                      ))}
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {(
+                  [
+                    ['トップ', type.notes.top.join('・')],
+                    ['ミドル', type.notes.middle.join('・')],
+                    ['ラスト', type.notes.last.join('・')],
+                  ] as const
+                ).map(([k, v]) => (
+                  <div key={k} style={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '12px 14px', borderRadius: 16, background: '#FAF7FC', border: `1px solid ${C.border}`, gap: 4 }}>
+                    <span style={{ fontFamily: 'Display', fontSize: 13, color: C.rose }}>{k}</span>
+                    <span style={{ fontSize: 15, lineHeight: 1.4 }}>{v}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {bars.map((b) => (
+                  <div key={b.c} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: 14 }}>
+                    <span style={{ width: 84, color: C.text2 }}>{ACCORD_NAME_JA[b.c]}</span>
+                    <div style={{ display: 'flex', flex: 1, height: 12, borderRadius: 999, background: '#F3EFF7' }}>
+                      <div style={{ display: 'flex', width: `${(b.pct / maxPct) * 100}%`, height: 12, borderRadius: 999, background: ACCORD_LIQUID[b.c] }} />
                     </div>
-                    <div style={{ display: 'flex', fontSize: 14, letterSpacing: 2, color: C.nibi }}>{type.code}</div>
+                    <span style={{ width: 44, textAlign: 'right', fontFamily: 'Display', color: C.text }}>{b.pct}%</span>
                   </div>
-                </div>
-
-                {/* 右側: キャッチ・調香表・レーダー */}
-                <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
-                  <div style={{ display: 'flex', fontSize: 30, letterSpacing: 3, lineHeight: 1.5 }}>{type.catch}</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', marginTop: 18, gap: 6, width: 440 }}>
-                    {(
-                      [
-                        ['トップ', type.notes.top.join('、')],
-                        ['ミドル', type.notes.middle.join('、')],
-                        ['ラスト', type.notes.last.join('、')],
-                      ] as const
-                    ).map(([k, v]) => (
-                      <div
-                        key={k}
-                        style={{
-                          display: 'flex',
-                          gap: 16,
-                          fontSize: 19,
-                          paddingBottom: 6,
-                          borderBottom: '1px solid rgba(42,36,32,0.12)',
-                        }}
-                      >
-                        <span style={{ fontSize: 14, letterSpacing: 3, width: 64, color: C.paperKin, paddingTop: 5 }}>{k}</span>
-                        <span style={{ color: C.sumi }}>{v}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <svg width="160" height="160" viewBox="0 0 200 200" style={{ position: 'absolute', left: 8, bottom: 6 }}>
-                    <polygon points={ringPoints(100, 100, 62)} fill="none" stroke={C.sumi} strokeOpacity="0.4" />
-                    <polygon points={ringPoints(100, 100, 41)} fill="none" stroke={C.sumi} strokeOpacity="0.16" />
-                    <polygon points={ringPoints(100, 100, 20)} fill="none" stroke={C.sumi} strokeOpacity="0.16" />
-                    <path d={radarPath(scores, 100, 100, 62)} fill={liquid} fillOpacity="0.55" stroke={liquid} strokeWidth="2" />
-                  </svg>
-                </div>
+                ))}
               </div>
-
-              {/* 落款 */}
-              <div
-                style={{
-                  position: 'absolute',
-                  right: 30,
-                  bottom: 26,
-                  width: 120,
-                  height: 120,
-                  background: C.shu,
-                  borderRadius: 4,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transform: 'rotate(-3deg)',
-                }}
-              >
-                <div style={{ position: 'absolute', inset: 7, border: `2px solid ${C.paper3}`, display: 'flex' }} />
-                <span style={{ fontFamily: 'Display', fontSize: 46, color: C.paper3, lineHeight: 1 }}>{chars[0] ?? ''}</span>
-                <span style={{ fontFamily: 'Display', fontSize: 46, color: C.paper3, lineHeight: 1 }}>{chars[1] ?? ''}</span>
-              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', fontSize: 14, color: C.text3, marginTop: 'auto' }}>{OG_SITE_URL_LABEL}</div>
             </div>
           </div>
         </div>
@@ -307,72 +166,35 @@ export async function GET(req: NextRequest) {
   }
 
   // ---------- 記事・既定 OG ----------
-  const liquid = type ? TYPE_LIQUID[type.code] : C.shu;
   const title = label ?? OG_DEFAULT_TITLE;
+  const accent = type ? TYPE_LIQUID[type.code] : C.rose;
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: W,
-          height: H,
-          display: 'flex',
-          background: C.ground,
-          color: C.ink,
-          fontFamily: 'Display',
-          padding: '56px 64px',
-          position: 'relative',
-        }}
-      >
-        <Background />
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
-            <div style={{ display: 'flex', fontSize: 18, letterSpacing: 5, color: C.ink2 }}>香水診断</div>
-            <div style={{ display: 'flex', fontFamily: 'Brush', fontSize: 34, letterSpacing: 5, color: C.kin }}>調香箋</div>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 26, maxWidth: 840 }}>
-            <div style={{ display: 'flex', fontSize: label ? 56 : 84, lineHeight: 1.35, letterSpacing: 4, borderLeft: `6px solid ${C.kin}`, paddingLeft: 24 }}>
-              {title}
+      <div style={{ width: W, height: H, display: 'flex', background: C.bg, position: 'relative', fontFamily: 'Body', color: C.text, overflow: 'hidden' }}>
+        <Blobs />
+        <div style={{ position: 'absolute', left: 60, top: 50, width: 1080, height: 530, background: C.card, borderRadius: 32, border: `1px solid ${C.border}`, boxShadow: '0 30px 60px -30px rgba(120,80,160,0.35)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '44px 56px' }}>
+          <Logo />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 22, maxWidth: 900 }}>
+            <div style={{ display: 'flex', fontFamily: 'Display', fontSize: label ? 58 : 84, lineHeight: 1.3, color: C.text }}>{title}</div>
+            <div style={{ display: 'flex', fontSize: 26, color: C.text2 }}>{OG_TAGLINE}</div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              {OG_SUBLINE.split(/[・／]/).filter(Boolean).map((s) => (
+                <div key={s} style={{ display: 'flex', padding: '6px 14px', borderRadius: 999, background: C.roseSoft, color: '#E8467A', fontSize: 15, fontFamily: 'Display' }}>
+                  {s.trim()}
+                </div>
+              ))}
             </div>
-            <div style={{ display: 'flex', fontSize: 28, letterSpacing: 2, color: C.ink2 }}>{OG_TAGLINE}</div>
-            <div style={{ display: 'flex', fontSize: 20, color: C.ink3, letterSpacing: 2 }}>{OG_SUBLINE}</div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 18 }}>
-            <span style={{ fontSize: 22, letterSpacing: 4 }}>{OG_SITE_LABEL}</span>
-            <span style={{ fontSize: 16, letterSpacing: 2, color: C.ink3 }}>{OG_SITE_URL_LABEL}</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: 6 }}>
+              {ACCORD_CODES.map((c) => (
+                <div key={c} style={{ display: 'flex', width: 18, height: 18, borderRadius: 9, background: ACCORD_LIQUID[c] }} />
+              ))}
+            </div>
+            <div style={{ display: 'flex', fontSize: 15, color: C.text3 }}>{OG_SITE_URL_LABEL}</div>
           </div>
-        </div>
-        {/* 右: 朱印 */}
-        <div
-          style={{
-            position: 'absolute',
-            right: 84,
-            top: 180,
-            width: 150,
-            height: 150,
-            background: liquid,
-            borderRadius: 75,
-            opacity: 0.9,
-            display: 'flex',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            right: 64,
-            bottom: 64,
-            width: 110,
-            height: 110,
-            background: C.shu,
-            borderRadius: 4,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transform: 'rotate(-3deg)',
-          }}
-        >
-          <div style={{ position: 'absolute', inset: 7, border: `2px solid ${C.paper3}`, display: 'flex' }} />
-          <span style={{ fontSize: 60, color: C.paper3, lineHeight: 1 }}>箋</span>
+          <div style={{ position: 'absolute', right: 56, top: 44, width: 120, height: 120, borderRadius: 60, background: accent, opacity: 0.85, display: 'flex' }} />
         </div>
       </div>
     ),

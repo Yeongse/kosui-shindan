@@ -1,104 +1,112 @@
 /*
- * デザイントークン — 「紺紙金泥」
- * 深い藍の料紙（紺紙）に金泥で書き、金銀の砂子を撒く。読ませる面だけ白練の紙を一枚載せる。
- * 朱は落款印にのみ使う（ベージュ地×朱のUIは避ける）。画像は /public/img 以下（無くても破綻しない）。
+ * デザイントークン v4 — 「香水診断 調香箋」
+ * 白いカード・淡いローズ／ラベンダーの地・太い丸ゴシック・ピル。
+ * 詳細は docs/design-brief.md。
  */
 :root {
-  /* 地（紺紙） */
-  --c-ground: #13203a; /* 紺 — ページ地 */
-  --c-surface: #1b2c4b; /* 紺青 — 面（パネル・行の背景） */
-  --c-surface-2: #24395e; /* 明るい紺 — hover */
-  --c-ground-deep: #0d1729; /* 濃紺 — 影・蒸留演出 */
+  /* 地・面 */
+  --c-bg: #fbf8fc; /* ページ地（極淡い藤白） */
+  --c-bg-rose: #fff4f8; /* にじみ: ローズ */
+  --c-bg-lav: #f4f1ff; /* にじみ: ラベンダー */
+  --c-card: #ffffff;
+  --c-card-2: #faf7fc; /* 面の2段目（選択肢 hover・表の帯） */
+  --c-border: #efe8f3;
+  --c-border-2: #e2d9ea;
+  --c-shadow: 0 10px 30px -14px rgba(120, 80, 160, 0.18), 0 2px 6px -2px rgba(120, 80, 160, 0.08);
+  --c-shadow-lg: 0 24px 60px -28px rgba(120, 80, 160, 0.28), 0 4px 12px -4px rgba(120, 80, 160, 0.1);
 
-  /* 紺紙の上の文字 */
-  --c-ink: #eeeae0; /* 白練 — 本文 */
-  --c-ink-2: #b9b4a7; /* 生壁色 — 補助 */
-  --c-ink-3: #857f74; /* 灰 — 最弱 */
-  --c-line: rgba(238, 234, 224, 0.16);
-  --c-line-soft: rgba(238, 234, 224, 0.09);
-  --c-line-strong: rgba(238, 234, 224, 0.32);
+  /* 文字 */
+  --c-text: #1e1b2e;
+  --c-text-2: #6e6785;
+  --c-text-3: #a19bb3;
 
-  /* 金泥・白群・朱 */
-  --c-kin: #cfae63; /* 金泥 — 見出しの罫・番号・主CTA */
-  --c-kin-deep: #a88a45;
-  --c-kin-pale: #e6cf93;
-  --c-kin-20: rgba(207, 174, 99, 0.28);
-  --c-kin-12: rgba(207, 174, 99, 0.14);
-  --c-byakugun: #a6cdd1; /* 白群 — リンク */
-  --c-byakugun-30: rgba(166, 205, 209, 0.35);
-  --c-fuji: #8f7aa3; /* 藤 — 飛雲 */
-  --c-asagi: #5b8791; /* 浅葱 — 飛雲 */
-  --c-shu: #c2402a; /* 朱 — 落款印・ロゴ印のみ */
+  /* 主色・副色 */
+  --c-rose: #ff5c8d;
+  --c-rose-deep: #e8467a;
+  --c-rose-soft: #ffe3ec;
+  --c-rose-12: rgba(255, 92, 141, 0.12);
+  --c-lav: #8b7cf6;
+  --c-lav-soft: #ebe6ff;
+  --c-lav-12: rgba(139, 124, 246, 0.12);
+  --c-mint-soft: #dff5ec;
+  --c-grad: linear-gradient(90deg, #ff6b9a 0%, #a48cff 100%);
 
-  /* 紙（調香箋カード・短冊・色紙など「紙の物体」） */
-  --c-paper: #f1efe7; /* 白練の紙 */
-  --c-paper-2: #e7e3d8; /* 紙の陰 */
-  --c-paper-3: #f7f5ee; /* 紙の明部 */
-  --c-paper-deep: #d9d3c4;
-  --c-paper-ink: #2a2420; /* 紙の上の墨 */
-  --c-paper-ink-2: #6b6157; /* 薄墨 */
-  --c-paper-ink-3: #9b9085; /* 鈍色 */
-  --c-paper-line: rgba(42, 36, 32, 0.2);
-  --c-paper-line-soft: rgba(42, 36, 32, 0.12);
-  --c-paper-kin: #8a6d2f; /* 紙の上の金（暗めで可読） */
-
-  /* 互換（旧名。新規コードでは上の名前を使う） */
-  --c-bottle: var(--c-ground);
-  --c-glass: var(--c-surface);
-  --c-white: var(--c-ink);
-  --c-white-70: var(--c-ink-2);
-  --c-white-50: var(--c-ink-3);
-  --c-white-30: var(--c-line-strong);
-  --c-amber: var(--c-kin);
-  --c-amber-20: var(--c-kin-20);
-  --c-verdigris: var(--c-ink-3);
-  --c-verdigris-40: var(--c-line);
-  --c-verdigris-20: var(--c-line-soft);
-  --c-rakkan: var(--c-shu);
-  --c-sumi: var(--c-paper-ink);
-  --c-usuzumi: var(--c-paper-ink-2);
-  --c-nibi: var(--c-paper-ink-3);
-  --c-sumi-12: var(--c-paper-line-soft);
-  --c-sumi-20: var(--c-paper-line);
-  --c-sumi-40: rgba(42, 36, 32, 0.4);
-  --c-sumi-60: var(--c-paper-ink-2);
-  --c-sumi-30: rgba(42, 36, 32, 0.4);
-  --c-ai: var(--c-byakugun);
-  --c-shu-12: var(--c-kin-12);
-  --c-shu-deep: var(--c-kin-deep);
-  --c-moegi: #7d9a5a;
+  /* 香調8色（パステル・チップとバーの地） */
+  --c-acc-cit: #ffe38a;
+  --c-acc-grn: #bfe8c9;
+  --c-acc-flr: #ffc2d6;
+  --c-acc-frt: #ffc8a8;
+  --c-acc-grm: #f1d3b6;
+  --c-acc-wdy: #d9c7b3;
+  --c-acc-amb: #f3d39b;
+  --c-acc-msk: #e6e2f2;
 
   /* 書体 */
-  --ff-display: var(--font-display), 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-  --ff-brush: var(--font-brush), 'Yuji Syuku', 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
-  --ff-body: var(--font-display), 'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-  --ff-data: var(--font-display), 'Shippori Mincho B1', 'Hiragino Mincho ProN', serif;
+  --ff-display: var(--font-display), 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', 'Hiragino Sans', sans-serif;
+  --ff-body: var(--font-body), 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
 
-  --fs-display: clamp(30px, 6vw, 58px);
-  --fs-h2: 23px;
-  --fs-h3: 18px;
-  --fs-body: 16px;
-  --fs-small: 14px;
-  --fs-data: 12.5px;
-  --lh-body: 2;
-  --ls-data: 0.12em;
+  --fs-body: 15.5px;
+  --lh-body: 1.85;
 
   /* レイアウト */
+  --w-app: 560px; /* 診断・結果の一列幅 */
   --w-content: 720px;
-  --w-wide: 1080px;
-  --gutter: clamp(20px, 5vw, 48px);
-  --radius: 2px;
-
-  /* 画像（無い場合は地色のみ） */
-  --img-washi: url('/img/paper/konshi-tile.jpg'); /* 紺紙のテクスチャ（暗い） */
-  --img-hero: url('/img/paper/hero-konshi.jpg'); /* 紺紙に金銀泥の飛雲 */
-  --img-kumo: url('/img/paper/kumo-band.png');
-  --img-sunago: url('/img/paper/sunago-corner.png');
-  --img-shikishi: url('/img/paper/shikishi.jpg'); /* 白練の紙（カード用） */
+  --w-wide: 960px;
+  --gutter: clamp(16px, 4vw, 28px);
+  --r-card: 20px;
+  --r-pill: 999px;
+  --r-btn: 14px;
 
   /* モーション */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast: 120ms;
-  --dur-base: 250ms;
-  --dur-slow: 500ms;
+  --dur-base: 220ms;
+  --dur-slow: 450ms;
+
+  /* 互換（旧名） */
+  --c-paper: var(--c-card);
+  --c-paper-3: var(--c-card);
+  --c-paper-2: var(--c-card-2);
+  --c-paper-ink: var(--c-text);
+  --c-paper-ink-2: var(--c-text-2);
+  --c-paper-ink-3: var(--c-text-3);
+  --c-paper-line: var(--c-border-2);
+  --c-paper-line-soft: var(--c-border);
+  --c-paper-kin: var(--c-rose);
+  --c-ground: var(--c-bg);
+  --c-surface: var(--c-card);
+  --c-surface-2: var(--c-card-2);
+  --c-ink: var(--c-text);
+  --c-ink-2: var(--c-text-2);
+  --c-ink-3: var(--c-text-3);
+  --c-line: var(--c-border-2);
+  --c-line-soft: var(--c-border);
+  --c-line-strong: var(--c-border-2);
+  --c-kin: var(--c-rose);
+  --c-kin-deep: var(--c-rose-deep);
+  --c-kin-pale: var(--c-rose-soft);
+  --c-kin-20: var(--c-border);
+  --c-kin-12: var(--c-rose-12);
+  --c-byakugun: var(--c-lav);
+  --c-byakugun-30: var(--c-lav-12);
+  --c-shu: var(--c-rose);
+  --c-sumi: var(--c-text);
+  --c-usuzumi: var(--c-text-2);
+  --c-nibi: var(--c-text-3);
+  --c-sumi-12: var(--c-border);
+  --c-sumi-20: var(--c-border-2);
+  --c-bottle: var(--c-bg);
+  --c-glass: var(--c-card-2);
+  --c-white: var(--c-text);
+  --c-white-70: var(--c-text-2);
+  --c-white-50: var(--c-text-3);
+  --c-amber: var(--c-rose);
+  --c-verdigris: var(--c-text-3);
+  --c-verdigris-40: var(--c-border-2);
+  --c-rakkan: var(--c-rose);
+  --ff-brush: var(--ff-display);
+  --ff-data: var(--ff-body);
+  --fs-data: 12px;
+  --ls-data: 0.04em;
+  --radius: var(--r-btn);
 }

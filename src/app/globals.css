@@ -1,6 +1,6 @@
 @import '../styles/tokens.css';
 
-/* ---------- reset（最小限） ---------- */
+/* ---------- reset ---------- */
 *,
 *::before,
 *::after {
@@ -14,14 +14,17 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--c-ground);
-  background-image: var(--img-washi);
-  background-size: 512px 512px;
-  color: var(--c-ink);
+  background-color: var(--c-bg);
+  background-image:
+    radial-gradient(ellipse 70% 40% at 15% 0%, var(--c-bg-rose) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, var(--c-bg-lav) 0%, transparent 70%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--c-text);
   font-family: var(--ff-body);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
-  font-feature-settings: 'palt' 0;
+  font-feature-settings: 'palt' 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100dvh;
@@ -39,6 +42,16 @@ dd,
 figure,
 blockquote {
   margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
 }
 
 ul,
@@ -67,47 +80,147 @@ svg {
   max-width: 100%;
 }
 
-/* ---------- フォーカスリング ---------- */
 :focus-visible {
-  outline: 2px solid var(--c-kin);
-  outline-offset: 3px;
+  outline: 3px solid var(--c-lav);
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
-/* ---------- 共通ユーティリティ ---------- */
+/* ---------- レイアウト ---------- */
 .container {
   width: 100%;
   max-width: var(--w-content);
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
-
 .container--wide {
   max-width: var(--w-wide);
 }
-
-/* 小さな添え字（旧 .data）。明朝・薄墨・字間広め */
-.data {
-  font-family: var(--ff-data);
-  font-size: var(--fs-data);
-  letter-spacing: var(--ls-data);
-  color: var(--c-ink-2);
+.container--app {
+  max-width: var(--w-app);
 }
 
-.display {
+/* ---------- 共通部品 ---------- */
+
+/* 白いカード */
+.card {
+  background: var(--c-card);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-card);
+  box-shadow: var(--c-shadow);
+}
+
+/* ピルチップ */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  background: var(--c-card);
+  border: 1px solid var(--c-border-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--c-text-2);
+  white-space: nowrap;
+}
+.chip--rose {
+  background: var(--c-rose-soft);
+  border-color: transparent;
+  color: var(--c-rose-deep);
+}
+.chip--lav {
+  background: var(--c-lav-soft);
+  border-color: transparent;
+  color: #5f4fd6;
+}
+
+/* ピルCTA */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 56px;
+  padding: 0 28px;
+  border-radius: var(--r-pill);
+  background: var(--c-rose);
+  color: #fff;
   font-family: var(--ff-display);
-  font-weight: 400;
-  line-height: 1.4;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 10px 24px -10px rgba(255, 92, 141, 0.55);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    background-color var(--dur-base) var(--ease),
+    box-shadow var(--dur-base) var(--ease);
+}
+.btn:hover {
+  background: var(--c-rose-deep);
+  box-shadow: 0 12px 28px -10px rgba(255, 92, 141, 0.65);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn--ghost {
+  background: var(--c-card);
+  color: var(--c-text);
+  border: 1.5px solid var(--c-border-2);
+  box-shadow: none;
+}
+.btn--ghost:hover {
+  background: var(--c-card-2);
+  box-shadow: none;
+}
+.btn--block {
+  width: 100%;
 }
 
-.brush {
-  font-family: var(--ff-brush);
-  font-weight: 400;
+/* テキストリンク */
+.link {
+  color: var(--c-lav);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--c-lav-12);
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1.5px;
+  transition: text-decoration-color var(--dur-base) var(--ease);
+}
+.link:hover {
+  text-decoration-color: var(--c-lav);
 }
 
-/* 縦書き */
-.tate {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+/* セクション見出し（装飾線なし・太字とサイズだけ） */
+.h2 {
+  font-size: 22px;
+  line-height: 1.5;
+}
+.h2--center {
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  background: var(--c-lav-soft);
+  color: #5f4fd6;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* 強調文字（ローズ→ラベンダー） */
+.grad-text {
+  background: var(--c-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .visually-hidden {
@@ -122,56 +235,6 @@ svg {
   border: 0;
 }
 
-/* テキストリンク: 白群、細い下線 */
-.link {
-  color: var(--c-byakugun);
-  text-decoration: underline;
-  text-decoration-color: var(--c-byakugun-30);
-  text-underline-offset: 0.28em;
-  text-decoration-thickness: 1px;
-  transition: text-decoration-color var(--dur-base) var(--ease);
-}
-.link:hover {
-  text-decoration-color: var(--c-byakugun);
-}
-
-/* 主CTA: 金泥。内側に紺の細線 */
-.btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6em;
-  min-height: 54px;
-  padding: 0 30px;
-  background: var(--c-kin);
-  color: var(--c-ground);
-  font-family: var(--ff-display);
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0.08em;
-  border-radius: var(--radius);
-  box-shadow: inset 0 0 0 1px var(--c-kin), inset 0 0 0 3px rgba(19, 32, 58, 0.35);
-  transition: background-color var(--dur-base) var(--ease);
-}
-.btn:hover {
-  background: var(--c-kin-pale);
-}
-.btn:active {
-  background: var(--c-kin-deep);
-}
-
-.btn--ghost {
-  background: transparent;
-  color: var(--c-ink);
-  box-shadow: inset 0 0 0 1px var(--c-line-strong);
-}
-.btn--ghost:hover,
-.btn--ghost:active {
-  background: var(--c-surface);
-}
-
-/* HTMLサイトマップの一覧 */
 .sitemap-list {
   display: flex;
   flex-direction: column;
@@ -179,47 +242,32 @@ svg {
   font-size: 15px;
 }
 
-/* 区切り罫 */
+/* 互換（旧クラス） */
+.data {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--c-text-3);
+}
+.display {
+  font-family: var(--ff-display);
+  font-weight: 700;
+}
+.brush {
+  font-family: var(--ff-display);
+  font-weight: 900;
+}
 .rule {
   border: 0;
-  border-top: 1px solid var(--c-line);
+  border-top: 1px solid var(--c-border);
   margin: 0;
 }
-
-/* 飛雲の帯（画像が無ければ淡い霞のグラデーション） */
-.kumo {
-  height: 72px;
-  background-color: transparent;
-  background-image: var(--img-kumo), linear-gradient(90deg, transparent, rgba(207, 174, 99, 0.14) 35%, rgba(166, 205, 209, 0.1) 65%, transparent);
-  background-repeat: no-repeat, no-repeat;
-  background-size: auto 100%, 100% 100%;
-  background-position: center, center;
-  pointer-events: none;
-}
-
-/* 金砂子（角に撒く） */
-.sunago {
-  position: relative;
-}
-.sunago::after {
-  content: '';
-  position: absolute;
-  right: -24px;
-  top: -24px;
-  width: 220px;
-  height: 220px;
-  background: var(--img-sunago) no-repeat center / contain;
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-/* 二重罫（料紙の界線） */
+.kumo,
+.sunago::after,
 .kaisen {
-  border-top: 1px solid var(--c-kin-20);
-  box-shadow: 0 2px 0 0 var(--c-ground), 0 3px 0 0 var(--c-kin-20);
+  display: none;
 }
 
-/* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

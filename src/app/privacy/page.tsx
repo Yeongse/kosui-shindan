@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <SiteHeader />
       <main className={`container ${styles.main}`}>
         <Breadcrumbs crumbs={[{ name: 'プライバシーポリシー', path: '/privacy' }]} />
-        <p className="data">個人情報の取り扱い</p>
+        <p style={{ textAlign: 'center' }}><span className="eyebrow">Privacy</span></p>
         <h1 className={styles.h1}>プライバシーポリシー</h1>
 
         <section className={styles.section} aria-labelledby="pp-1">

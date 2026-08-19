@@ -23,7 +23,7 @@ export default function AboutPage() {
       <SiteHeader />
       <main className={`container ${styles.main}`}>
         <Breadcrumbs crumbs={[{ name: '診断の考え方・運営者', path: '/about' }]} />
-        <p className="data">この診断について</p>
+        <p style={{ textAlign: 'center' }}><span className="eyebrow">About</span></p>
         <h1 className={styles.h1}>香水診断 調香箋について</h1>
 
         <section className={styles.section} aria-labelledby="about-idea">
@@ -102,7 +102,7 @@ export default function AboutPage() {
         </p>
 
         <div className={styles.cta}>
-          <ShindanCta />
+          <ShindanCta align="center" />
         </div>
       </main>
       <SiteFooter />

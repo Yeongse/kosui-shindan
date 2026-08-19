@@ -1,21 +1,17 @@
 import { ACCORD_CODES, type AccordCode, type ScentType } from '@/data/schema';
 import { absUrl } from './seo';
+import { ACCORD_LIQUID as ACCORD_LIQUID_LOCAL, ACCORD_NAME_JA as ACCORD_NAME_JA_LOCAL } from '@/data/palette';
 
-/** 縦長画像の配色（紺紙金泥・tokens.css と同期） */
+/** 縦長画像の配色（tokens.css と同期） */
 const P = {
-  ground: '#13203A',
-  ink: '#EEEAE0',
-  ink2: '#B9B4A7',
-  ink3: '#857F74',
-  paper: '#F1EFE7',
-  paper3: '#F7F5EE',
-  sumi: '#2A2420',
-  usuzumi: '#6B6157',
-  nibi: '#9B9085',
-  paperKin: '#8A6D2F',
-  shu: '#C2402A',
-  kin: '#CFAE63',
-  byakugun: '#A6CDD1',
+  bg: '#FBF8FC',
+  roseSoft: '#FFE3EC',
+  lavSoft: '#EBE6FF',
+  card: '#FFFFFF',
+  rose: '#FF5C8D',
+  text: '#1E1B2E',
+  text2: '#6E6785',
+  text3: '#A19BB3',
 };
 
 /**
@@ -66,109 +62,8 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: numbe
   ctx.closePath();
 }
 
-/** 飛雲 */
-function drawKumo(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, color: string, alpha: number) {
-  const k = w / 400;
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.scale(k, k);
-  ctx.globalAlpha = alpha;
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(20, 70);
-  ctx.bezierCurveTo(10, 40, 60, 20, 110, 34);
-  ctx.bezierCurveTo(130, 8, 200, 4, 230, 30);
-  ctx.bezierCurveTo(270, 10, 340, 20, 350, 52);
-  ctx.bezierCurveTo(390, 56, 392, 90, 350, 94);
-  ctx.bezierCurveTo(300, 110, 200, 104, 150, 96);
-  ctx.bezierCurveTo(100, 108, 30, 100, 20, 70);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-}
 
-/** 金砂子（決定的な疑似乱数で散らす） */
-function drawSunago(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, n: number, seed: number) {
-  let s = seed;
-  const rnd = () => {
-    s = (s * 9301 + 49297) % 233280;
-    return s / 233280;
-  };
-  ctx.save();
-  ctx.fillStyle = P.kin;
-  ctx.globalAlpha = 0.55;
-  for (let i = 0; i < n; i++) {
-    ctx.beginPath();
-    ctx.arc(x + rnd() * w, y + rnd() * h, 1.5 + rnd() * 3.5, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.restore();
-}
 
-function drawRadar(
-  ctx: CanvasRenderingContext2D,
-  scores: Record<AccordCode, number>,
-  cx: number,
-  cy: number,
-  R: number,
-  color: string,
-  ink: string,
-  monoFont: string,
-) {
-  const max = Math.max(1, ...ACCORD_CODES.map((c) => scores[c]));
-  ctx.save();
-  ctx.lineWidth = 1.5;
-  for (const k of [0.33, 0.66, 1]) {
-    ctx.beginPath();
-    ACCORD_CODES.forEach((_, i) => {
-      const a = (Math.PI * 2 * i) / 8 - Math.PI / 2;
-      const x = cx + Math.cos(a) * R * k;
-      const y = cy + Math.sin(a) * R * k;
-      if (i === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    });
-    ctx.closePath();
-    ctx.strokeStyle = ink;
-    ctx.globalAlpha = k === 1 ? 0.45 : 0.18;
-    ctx.stroke();
-  }
-  ctx.globalAlpha = 0.15;
-  ACCORD_CODES.forEach((_, i) => {
-    const a = (Math.PI * 2 * i) / 8 - Math.PI / 2;
-    ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(cx + Math.cos(a) * R, cy + Math.sin(a) * R);
-    ctx.stroke();
-  });
-  ctx.globalAlpha = 1;
-  ctx.beginPath();
-  ACCORD_CODES.forEach((c, i) => {
-    const a = (Math.PI * 2 * i) / 8 - Math.PI / 2;
-    const r = (Math.max(0, scores[c]) / max) * R;
-    const x = cx + Math.cos(a) * r;
-    const y = cy + Math.sin(a) * r;
-    if (i === 0) ctx.moveTo(x, y);
-    else ctx.lineTo(x, y);
-  });
-  ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.globalAlpha = 0.55;
-  ctx.fill();
-  ctx.globalAlpha = 1;
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  ctx.font = `20px ${monoFont}`;
-  ctx.fillStyle = ink;
-  ctx.globalAlpha = 0.7;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ACCORD_CODES.forEach((c, i) => {
-    const a = (Math.PI * 2 * i) / 8 - Math.PI / 2;
-    ctx.fillText(c, cx + Math.cos(a) * (R + 40), cy + Math.sin(a) * (R + 40));
-  });
-  ctx.restore();
-}
 
 function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
   const lines: string[] = [];
@@ -189,15 +84,14 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
 export interface StoryImageParams {
   type: ScentType;
   scores: Record<AccordCode, number>;
-  batchNo: string;
+  batchNo?: string;
   siteLabel?: string;
 }
 
-/** 1080×1920 の縦長画像を生成して Blob を返す */
+/** 1080×1920 の縦長画像を生成して Blob を返す（白いカード + 淡い地） */
 export async function generateStoryImage({
   type,
   scores,
-  batchNo,
   siteLabel = 'kosui-shindan.com',
 }: StoryImageParams): Promise<Blob> {
   const W = 1080;
@@ -208,146 +102,155 @@ export async function generateStoryImage({
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('canvas unsupported');
 
-  const display = cssVar('--ff-display', "'Shippori Mincho B1', serif");
-  const brush = cssVar('--ff-brush', "'Yuji Syuku', serif");
-  const body = display;
-  const mono = display;
-  await ensureFonts([`180px ${brush}`, `120px ${display}`, `700 60px ${display}`, `30px ${body}`, `24px ${mono}`]);
+  const display = cssVar('--ff-display', "'Zen Maru Gothic', sans-serif");
+  const body = cssVar('--ff-body', "'Zen Kaku Gothic New', sans-serif");
+  await ensureFonts([`900 120px ${display}`, `700 40px ${display}`, `500 30px ${body}`, `400 24px ${body}`]);
 
-  // 背景（紺紙）
-  ctx.fillStyle = P.ground;
+  // 地
+  ctx.fillStyle = P.bg;
   ctx.fillRect(0, 0, W, H);
-  drawKumo(ctx, -80, 40, 620, P.kin, 0.14);
-  drawKumo(ctx, 560, 1660, 620, P.byakugun, 0.1);
-  drawSunago(ctx, 760, 0, 320, 260, 90, 7);
-  drawSunago(ctx, 0, 1640, 340, 280, 80, 19);
+  ctx.globalAlpha = 0.9;
+  ctx.fillStyle = P.roseSoft;
+  ctx.beginPath();
+  ctx.arc(120, 160, 420, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = P.lavSoft;
+  ctx.beginPath();
+  ctx.arc(W - 80, H - 260, 480, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
 
-  // 上部ラベル
-  ctx.fillStyle = P.kin;
-  ctx.font = `26px ${display}`;
+  // ロゴ
+  ctx.fillStyle = P.text;
+  ctx.font = `900 40px ${display}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
-  ctx.fillText('香 水 診 断 　 調 香 箋', W / 2, 150);
+  ctx.fillText('調香箋', W / 2, 150);
+  ctx.fillStyle = P.text3;
+  ctx.font = `500 24px ${body}`;
+  ctx.fillText('香水診断', W / 2, 188);
 
-  // 箋紙
-  const px = 90;
-  const py = 220;
+  // カード
+  const px = 80;
+  const py = 240;
   const pw = W - px * 2;
-  const ph = 1400;
+  const ph = 1420;
   ctx.save();
-  ctx.shadowColor = 'rgba(0,0,0,0.6)';
-  ctx.shadowBlur = 60;
+  ctx.shadowColor = 'rgba(120,80,160,0.25)';
+  ctx.shadowBlur = 70;
   ctx.shadowOffsetY = 30;
-  ctx.fillStyle = P.paper;
-  roundRect(ctx, px, py, pw, ph, 2);
+  ctx.fillStyle = P.card;
+  roundRect(ctx, px, py, pw, ph, 44);
   ctx.fill();
   ctx.restore();
-  // 金の二重枠
-  ctx.strokeStyle = 'rgba(207,174,99,0.5)';
-  ctx.lineWidth = 2;
-  ctx.strokeRect(px + 1, py + 1, pw - 2, ph - 2);
-  ctx.strokeRect(px + 22, py + 22, pw - 44, ph - 44);
 
-  // 箋のヘッダ
-  ctx.fillStyle = P.usuzumi;
-  ctx.font = `22px ${display}`;
-  ctx.textAlign = 'left';
-  ctx.fillText('香水診断 調香箋', px + 60, py + 90);
-  ctx.textAlign = 'right';
-  ctx.fillText(batchNo === 'SPECIMEN' ? '調合番号 見本' : `調合番号 第${batchNo}号`, px + pw - 60, py + 90);
-  ctx.strokeStyle = 'rgba(42,36,32,0.3)';
+  // 丸
+  const cx = W / 2;
+  const cy = py + 230;
+  ctx.fillStyle = type.liquidColor;
   ctx.beginPath();
-  ctx.moveTo(px + 60, py + 116);
-  ctx.lineTo(px + pw - 60, py + 116);
+  ctx.arc(cx, cy, 150, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 10;
+  ctx.stroke();
+  ctx.strokeStyle = type.liquidColor;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(cx, cy, 162, 0, Math.PI * 2);
   ctx.stroke();
 
-  // タイプ名（縦に二文字を積む・筆）
-  const nameX = px + 190;
-  const nameTop = py + 200;
-  ctx.fillStyle = P.sumi;
-  ctx.font = `180px ${brush}`;
+  // ラベル・名前
   ctx.textAlign = 'center';
-  ctx.textBaseline = 'top';
-  const chars = Array.from(type.name);
-  chars.forEach((c, i) => ctx.fillText(c, nameX, nameTop + i * 200));
-  // 読み・コード（縦）
-  ctx.font = `28px ${display}`;
-  ctx.fillStyle = P.usuzumi;
-  Array.from(type.kana).forEach((c, i) => ctx.fillText(c, nameX + 135, nameTop + 10 + i * 34));
-  ctx.font = `22px ${display}`;
-  ctx.save();
-  ctx.translate(nameX + 135, nameTop + 10 + type.kana.length * 34 + 30);
-  ctx.rotate(Math.PI / 2);
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(type.code, 0, 0);
-  ctx.restore();
+  ctx.fillStyle = P.text2;
+  ctx.font = `500 26px ${body}`;
+  ctx.fillText('わたしの香水タイプは', cx, cy + 230);
+  ctx.fillStyle = P.text;
+  ctx.font = `900 120px ${display}`;
+  ctx.fillText(type.name, cx, cy + 360);
+  ctx.fillStyle = P.text3;
+  ctx.font = `500 24px ${body}`;
+  ctx.fillText(type.kana, cx, cy + 400);
+  ctx.fillStyle = P.text;
+  ctx.font = `700 38px ${display}`;
+  ctx.fillText(type.catch, cx, cy + 470);
 
-  // キャッチ
-  const rightX = px + 400;
-  ctx.textAlign = 'left';
+  // タグ
+  const [accord, temp] = type.code.split('-') as [AccordCode, 'W' | 'C'];
+  const tags = [`#${ACCORD_NAME_JA_LOCAL[accord]}系`, `#${temp === 'C' ? 'クール' : 'ウォーム'}`, `#${type.notes.last[0] ?? ''}`];
+  ctx.font = `700 24px ${display}`;
+  const widths = tags.map((t) => ctx.measureText(t).width + 40);
+  let tx = cx - (widths.reduce((a, b) => a + b, 0) + (tags.length - 1) * 12) / 2;
+  tags.forEach((t, i) => {
+    ctx.fillStyle = P.lavSoft;
+    roundRect(ctx, tx, cy + 505, widths[i]!, 46, 23);
+    ctx.fill();
+    ctx.fillStyle = '#5F4FD6';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(t, tx + widths[i]! / 2, cy + 528);
+    tx += widths[i]! + 12;
+  });
   ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = P.sumi;
-  ctx.font = `40px ${display}`;
-  const catchLines = wrapText(ctx, type.catch, pw - 400 - 60);
-  catchLines.forEach((l, i) => ctx.fillText(l, rightX, py + 250 + i * 56));
 
-  // 調香表
+  // ノート3カード
   const rows: [string, string][] = [
-    ['トップ', type.notes.top.join('、')],
-    ['ミドル', type.notes.middle.join('、')],
-    ['ラスト', type.notes.last.join('、')],
+    ['トップ', type.notes.top.join('・')],
+    ['ミドル', type.notes.middle.join('・')],
+    ['ラスト', type.notes.last.join('・')],
   ];
-  let ry = py + 250 + catchLines.length * 56 + 60;
-  ctx.strokeStyle = 'rgba(42,36,32,0.12)';
-  rows.forEach(([k, v]) => {
-    ctx.fillStyle = P.paperKin;
-    ctx.font = `20px ${display}`;
-    ctx.fillText(k, rightX, ry);
-    ctx.fillStyle = P.sumi;
-    ctx.font = `28px ${body}`;
-    const lines = wrapText(ctx, v, pw - 400 - 60 - 130);
-    lines.forEach((l, i) => ctx.fillText(l, rightX + 130, ry + i * 38));
-    ry += Math.max(1, lines.length) * 38 + 22;
-    ctx.beginPath();
-    ctx.moveTo(rightX, ry - 12);
-    ctx.lineTo(px + pw - 60, ry - 12);
-    ctx.stroke();
-    ry += 18;
+  const cardW = (pw - 80 - 20) / 3;
+  rows.forEach(([k, v], i) => {
+    const x = px + 40 + i * (cardW + 10);
+    const y = cy + 600;
+    ctx.fillStyle = '#FAF7FC';
+    roundRect(ctx, x, y, cardW, 150, 24);
+    ctx.fill();
+    ctx.fillStyle = P.rose;
+    ctx.font = `900 22px ${display}`;
+    ctx.textAlign = 'center';
+    ctx.fillText(k, x + cardW / 2, y + 44);
+    ctx.fillStyle = P.text;
+    ctx.font = `500 22px ${body}`;
+    const lines = wrapText(ctx, v, cardW - 30);
+    lines.slice(0, 3).forEach((l, li) => ctx.fillText(l, x + cardW / 2, y + 84 + li * 30));
   });
 
-  // レーダー
-  drawRadar(ctx, scores, px + 300, py + ph - 330, 190, type.liquidColor, P.sumi, display);
-
-  // 落款印
-  const sx = px + pw - 60 - 190;
-  const sy = py + ph - 60 - 190;
-  ctx.save();
-  ctx.translate(sx + 95, sy + 95);
-  ctx.rotate((-3 * Math.PI) / 180);
-  ctx.fillStyle = P.shu;
-  roundRect(ctx, -95, -95, 190, 190, 5);
-  ctx.fill();
-  ctx.strokeStyle = P.paper3;
-  ctx.lineWidth = 3;
-  ctx.strokeRect(-83, -83, 166, 166);
-  ctx.fillStyle = P.paper3;
-  ctx.font = `700 70px ${display}`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(chars[0] ?? '', 0, -42);
-  ctx.fillText(chars[1] ?? '', 0, 42);
-  ctx.restore();
+  // バランスバー（上位4）
+  const total = Math.max(1, ACCORD_CODES.reduce((a, c) => a + Math.max(0, scores[c]), 0));
+  const bars = [...ACCORD_CODES]
+    .map((c) => ({ c, pct: Math.round((Math.max(0, scores[c]) / total) * 100) }))
+    .sort((a, b) => b.pct - a.pct)
+    .slice(0, 4);
+  const maxPct = Math.max(1, ...bars.map((b) => b.pct));
+  bars.forEach((b, i) => {
+    const y = cy + 800 + i * 58;
+    ctx.textAlign = 'left';
+    ctx.fillStyle = P.text2;
+    ctx.font = `500 24px ${body}`;
+    ctx.fillText(ACCORD_NAME_JA_LOCAL[b.c], px + 50, y + 20);
+    const bx = px + 190;
+    const bw = pw - 190 - 130;
+    ctx.fillStyle = '#F3EFF7';
+    roundRect(ctx, bx, y, bw, 20, 10);
+    ctx.fill();
+    ctx.fillStyle = ACCORD_LIQUID_LOCAL[b.c];
+    roundRect(ctx, bx, y, bw * (b.pct / maxPct), 20, 10);
+    ctx.fill();
+    ctx.textAlign = 'right';
+    ctx.fillStyle = P.text;
+    ctx.font = `700 24px ${display}`;
+    ctx.fillText(`${b.pct}%`, px + pw - 50, y + 20);
+  });
 
   // 下部
   ctx.textAlign = 'center';
-  ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = P.ink;
-  ctx.font = `34px ${display}`;
-  ctx.fillText('12の質問で、あなたに似合う香水がわかる。', W / 2, H - 200);
-  ctx.fillStyle = P.ink3;
-  ctx.font = `24px ${display}`;
-  ctx.fillText(`香水診断 調香箋  ${siteLabel}`, W / 2, H - 140);
+  ctx.fillStyle = P.text2;
+  ctx.font = `700 30px ${display}`;
+  ctx.fillText('12の質問で、あなたに似合う香水がわかる。', W / 2, H - 150);
+  ctx.fillStyle = P.text3;
+  ctx.font = `500 24px ${body}`;
+  ctx.fillText(siteLabel, W / 2, H - 105);
 
   return new Promise<Blob>((resolve, reject) => {
     canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('toBlob failed'))), 'image/png');
