@@ -70,40 +70,50 @@ soft pastel digital illustration, clean modern style for a personality-quiz webs
 
 ---
 
-## public/img/hero/key-visual.jpg（1600×900）
+## public/img/hero/key-visual.png（1600×900）
 
-soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, thin elegant lines, flat shading, airy light. Three or four pastel perfume bottles of different shapes on a white washi paper surface, a few soft petals, a thin red-and-white mizuhiki cord loosely placed, small droplets of light, playful and clean, wide 16:9 composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not loud traditional patterns.
+**本命（俯瞰のフラットレイ・和の小物で統一）**
+
+Japanese modern (wa-modern) flat-lay illustration, top-down view, clean contemporary style like a present-day Kyoto craft or cosmetics brand, soft pastel digital painting with thin elegant lines and flat shading. On a sheet of white washi paper: three small perfume bottles with Japanese craftsmanship — one white porcelain bottle, one faceted Edo-kiriko glass bottle in pale indigo, one round bottle with a lacquered vermilion cap — placed with a small chirimen-silk scent sachet (nioi-bukuro) tied with a braided cord, a red-and-white mizuhiki knot, a folded strip of washi like a tanzaku, a few scattered petals (cherry blossom, wisteria, chrysanthemum) and tiny flakes of gold leaf. Colors: off-white #FCFAF7 base, vermilion #E0492F and indigo #2D4F8A accents, pastel Japanese colors. Generous empty space on the left third, wide 16:9 composition, airy soft light, no text, no letters, no watermark, no frame, not Western perfumery, no French boudoir, no crystal chandelier, no roses-only bouquet, no people.
+
+**別案A（短冊と香水瓶）**
+
+Japanese modern (wa-modern) illustration, clean contemporary style, thin elegant lines, flat shading, soft pastel. A single small perfume bottle with a lacquered vermilion cap standing on white washi, behind it three hanging tanzaku paper strips in pale pink, pale indigo and pale yellow (blank, no writing), a loop of red-and-white mizuhiki cord, a few falling cherry blossom and wisteria petals, tiny gold leaf flakes, subtle asanoha (hemp-leaf) pattern faintly visible on the background paper. Off-white #FCFAF7 base with vermilion #E0492F and indigo #2D4F8A accents, wide 16:9, generous empty space, airy light, no text, no letters, no watermark, no frame, not Western perfumery, no people.
+
+**別案B（月虹の情景・タイプ名の世界観寄り）**
+
+Japanese modern (wa-modern) illustration, clean contemporary style, thin elegant lines, flat shading, soft pastel. A quiet night scene in a flat graphic style: a pale full moon with a faint rainbow arc over still water, white lily-of-the-valley and iris at the water's edge, a small porcelain perfume bottle placed on a washi sheet in the foreground, a loop of mizuhiki cord, tiny gold leaf flakes. Palette: off-white #FCFAF7, pale pink, pale indigo #2D4F8A, vermilion #E0492F accent, wide 16:9, generous empty space, airy light, no text, no letters, no watermark, no frame, not Western perfumery, no people.
 
 ---
 
-## public/img/notes/citrus.jpg（1600×700）
+## public/img/notes/citrus.png（1600×700）
 
-soft pastel digital illustration, clean modern style, thin elegant lines, flat shading, airy light. Sliced lemon, grapefruit and yuzu on white washi paper with soft morning light, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame.
+Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. Sliced lemon, grapefruit and yuzu on white washi paper with soft morning light, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.
 
-## public/img/notes/green.jpg（1600×700）
+## public/img/notes/green.png（1600×700）
 
-soft pastel digital illustration, clean modern style, thin elegant lines, flat shading, airy light. Fresh young leaves with water droplets, freshly cut grass and a bit of moss on white washi paper, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame.
+Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. Fresh young leaves with water droplets, freshly cut grass and a bit of moss on white washi paper, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.
 
-## public/img/notes/floral.jpg（1600×700）
+## public/img/notes/floral.png（1600×700）
 
-soft pastel digital illustration, clean modern style, thin elegant lines, flat shading, airy light. A bouquet of roses, peonies and lily-of-the-valley with a small washi paper wrapping, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame.
+Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. A bouquet of roses, peonies and lily-of-the-valley with a small washi paper wrapping, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.
 
-## public/img/notes/fruity.jpg（1600×700）
+## public/img/notes/fruity.png（1600×700）
 
-soft pastel digital illustration, clean modern style, thin elegant lines, flat shading, airy light. Peaches, lychees and green apples with water droplets in a clear glass bowl, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame.
+Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. Peaches, lychees and green apples with water droplets in a clear glass bowl, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.
 
-## public/img/notes/gourmand.jpg（1600×700）
+## public/img/notes/gourmand.png（1600×700）
 
-soft pastel digital illustration, clean modern style, thin elegant lines, flat shading, airy light. Caramel, white chocolate, wasanbon sugar sweets and vanilla beans arranged on white washi paper, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame.
+Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. Caramel, white chocolate, wasanbon sugar sweets and vanilla beans arranged on white washi paper, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.
 
-## public/img/notes/woody.jpg（1600×700）
+## public/img/notes/woody.png（1600×700）
 
-soft pastel digital illustration, clean modern style, thin elegant lines, flat shading, airy light. Pieces of hinoki cypress and cedar wood with needles, soft dappled sunlight, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame.
+Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. Pieces of hinoki cypress and cedar wood with needles, soft dappled sunlight, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.
 
-## public/img/notes/amber.jpg（1600×700）
+## public/img/notes/amber.png（1600×700）
 
-soft pastel digital illustration, clean modern style, thin elegant lines, flat shading, airy light. Amber resin pieces and a small incense burner with a thin thread of smoke, warm evening light, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame.
+Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. Amber resin pieces and a small incense burner with a thin thread of smoke, warm evening light, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.
 
-## public/img/notes/musk.jpg（1600×700）
+## public/img/notes/musk.png（1600×700）
 
-soft pastel digital illustration, clean modern style, thin elegant lines, flat shading, airy light. Soft white linen and small white flowers with generous empty space, clean and calm, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame.
+Japanese modern (wa-modern) illustration, clean contemporary style like a present-day Kyoto craft brand, thin elegant lines, flat shading, soft pastel, airy light, props are Japanese (white washi paper, white porcelain, kiriko glass, mizuhiki cord, chirimen fabric) not Western perfumery. Soft white linen and small white flowers with generous empty space, clean and calm, wide horizontal composition, white to off-white background #FCFAF7, no text, no letters, no watermark, no frame, not Western perfumery, no people.

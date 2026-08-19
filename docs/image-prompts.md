@@ -52,16 +52,18 @@
 
 | パス | サイズ | 表示 |
 |---|---|---|
-| `public/img/hero/key-visual.jpg` | 1600×900 | LP最上部、角丸 24px の横長枠。文字は載せないので絵だけで「香水診断」だと伝わる構図 |
+| `public/img/hero/key-visual.png` | 1600×900 | LP最上部、角丸 24px の横長枠。文字は載せないので絵だけで「香水診断」だと伝わる構図 |
 
-プロンプト例:
-> 接頭辞 + "three or four pastel perfume bottles of different shapes on a white washi surface, a few soft petals, a thin red-and-white mizuhiki cord loosely placed, droplets of light, playful and clean, wide 16:9 composition"
+**注意**: 洋風の香水静物にすると、サイト名・タイプ名（調香箋・月虹…）の和のトーンと浮く。小物を和のもので統一する（白磁・江戸切子・漆の蓋・匂い袋・水引・短冊・和紙・金箔）。完成版プロンプトは [image-prompts-ready.md](./image-prompts-ready.md) の「本命／別案A／別案B」。
+
+プロンプト例（本命）:
+> 接頭辞 + "top-down flat-lay on white washi: a white porcelain perfume bottle, a pale-indigo Edo-kiriko glass bottle and a round bottle with a lacquered vermilion cap, a chirimen-silk scent sachet with braided cord, a red-and-white mizuhiki knot, a folded tanzaku washi strip, scattered cherry blossom, wisteria and chrysanthemum petals, tiny gold leaf flakes, generous empty space on the left, wide 16:9, not Western perfumery, no people"
 
 ## 3. 香りノート解説の扉絵 ★★
 
 | パス | サイズ | 表示 |
 |---|---|---|
-| `public/img/notes/{slug}.jpg` ×8 | 1600×700 | 一覧カードと記事冒頭の横長枠 |
+| `public/img/notes/{slug}.png` ×8 | 1600×700 | 一覧カードと記事冒頭の横長枠 |
 
 | slug | モチーフ |
 |---|---|
