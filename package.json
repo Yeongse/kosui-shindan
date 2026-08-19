@@ -17,6 +17,7 @@
     "og:fonts": "tsx scripts/build-og-fonts.ts",
     "shots": "tsx scripts/shots.ts",
     "favicon": "tsx scripts/make-favicon.ts",
+    "img:optimize": "tsx scripts/optimize-images.ts",
     "verify": "npm run typecheck && npm run test && npm run build && npm run check:links && npm run test:e2e"
   },
   "dependencies": {

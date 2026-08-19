@@ -39,7 +39,7 @@ export function ShindanCard({
         <Stamp name={type.name} size={60} className={styles.stamp} />
         <div className={styles.avatar}>
           <Art
-            src={`/img/types/${type.slug}.png`}
+            src={`/img/types/${type.slug}.webp`}
             alt=""
             className={styles.avatarArt}
             loading="eager"

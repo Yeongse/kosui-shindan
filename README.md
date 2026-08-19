@@ -21,7 +21,7 @@
 - 診断・結果は最大 560px の一列（PCでもアプリ感）。設問は「3 / 12」+ 進捗バー + 縦積みの角丸ボタン
 - 結果は丸いキャラ絵 → タイプ名 → タグ → 調香ノート3カード → 香りのバランス（8本のバー%）→ 相性カード → シェア4ボタン
 - 見出しの横バー・等幅ラベル・罫線主体・暗い地・セリフ体・クリーム地×赤茶は使わない
-- 画像スロット（`/public/img/...`）は無くても崩れない。16タイプのキャラ絵が主役なので、生成プロンプトは [docs/image-prompts.md](./docs/image-prompts.md)
+- 画像は原本を `assets/img/`、配信用 WebP を `public/img/` に置く（`npm run img:optimize` で生成）。スロットは無くても崩れない。生成プロンプトは [docs/image-prompts.md](./docs/image-prompts.md) / [docs/image-prompts-ready.md](./docs/image-prompts-ready.md)
 
 ## セットアップ
 
@@ -43,6 +43,8 @@ npm run dev
 | `npm run analyze:distribution` | 16タイプの出現分布（一様ランダム / 人間モデル）を表示。`PATCHES` 環境変数で重み案を試算 |
 | `npm run og:fonts` | OG画像用フォントのサブセット再生成（後述） |
 | `npm run shots` | 主要ページのフルページスクリーンショット（目視検収用） |
+| `npm run favicon` | ロゴ画像から favicon / apple-touch-icon / トリム版を生成 |
+| `npm run img:optimize` | `assets/img`（原本PNG）→ `public/img`（配信用WebP: タイプ512²・ノート/ヒーロー幅1200）を生成 |
 | `npm run verify` | typecheck → test → build → check:links → e2e を一括実行（リリース前） |
 
 ## ディレクトリ

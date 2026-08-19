@@ -37,7 +37,7 @@ export default function NotesIndexPage() {
             return (
               <li key={n.slug} className={`card ${styles.item}`}>
                 <Link href={`/notes/${n.slug}`} className={styles.thumb} style={{ background: `${ACCORD_LIQUID[n.accord]}33` }}>
-                  <Art src={`/img/notes/${n.slug}.png`} alt="" className={styles.thumbArt} fallback={<span className={styles.thumbDot} style={{ background: ACCORD_LIQUID[n.accord] }} />} />
+                  <Art src={`/img/notes/${n.slug}.webp`} alt="" className={styles.thumbArt} fallback={<span className={styles.thumbDot} style={{ background: ACCORD_LIQUID[n.accord] }} />} />
                 </Link>
                 <div className={styles.body}>
                   <h2 className={styles.title}>

@@ -12,7 +12,7 @@ export function TypeCard({ type, size = 'md' }: { type: ScentType; size?: 'sm' |
     <Link href={`/type/${type.slug}`} className={`${styles.card} ${size === 'sm' ? styles.sm : ''}`}>
       <div className={styles.avatar} style={{ background: `${type.liquidColor}33` }}>
         <Art
-          src={`/img/types/${type.slug}.png`}
+          src={`/img/types/${type.slug}.webp`}
           alt=""
           className={styles.avatarArt}
           fallback={<span className={styles.avatarFallback} style={{ background: type.liquidColor }} aria-hidden="true" />}
