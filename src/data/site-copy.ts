@@ -52,6 +52,9 @@ export const LP_FAQ: readonly { q: string; a: string }[] = [
 
 export const ABOUT_OPERATOR = {
   name: '香水診断 調香箋 運営事務局',
-  contactNote: 'お問い合わせは下記フォームからお願いします。返信には数日いただく場合があります。',
+  email: 'admin.chokosen@gmail.com',
   contactUrl: 'https://forms.gle/iYZWpzvUccW7aPnr8',
+  contactNote: 'お問い合わせはフォームまたはメールでお願いします。返信には数日いただく場合があります。',
+  /** サイトの公開日（プライバシーポリシー等の最終更新日として表示する） */
+  updatedAt: '2026.08.21',
 };

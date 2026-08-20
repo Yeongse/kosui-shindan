@@ -68,11 +68,21 @@ export default function AboutPage() {
             <div className={styles.dlRow}>
               <dt className={`data ${styles.dt}`}>お問い合わせ</dt>
               <dd>
-                {ABOUT_OPERATOR.contactNote}{' '}
+                {ABOUT_OPERATOR.contactNote}
+                <br />
                 <a href={ABOUT_OPERATOR.contactUrl} className="link" target="_blank" rel="noopener noreferrer">
                   お問い合わせフォーム
                 </a>
+                <br />
+                メール:{' '}
+                <a href={`mailto:${ABOUT_OPERATOR.email}`} className="link">
+                  {ABOUT_OPERATOR.email}
+                </a>
               </dd>
+            </div>
+            <div className={styles.dlRow}>
+              <dt className={`data ${styles.dt}`}>サイト名</dt>
+              <dd>香水診断 調香箋（こうすいしんだん ちょうこうせん）</dd>
             </div>
           </dl>
         </section>
@@ -84,7 +94,7 @@ export default function AboutPage() {
           <div className={styles.prose}>
             <p>本診断は娯楽コンテンツであり、医学・心理学的評価ではありません。結果は香りの好みを言葉にするための一つの目安であり、特定の効果・効能を保証するものではありません。</p>
             <p>
-              結果ページおよびガイド記事には、アフィリエイトプログラムによる広告リンク（PR表記あり）が含まれます。リンク先での購入・契約に関する責任は各販売事業者にあり、当サイトは商品の品質・在庫・価格について保証しません。
+              結果ページおよびガイド記事には、アフィリエイトプログラムによる広告リンクを含むことがあります（その場合は「PR」と表記します）。リンク先での購入・契約に関する責任は各販売事業者にあり、当サイトは商品の品質・在庫・価格について保証しません。
             </p>
             <p>
               掲載内容は執筆時点の一般的な情報に基づきます。香料へのアレルギーや体調に関わる事項は、必ず製品の表示と専門家の指示に従ってください。
