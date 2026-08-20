@@ -7,7 +7,7 @@
 ## スタック
 
 - Next.js 16 (App Router, Turbopack) + TypeScript strict + CSS Modules。**完全静的**（`output: 'export'`）
-- ホスティング: Cloudflare Workers の静的アセット（アセット専用・Worker コードなし）。構成は Terraform（`infra/terraform`）
+- ホスティング: Cloudflare Workers の静的アセット（アセット専用・Worker コードなし）。設定は `wrangler.jsonc`
 - 状態: React useReducer + sessionStorage（回答）/ localStorage（履歴3件）。外部状態管理なし
 - アニメーション: CSS transition/keyframes + SVG。framer-motion 等なし
 - OG画像: `next/og`（satori）で**ビルド時に生成**し `public/og/*.png` として配信（41枚）
@@ -48,6 +48,7 @@ npm run dev
 | `npm run shots` | 主要ページのフルページスクリーンショット（目視検収用） |
 | `npm run favicon` | ロゴ画像から favicon / apple-touch-icon / トリム版を生成 |
 | `npm run img:optimize` | `assets/img`（原本PNG）→ `public/img`（配信用WebP: タイプ512²・ノート/ヒーロー幅1200）を生成 |
+| `npm run deploy` | `out/` を Cloudflare にアップロードして公開（要 `CLOUDFLARE_API_TOKEN`） |
 | `npm run verify` | typecheck → test → build → check:links → e2e を一括実行（リリース前） |
 
 ## ディレクトリ
@@ -88,9 +89,8 @@ src/
 scripts/                  ビルド補助・検収・分析（build-og / optimize-images / favicon / check-links ほか）
 e2e/                      Playwright（静的出力に対して実行）
 assets/                   原本（画像PNG・OGフォント）。配信物は public/ に生成する
-infra/
-  cloudflare/             _headers / _redirects（Cloudflare の静的アセット設定）
-  terraform/              Cloudflare の構成（Worker・ドメイン・リダイレクト・解析）
+public/                   静的ファイル（画像・OG画像・_headers・_redirects）
+wrangler.jsonc            Cloudflare へのデプロイ設定（アセット専用）
 ```
 
 ## 診断ロジックとキャリブレーション
@@ -117,20 +117,56 @@ python3 -m venv .venv && .venv/bin/pip install fonttools brotli
 OG_FONT_SRC=/path/to/ttf PYFTSUBSET=.venv/bin/pyftsubset npm run og:fonts
 ```
 
-## デプロイ（Cloudflare / Terraform）
+## デプロイ（Cloudflare Workers 静的アセット）
 
-静的書き出し（`output: 'export'`）した `out/` を、Cloudflare Workers の静的アセットとして配信する。サーバーは持たない。
+静的書き出し（`output: 'export'`）した `out/` を、Cloudflare にアップロードして配信する。
+Worker のコードは持たない「アセット専用」構成なので、リクエストは Cloudflare のアセット配信層で完結する
+（コールドスタートなし・Worker のリクエスト課金なし）。設定は [wrangler.jsonc](./wrangler.jsonc) の1ファイル。
 
 ```bash
+export CLOUDFLARE_API_TOKEN='...'   # スコープは下記
 npm run build                       # out/ を作る（OG画像生成 → next build）
-cd infra/terraform && terraform apply
+npm run deploy                      # out/ をアップロードして公開
 ```
 
-手順とAPIトークンの権限は [infra/terraform/README.md](./infra/terraform/README.md)。Terraform が作るもの:
-静的アセット配信（Worker コードは持たない「アセット専用」構成）／独自ドメイン接続／`www` → apex の301／
-常時HTTPS／Cloudflare Web Analytics。
+### API トークンのスコープ
 
-URL解決（`infra/cloudflare/_headers` `_redirects`）はローカルでも再現できる:
+Cloudflare ダッシュボード →「マイプロフィール」→「API トークン」→「トークンを作成」。
+テンプレート **「Cloudflare Workers を編集する」** を選ぶのが最短。手で選ぶ場合の最小構成:
+
+| 種別 | 対象 | 権限 | 用途 |
+|---|---|---|---|
+| アカウント | Workers スクリプト | 編集 | Worker と静的アセットのアップロード |
+| アカウント | アカウント設定 | 読み取り | アカウントの解決（`CLOUDFLARE_ACCOUNT_ID` を渡す場合は省略可） |
+| ゾーン | Workers ルート | 編集 | 独自ドメイン（`kosui-shindan.com`）への接続 |
+| ゾーン | ゾーン | 読み取り | 接続先ゾーンの解決 |
+
+- **ゾーンリソース**は `kosui-shindan.com` だけに限定してよい
+- KV / R2 / D1 は使っていないので不要
+- トークンはファイルに書かず、環境変数 `CLOUDFLARE_API_TOKEN` で渡す
+
+### 初回だけダッシュボードで設定すること
+
+`wrangler deploy` は配信とドメイン接続までを行う。以下はサイトの挙動に関わるがデプロイでは触らないので、
+最初に1回だけ設定する（いずれもゾーンの設定画面）。
+
+1. **www → apex の301**: ルール →「リダイレクトルール」→ 受信リクエストが `hostname eq "www.kosui-shindan.com"` のとき、
+   `concat("https://kosui-shindan.com", http.request.uri.path)` へ 301（クエリ文字列を保持）。
+   あわせて DNS に `www` の AAAA レコード `100::`（プロキシ ON）を追加する
+2. **常時 HTTPS**: SSL/TLS →「エッジ証明書」→「常に HTTPS を使用」を ON
+3. **アクセス解析**: 「Web Analytics」→ サイトを追加 → `kosui-shindan.com`（自動挿入を ON にすれば
+   `NEXT_PUBLIC_CF_BEACON_TOKEN` の設定は不要）
+
+### URL の解決規則
+
+`public/_headers` と `public/_redirects` がビルドで `out/` にコピーされ、アップロード時に Cloudflare が読み取る。
+
+- `/type/gekko` → `out/type/gekko.html`、`/type/gekko/` は `/type/gekko` へ 301（`html_handling`）
+- 未一致は `out/404.html` を 404 で返す（`not_found_handling`）
+- 旧URL（`/q`、`/types`、`/r/{コード}`）は現行URLへ 301（`_redirects`）
+- `/_next/static/*` は1年、画像とOGは1週間キャッシュ（`_headers`）
+
+同じ挙動をローカルでも再現できる（E2E もこの上で実行される）:
 
 ```bash
 npm run build && npm run serve      # http://localhost:3199
@@ -143,7 +179,7 @@ npm run build && npm run serve      # http://localhost:3199
 
 1. `npm run verify` が全て通ることを確認（typecheck / tests / build / 内部リンク検証 / E2E）
 2. `npm run shots` で 390px と 1280px の見た目を確認（`npm run shots -- 390`）
-3. `cd infra/terraform && terraform apply` でデプロイ後、`https://kosui-shindan.com/sitemap.xml` と `/robots.txt` を確認
+3. `npm run deploy` でデプロイ後、`https://kosui-shindan.com/sitemap.xml` と `/robots.txt` を確認
 4. **Google Search Console** に `kosui-shindan.com`（ドメインプロパティ）を追加し、Cloudflare DNS に TXT レコードで所有権確認
 5. サイトマップ `https://kosui-shindan.com/sitemap.xml` を送信
 6. URL検査で `/`, `/type/gekko`, `/notes/musk`, `/guide/how-to-choose` をインデックス登録リクエスト
@@ -163,7 +199,7 @@ npm run build && npm run serve      # http://localhost:3199
 - **完全静的化（§6/§10.2/§11.1）**: Cloudflare の静的ホスティングに載せるため、Edge の `/api/og`・middleware・動的ルートを廃止した。
   - OG画像は**ビルド時に生成**（`public/og/*.png`）。このため `?d=` によるOG画像の個人化は行わない（共有リンクのプレビューはタイプ代表値。ページ本体とダウンロードする縦長画像は従来どおり個人のスコアで描画される）
   - `?d=` は**ブラウザ側で解決**する。静的HTMLはタイプ代表値で描画し、マウント後に香りのバランス・隠し香調・共有URLを本人の値へ差し替える（本文・見出しは静的HTMLに含まれるので検索には影響しない）
-  - 旧URLの301は Cloudflare 側（`infra/cloudflare/_redirects`）で行う
+  - 旧URLの301は Cloudflare 側（`public/_redirects`）で行う
 - **X の intent URL**: `x.com/intent/post` を使用（旧 twitter.com は転送されるため）
 - **デザイン（§7）**: ユーザー指示により spec の世界観（暗い薬瓶・縦書き・蒸留瓶）を離れ、現代の診断サイトの文法（白カード・パステル・丸ゴ・進捗バー・キャラ絵）に全面変更。§7.0 の「角丸カードのグリッド」「棒状プログレス」はジャンル標準として採用。絵文字不使用・「！」不使用は維持
 - **計測（§12.7）**: GA4 と同意バナーは撤去し Cloudflare Web Analytics に置換。`track()` は no-op の差し替え点として残置

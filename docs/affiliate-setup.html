@@ -181,7 +181,7 @@ NEXT_PUBLIC_EXPERIENCE_LABEL=調香体験を探す</code></pre>
 
 <ol>
   <li><b>ローカル確認</b>：プロジェクト直下の <code>.env.local</code> に上記を書き、<code>npm run dev</code> → <code>http://localhost:3000/type/gekko</code> を開いてボタンのリンク先を確認。</li>
-  <li><b>本番</b>：このサイトは完全静的なので、<code>NEXT_PUBLIC_</code> の値は<b>ビルドしたマシンの <code>.env.local</code></b> がそのままHTMLに焼き込まれる。値を入れたら <code>npm run build</code> → <code>cd infra/terraform &amp;&amp; terraform apply</code> で反映する（Cloudflare のダッシュボードに環境変数を置いても反映されない）。</li>
+  <li><b>本番</b>：このサイトは完全静的なので、<code>NEXT_PUBLIC_</code> の値は<b>ビルドしたマシンの <code>.env.local</code></b> がそのままHTMLに焼き込まれる。値を入れたら <code>npm run build</code> → <code>npm run deploy</code> で反映する（Cloudflare のダッシュボードに環境変数を置いても反映されない）。</li>
   <li><b>確認</b>：本番の結果ページで 3つのリンク（楽天／Amazon／体験）を実際にクリックして着地を確認。各 ASP のレポートに「クリック」が1件つけば配線完了。</li>
 </ol>
 
@@ -208,7 +208,7 @@ NEXT_PUBLIC_EXPERIENCE_LABEL=調香体験を探す</code></pre>
   <li>楽天アフィリエイト登録 → アフィリエイトIDを環境変数に設定</li>
   <li>バリューコマース（または A8.net／アクセストレード）登録 → アソビュー／じゃらんに提携申請</li>
   <li>承認後、調香体験一覧のアフィリエイトリンクを発行 → <code>NEXT_PUBLIC_EXPERIENCE_URL</code> に設定</li>
-  <li><code>.env.local</code> に環境変数を入れて <code>npm run build</code> → <code>terraform apply</code> で反映</li>
+  <li><code>.env.local</code> に環境変数を入れて <code>npm run build</code> → <code>npm run deploy</code> で反映</li>
   <li>本番の結果ページで3リンクをクリックし、各管理画面にクリックが記録されることを確認</li>
   <li>フッターに Amazon 必須文言が出ていることを確認</li>
 </ul>

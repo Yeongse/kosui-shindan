@@ -1,4 +1,5 @@
-# Cloudflare Workers 静的アセットのリダイレクト設定（Terraform から assets.config.redirects に渡す）
+# Cloudflare Workers 静的アセットのリダイレクト設定。
+# public/ に置くことでビルド時に out/ へコピーされ、アップロード時に Cloudflare が読み取る。
 # 旧URL（app-spec.md §6 の旧仕様）を 301 で現行URLへ集約する。
 /q               /shindan            301
 /types           /type               301

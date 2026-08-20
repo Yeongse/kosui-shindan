@@ -7,8 +7,8 @@
  * 再現する挙動:
  * - html_handling = "drop-trailing-slash": /type/gekko → out/type/gekko.html、/type/gekko/ は /type/gekko へ 301
  * - not_found_handling = "404-page": 未一致は out/404.html を 404 で返す
- * - infra/cloudflare/_redirects の 301 リダイレクト
- * - infra/cloudflare/_headers の共通ヘッダ（先頭の /* ブロックのみ簡易適用）
+ * - out/_redirects の 301 リダイレクト
+ * - out/_headers の共通ヘッダ（先頭の /* ブロックのみ簡易適用）
  */
 import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import http from 'node:http';
@@ -35,7 +35,7 @@ const TYPES: Record<string, string> = {
 
 function loadRedirects(): Map<string, { to: string; code: number }> {
   const m = new Map<string, { to: string; code: number }>();
-  const f = path.resolve('infra/cloudflare/_redirects');
+  const f = path.join(ROOT, '_redirects');
   if (!existsSync(f)) return m;
   for (const line of readFileSync(f, 'utf8').split('\n')) {
     const t = line.trim();
@@ -47,7 +47,7 @@ function loadRedirects(): Map<string, { to: string; code: number }> {
 }
 
 function commonHeaders(): Record<string, string> {
-  const f = path.resolve('infra/cloudflare/_headers');
+  const f = path.join(ROOT, '_headers');
   const out: Record<string, string> = {};
   if (!existsSync(f)) return out;
   let inGlobal = false;
