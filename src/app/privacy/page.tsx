@@ -93,7 +93,7 @@ export default function PrivacyPage() {
           </h2>
           <div className={styles.prose}>
             <p>
-              シェア機能（X、LINE）や検索リンク、お問い合わせフォーム（Google フォーム）は外部サービスへ遷移します。遷移先での情報の取り扱いは各サービスのポリシーに従います。
+              シェア機能（X）や検索リンク、お問い合わせフォーム（Google フォーム）は外部サービスへ遷移します。遷移先での情報の取り扱いは各サービスのポリシーに従います。
             </p>
           </div>
         </section>

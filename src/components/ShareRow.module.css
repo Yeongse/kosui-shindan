@@ -9,7 +9,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -51,9 +51,6 @@
 
 .x .icon {
   background: #1e1b2e;
-}
-.line .icon {
-  background: #06c755;
 }
 .image .icon {
   background: var(--c-rose);

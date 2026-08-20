@@ -8,6 +8,8 @@
  * - public/og/guide-{slug}.png  ×16（ガイド記事）
  * - public/og/default.png       （LP・その他）
  * フォントは assets/og-fonts/*.woff（npm run og:fonts で再生成）。
+ * タイプ・ノートの絵は assets/img 配下の原本PNGを data URI として埋め込む
+ * （配信用の WebP は satori が読めないため、原本の PNG を使う）。
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -22,6 +24,15 @@ const OUT = path.resolve('public/og');
 function toArrayBuffer(p: string): ArrayBuffer {
   const b = readFileSync(p);
   return b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength) as ArrayBuffer;
+}
+
+/** 画像を data URI にする。無ければ null（呼び出し側は色だけで描画する） */
+function dataUri(file: string): string | null {
+  try {
+    return `data:image/png;base64,${readFileSync(file).toString('base64')}`;
+  } catch {
+    return null;
+  }
 }
 
 async function write(name: string, res: Response) {
@@ -48,11 +59,13 @@ async function write(name: string, res: Response) {
   let bytes = 0;
 
   for (const t of TYPES) {
-    bytes += await write(`type-${t.slug}.png`, renderTypeOg(t, assets));
+    const art = dataUri(path.resolve(`assets/img/types/${t.slug}.png`));
+    bytes += await write(`type-${t.slug}.png`, renderTypeOg(t, assets, art));
     count++;
   }
   for (const n of NOTES) {
-    bytes += await write(`note-${n.slug}.png`, renderLabelOg(assets, `${n.name}系の香水とは`, TYPE_LIQUID[`${n.accord}-C`]));
+    const art = dataUri(path.resolve(`assets/img/notes/${n.slug}.png`));
+    bytes += await write(`note-${n.slug}.png`, renderLabelOg(assets, `${n.name}系の香水とは`, TYPE_LIQUID[`${n.accord}-C`], art));
     count++;
   }
   for (const g of GUIDES) {

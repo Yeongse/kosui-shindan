@@ -31,10 +31,6 @@ export function xIntentUrl(type: ScentType, url: string): string {
   return `https://x.com/intent/post?text=${encodeURIComponent(buildShareText(type, url))}`;
 }
 
-export function lineShareUrl(type: ScentType, url: string): string {
-  return `https://line.me/R/share?text=${encodeURIComponent(buildShareText(type, url))}`;
-}
-
 /* ---------- 縦長画像（Instagram ストーリーズ用） ---------- */
 
 function cssVar(name: string, fallback: string): string {
@@ -82,6 +78,33 @@ function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number)
   return lines;
 }
 
+/**
+ * 画像を読み込む。失敗したら null（描画は色だけのフォールバックにする）。
+ * 同一オリジンの画像なので canvas は汚染されず、toBlob で保存できる。
+ */
+function loadImage(src: string): Promise<HTMLImageElement | null> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.decoding = 'async';
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+/** 画像を円形に切り抜いて中央に収める（cover 相当） */
+function drawCircularImage(ctx: CanvasRenderingContext2D, img: HTMLImageElement, cx: number, cy: number, r: number) {
+  const side = Math.min(img.naturalWidth, img.naturalHeight);
+  const sx = (img.naturalWidth - side) / 2;
+  const sy = (img.naturalHeight - side) / 2;
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.clip();
+  ctx.drawImage(img, sx, sy, side, side, cx - r, cy - r, r * 2, r * 2);
+  ctx.restore();
+}
+
 export interface StoryImageParams {
   type: ScentType;
   scores: Record<AccordCode, number>;
@@ -105,7 +128,10 @@ export async function generateStoryImage({
 
   const display = cssVar('--ff-display', "'Zen Old Mincho', serif");
   const body = cssVar('--ff-body', "'Zen Kaku Gothic New', sans-serif");
-  await ensureFonts([`900 120px ${display}`, `700 40px ${display}`, `500 30px ${body}`, `400 24px ${body}`]);
+  const [, typeArt] = await Promise.all([
+    ensureFonts([`900 120px ${display}`, `700 40px ${display}`, `500 30px ${body}`, `400 24px ${body}`]),
+    loadImage(`/img/types/${type.slug}.webp`),
+  ]);
 
   // 地
   ctx.fillStyle = P.bg;
@@ -145,15 +171,22 @@ export async function generateStoryImage({
   ctx.fill();
   ctx.restore();
 
-  // 丸
+  // 丸（タイプのキャラ絵。読み込めなければ液体色で塗る）
   const cx = W / 2;
   const cy = py + 230;
+  const r = 150;
   ctx.fillStyle = type.liquidColor;
   ctx.beginPath();
-  ctx.arc(cx, cy, 150, 0, Math.PI * 2);
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
   ctx.fill();
+  if (typeArt) {
+    drawCircularImage(ctx, typeArt, cx, cy, r);
+  }
+  // 二重の輪（結果カードと同じ意匠）
   ctx.strokeStyle = '#fff';
   ctx.lineWidth = 10;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
   ctx.stroke();
   ctx.strokeStyle = type.liquidColor;
   ctx.lineWidth = 3;

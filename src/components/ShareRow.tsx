@@ -3,18 +3,13 @@
 import { useState } from 'react';
 import type { AccordCode, ScentType } from '@/data/schema';
 import { track } from '@/lib/analytics';
-import { downloadBlob, generateStoryImage, lineShareUrl, shareUrlFor, xIntentUrl } from '@/lib/share';
+import { downloadBlob, generateStoryImage, shareUrlFor, xIntentUrl } from '@/lib/share';
 import { useResultMode } from './ResultMode';
 import styles from './ShareRow.module.css';
 
 const IconX = () => (
   <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="currentColor">
     <path d="M17.5 3h3.1l-6.8 7.8L21.8 21h-6.3l-4.9-6.4L5 21H1.9l7.3-8.3L1.5 3h6.4l4.4 5.9L17.5 3zm-1.1 16.2h1.7L7.1 4.7H5.3l11.1 14.5z" />
-  </svg>
-);
-const IconLine = () => (
-  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="currentColor">
-    <path d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.2 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6c1.5-1.6 2.1-3.2 2.1-4.8C22 6.6 17.5 3 12 3zM8.3 13.6H6.2c-.3 0-.5-.2-.5-.5V9c0-.3.2-.5.5-.5s.5.2.5.5v3.6h1.6c.3 0 .5.2.5.5s-.2.5-.5.5zm1.9-.5c0 .3-.2.5-.5.5s-.5-.2-.5-.5V9c0-.3.2-.5.5-.5s.5.2.5.5v4.1zm5 0c0 .2-.1.4-.3.5h-.2c-.2 0-.3-.1-.4-.2l-2.1-2.9v2.6c0 .3-.2.5-.5.5s-.5-.2-.5-.5V9c0-.2.1-.4.3-.5h.2c.2 0 .3.1.4.2l2.1 2.9V9c0-.3.2-.5.5-.5s.5.2.5.5v4.1zm3.3-2.6c.3 0 .5.2.5.5s-.2.5-.5.5h-1.6v1h1.6c.3 0 .5.2.5.5s-.2.5-.5.5h-2.1c-.3 0-.5-.2-.5-.5V9c0-.3.2-.5.5-.5h2.1c.3 0 .5.2.5.5s-.2.5-.5.5h-1.6v1h1.6z" />
   </svg>
 );
 const IconImage = () => (
@@ -31,7 +26,7 @@ const IconLink = () => (
   </svg>
 );
 
-/** シェア: X / LINE / 画像を保存 / リンクをコピー */
+/** シェア: X / 画像を保存 / リンクをコピー */
 export function ShareRow({
   type,
   scores: fallbackScores,
@@ -94,19 +89,6 @@ export function ShareRow({
             <IconX />
           </span>
           <span>X</span>
-        </a>
-        <a
-          href={lineShareUrl(type, url)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`${styles.btn} ${styles.line}`}
-          data-share="line"
-          onClick={() => track('share', { method: 'line', type: type.code })}
-        >
-          <span className={styles.icon}>
-            <IconLine />
-          </span>
-          <span>LINE</span>
         </a>
         <button type="button" className={`${styles.btn} ${styles.image}`} onClick={onImage} disabled={busy} data-share="image">
           <span className={styles.icon}>

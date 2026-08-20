@@ -7,7 +7,7 @@ import { OG_SITE_URL_LABEL, OG_SUBLINE, OG_TAGLINE } from '@/lib/og-labels';
 /**
  * OG画像のレンダリング（1200×630）。ビルド時に scripts/build-og.ts から呼ばれ、
  * public/og/*.png として書き出される（配信は静的ファイル）。
- * 白いカード + 淡い地。フォントとロゴは呼び出し側から渡す。
+ * 白いカード + 淡い地。フォント・ロゴ・タイプのキャラ絵は呼び出し側から data URI で渡す。
  */
 
 export const OG_W = 1200;
@@ -62,8 +62,8 @@ function Logo({ src }: { src: string | null }) {
   );
 }
 
-/** タイプの結果カード風 OG */
-export function renderTypeOg(type: ScentType, assets: OgAssets): ImageResponse {
+/** タイプの結果カード風 OG。art はタイプのキャラ絵（data URI）。無ければ液体色の円になる。 */
+export function renderTypeOg(type: ScentType, assets: OgAssets, art: string | null = null): ImageResponse {
   const scores = representativeScores(type.code);
   const liquid = TYPE_LIQUID[type.code];
   const [accord, temp] = type.code.split('-') as [AccordCode, 'W' | 'C'];
@@ -102,7 +102,22 @@ export function renderTypeOg(type: ScentType, assets: OgAssets): ImageResponse {
           </div>
           {/* 左: 丸 + 名前 */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 380, gap: 18 }}>
-            <div style={{ width: 190, height: 190, borderRadius: 95, background: liquid, opacity: 0.9, display: 'flex', boxShadow: `0 0 0 6px #fff, 0 0 0 8px ${liquid}, 0 0 0 14px #fff, 0 0 0 15px ${liquid}88` }} />
+            <div
+              style={{
+                width: 190,
+                height: 190,
+                borderRadius: 95,
+                background: liquid,
+                display: 'flex',
+                overflow: 'hidden',
+                boxShadow: `0 0 0 6px #fff, 0 0 0 8px ${liquid}, 0 0 0 14px #fff, 0 0 0 15px ${liquid}88`,
+              }}
+            >
+              {art ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={art} width={190} height={190} alt="" style={{ borderRadius: 95, objectFit: 'cover' }} />
+              ) : null}
+            </div>
             <div style={{ display: 'flex', fontSize: 16, color: C.text2, marginTop: 6 }}>あなたの香水タイプは</div>
             <div style={{ display: 'flex', fontFamily: 'Display', fontSize: 78, lineHeight: 1, letterSpacing: 8, color: C.text }}>{type.name}</div>
             <div style={{ display: 'flex', fontSize: 16, color: C.text3, letterSpacing: 4 }}>{type.kana}</div>
@@ -152,8 +167,8 @@ export function renderTypeOg(type: ScentType, assets: OgAssets): ImageResponse {
   );
 }
 
-/** 記事・既定の OG（label 無しならサイト全体の既定） */
-export function renderLabelOg(assets: OgAssets, label: string | null, accentColor?: string): ImageResponse {
+/** 記事・既定の OG（label 無しならサイト全体の既定）。art は右上の丸に入れる絵（data URI）。 */
+export function renderLabelOg(assets: OgAssets, label: string | null, accentColor?: string, art: string | null = null): ImageResponse {
   const title = label ?? '香水診断';
   const accent = accentColor ?? C.rose;
   return new ImageResponse(
@@ -183,7 +198,25 @@ export function renderLabelOg(assets: OgAssets, label: string | null, accentColo
             </div>
             <div style={{ display: 'flex', fontSize: 15, color: C.text3 }}>{OG_SITE_URL_LABEL}</div>
           </div>
-          <div style={{ position: 'absolute', right: 56, top: 44, width: 120, height: 120, borderRadius: 60, background: accent, opacity: 0.85, display: 'flex' }} />
+          <div
+            style={{
+              position: 'absolute',
+              right: 56,
+              top: 44,
+              width: 120,
+              height: 120,
+              borderRadius: 60,
+              background: accent,
+              display: 'flex',
+              overflow: 'hidden',
+              boxShadow: `0 0 0 5px #fff, 0 0 0 6px ${accent}`,
+            }}
+          >
+            {art ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={art} width={120} height={120} alt="" style={{ borderRadius: 60, objectFit: 'cover' }} />
+            ) : null}
+          </div>
         </div>
       </div>
     ),
