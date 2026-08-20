@@ -7,7 +7,7 @@
 ## スタック
 
 - Next.js 16 (App Router, Turbopack) + TypeScript strict + CSS Modules。**完全静的**（`output: 'export'`）
-- ホスティング: Cloudflare Workers の静的アセット。構成は Terraform（`infra/terraform`）
+- ホスティング: Cloudflare Workers の静的アセット（アセット専用・Worker コードなし）。構成は Terraform（`infra/terraform`）
 - 状態: React useReducer + sessionStorage（回答）/ localStorage（履歴3件）。外部状態管理なし
 - アニメーション: CSS transition/keyframes + SVG。framer-motion 等なし
 - OG画像: `next/og`（satori）で**ビルド時に生成**し `public/og/*.png` として配信（41枚）
@@ -127,7 +127,8 @@ cd infra/terraform && terraform apply
 ```
 
 手順とAPIトークンの権限は [infra/terraform/README.md](./infra/terraform/README.md)。Terraform が作るもの:
-Worker（静的アセット）／独自ドメイン接続／`www` → apex の301／常時HTTPS／Cloudflare Web Analytics。
+静的アセット配信（Worker コードは持たない「アセット専用」構成）／独自ドメイン接続／`www` → apex の301／
+常時HTTPS／Cloudflare Web Analytics。
 
 URL解決（`infra/cloudflare/_headers` `_redirects`）はローカルでも再現できる:
 

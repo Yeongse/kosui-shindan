@@ -17,27 +17,17 @@ data "cloudflare_zone" "this" {
 locals {
   # provider のバージョンによって zone の識別子が zone_id / id のどちらかに入るため両対応
   zone_id = try(coalesce(data.cloudflare_zone.this.zone_id, data.cloudflare_zone.this.id), data.cloudflare_zone.this.id)
-
-  worker_entry = "${path.module}/worker/index.mjs"
 }
 
-# --- 静的サイト本体（Worker + 静的アセット） -------------------------------
+# --- 静的サイト本体（アセットのみ・Worker コードは持たない） ----------------
+# スクリプトを置かない「アセット専用」構成。リクエストは Cloudflare のアセット配信層で
+# 完結し、Worker は起動しない（コールドスタートなし・Worker のリクエスト課金なし）。
+# 将来サーバー処理が必要になったら content_file / main_module と ASSETS バインディングを足す。
 resource "cloudflare_workers_script" "site" {
   account_id  = var.account_id
   script_name = var.worker_name
 
-  content_file   = local.worker_entry
-  content_sha256 = filesha256(local.worker_entry)
-  main_module    = "index.mjs"
-
   compatibility_date = var.compatibility_date
-
-  bindings = [
-    {
-      name = "ASSETS"
-      type = "assets"
-    }
-  ]
 
   assets = {
     directory = var.assets_directory
@@ -45,7 +35,7 @@ resource "cloudflare_workers_script" "site" {
     config = {
       # /type/gekko → type/gekko.html。末尾スラッシュ付きは 301 で落とす（canonical と一致させる）
       html_handling = "drop-trailing-slash"
-      # 未一致は 404.html を 404 で返す
+      # どのアセットにも一致しないリクエストは 404.html を 404 で返す
       not_found_handling = "404-page"
 
       headers   = file("${path.module}/../cloudflare/_headers")

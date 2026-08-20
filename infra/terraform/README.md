@@ -55,7 +55,7 @@ terraform apply        # out/ をアップロードし、ドメイン・リダ�
 
 | リソース | 役割 |
 |---|---|
-| `cloudflare_workers_script.site` | 静的アセット（`out/`）の配信。`_headers` / `_redirects` もここに含まれる |
+| `cloudflare_workers_script.site` | 静的アセット（`out/`）の配信。**Worker コードは持たない**（アセット専用）。`_headers` / `_redirects` もここに含まれる |
 | `cloudflare_workers_custom_domain.apex` | `kosui-shindan.com` を Worker に接続（DNSと証明書は自動） |
 | `cloudflare_dns_record.www` + `cloudflare_ruleset.redirects` | `www` → apex の 301（パス・クエリを維持） |
 | `cloudflare_zone_setting.always_use_https` | HTTP → HTTPS の常時リダイレクト |
@@ -69,6 +69,14 @@ URL の解決規則（`infra/cloudflare/_headers` / `_redirects` と Terraform �
 - `/_next/static/*` は 1年キャッシュ、画像・OGは1週間キャッシュ
 
 この挙動はローカルでも再現できる（`npm run serve` → http://localhost:3199 ）。E2E もこの上で実行される。
+
+## なぜ「Worker」なのに JavaScript が無いのか
+
+Cloudflare の静的アセット配信は Workers の枠組みで提供されるが、**スクリプトを置かない構成にできる**。
+その場合リクエストはアセット配信層だけで完結し、Worker は起動しない（コールドスタートなし・
+Worker のリクエスト課金なし）。このサイトはサーバー処理が要らないのでこの構成にしている。
+将来サーバー処理を足したくなったら、`content_file` / `main_module` と `ASSETS` バインディングを
+`cloudflare_workers_script.site` に追加すれば、アセット配信はそのまま活かせる。
 
 ## 更新するとき
 
