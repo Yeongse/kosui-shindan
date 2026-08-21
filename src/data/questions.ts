@@ -22,6 +22,15 @@ import type { Question } from './schema';
  *   - 「聞き上手」「深呼吸」「昼の自然光」「メモの束」「熱いシャワー」に warm+1（GRN-W / MSK-W の受け皿）、
  *     「甘いもの」「元気になるタイプ」「ワンピース」に cool-1（GRM-C / FRT-C / FLR-C の受け皿）
  * 調整後: 一様ランダム 3.3%〜9.4%（warm 49%）、人間モデル 3.5%〜9.4%（warm 51%）。
+ *
+ * ── 第3段階: 設問文の平易化（回答しやすさの改善）──
+ * Q3 / Q9 / Q10 / Q12 が抽象的な仮定（「雨の日は正直にいえば」「言葉を使えないなら」「季節がひとつ消えるとしたら」
+ * 「香りをまとう理由」）で回答しづらいという指摘を受け、意味を保ったまま日常的な問いに書き換えた
+ * （雨の休日の過ごし方 / 気持ちの伝え方 / 好きな季節 / 香水をつけたくなる場面）。**選択肢の重みは据え置き**。
+ * 選択肢の中身が変わったぶん human-prior.ts の選ばれやすさを実態に合わせて更新したところ（雨の日に外出する人は減り、
+ * 夏を選ぶ人は春秋より少ない）、FRT の主要な受け皿が痩せて人間モデルで FRT-C 2.6% となったため、
+ * 意味と矛盾しない範囲で温度のみ2箇所調整した: Q2B「市場。土地の果物」temp 0→-1、Q8D「誰かと少し喋って」temp 0→-1。
+ * 調整後: 一様ランダム 2.9%〜9.4%（warm 43%）、人間モデル 3.8%〜10.3%（warm 49%）。
  * いずれも scripts/analyze-distribution.ts と src/lib/scoring.test.ts で担保する。
  */
 export const QUESTIONS: readonly Question[] = [
@@ -63,7 +72,7 @@ export const QUESTIONS: readonly Question[] = [
       {
         key: 'B',
         label: '市場。土地の果物と人の声のほうへ',
-        weight: { accords: { FRT: 3, GRM: 1 }, temp: 0, int: 1 },
+        weight: { accords: { FRT: 3, GRM: 1 }, temp: -1, int: 1 },
       },
       {
         key: 'C',
@@ -79,26 +88,26 @@ export const QUESTIONS: readonly Question[] = [
   },
   {
     no: 3,
-    text: '雨の日は、正直にいえば。',
+    text: '雨の休日。どう過ごすのが好き。',
     options: [
       {
         key: 'A',
-        label: '好き。世界の音量が下がる感じがする',
+        label: '窓を少し開けて、静かに過ごす',
         weight: { accords: { GRN: 3, MSK: 1 }, temp: -2, int: 1 },
       },
       {
         key: 'B',
-        label: '嫌い。予定がすべて重たくなる',
+        label: '気にせず出かける。予定は変えたくない',
         weight: { accords: { CIT: 2, FRT: 2 }, temp: 0, int: 0 },
       },
       {
         key: 'C',
-        label: '好き。家にこもる口実ができる',
+        label: 'おやつを買い込んで、家でゆっくり',
         weight: { accords: { GRM: 3, AMB: 1 }, temp: 0, int: 2 },
       },
       {
         key: 'D',
-        label: 'どちらでもない。傘を選ぶのは少し楽しい',
+        label: '好きな入浴剤で、長めにお風呂に入る',
         weight: { accords: { FLR: 1, GRM: 2, MSK: 1 }, temp: 0, int: 0 },
       },
     ],
@@ -229,53 +238,53 @@ export const QUESTIONS: readonly Question[] = [
       {
         key: 'D',
         label: '誰かと少し喋って、緊張を薄める',
-        weight: { accords: { FRT: 3, GRM: 1, FLR: 1 }, temp: 0, int: 0 },
+        weight: { accords: { FRT: 3, GRM: 1, FLR: 1 }, temp: -1, int: 0 },
       },
     ],
   },
   {
     no: 9,
-    text: 'もし一週間、言葉を使えないなら、代わりに残したいのは。',
+    text: '大切な人に気持ちを伝えるとき、あなたに近いのは。',
     options: [
       {
         key: 'A',
-        label: '写真。切り取った光で伝える',
+        label: '写真を撮って送る',
         weight: { accords: { CIT: 2, FLR: 1, GRN: 1 }, temp: 0, int: 1 },
       },
       {
         key: 'B',
-        label: '料理。食べれば分かる',
+        label: 'お菓子や料理をつくる',
         weight: { accords: { GRM: 3, GRN: 1 }, temp: 0, int: 2 },
       },
       {
         key: 'C',
-        label: '手紙にならない、短いメモの束',
+        label: '短いメッセージを書く',
         weight: { accords: { MSK: 2, GRN: 1, WDY: 1 }, temp: 1, int: 1 },
       },
       {
         key: 'D',
-        label: '音楽のプレイリスト',
+        label: '好きな音楽をすすめる',
         weight: { accords: { AMB: 2, FLR: 2 }, temp: 0, int: 2 },
       },
     ],
   },
   {
     no: 10,
-    text: '季節がひとつ消えるとしたら、絶対に残したいのは。',
+    text: 'いちばん好きな季節は。',
     options: [
       {
         key: 'A',
-        label: '春。始まりの匂いがする',
+        label: '春。花が咲いて、空気がやわらかい',
         weight: { accords: { FLR: 2, GRN: 2 }, temp: 1, int: 0 },
       },
       {
         key: 'B',
-        label: '夏。全部が濃くて速い',
+        label: '夏。光が強くて、開放的になる',
         weight: { accords: { CIT: 1, FRT: 3 }, temp: -1, int: 1 },
       },
       {
         key: 'C',
-        label: '秋。深くなっていくのが好き',
+        label: '秋。少しずつ深くなっていく感じ',
         weight: { accords: { WDY: 2, AMB: 2 }, temp: 0, int: 2 },
       },
       {
@@ -313,26 +322,26 @@ export const QUESTIONS: readonly Question[] = [
   },
   {
     no: 12,
-    text: '最後の質問。香りをまとう理由に一番近いのは。',
+    text: '最後の質問。香水をつけたくなるのは、どんなとき。',
     options: [
       {
         key: 'A',
-        label: '気持ちを切り替えるスイッチとして',
+        label: '出かける前に、気持ちを切り替えたいとき',
         weight: { accords: { CIT: 2, GRN: 2 }, temp: 0, int: 0 },
       },
       {
         key: 'B',
-        label: '近くにいる人にだけ、そっと届けばいい',
+        label: '人と近くで話す日。さりげなく香るくらいがいい',
         weight: { accords: { MSK: 2, FRT: 2 }, temp: 0, int: 0 },
       },
       {
         key: 'C',
-        label: '私がいた場所に、私の気配を残したい',
+        label: '特別な日。印象に残したいとき',
         weight: { accords: { AMB: 3, WDY: 1 }, temp: 1, int: 3 },
       },
       {
         key: 'D',
-        label: '誰のためでもない。自分が好きな匂いの中にいたい',
+        label: '家でひとりのとき。自分が心地よければいい',
         weight: { accords: { FLR: 2, GRM: 1, WDY: 1 }, temp: 0, int: 2 },
       },
     ],

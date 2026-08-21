@@ -99,7 +99,7 @@ test('選択肢の縦位置は設問の長さに関わらず一定', async ({ pa
     return (await page.locator('button[data-key="A"]').boundingBox())!.y;
   };
   const y1 = await yOf();
-  // Q1（1行）→ Q2 → … Q9（もし一週間、言葉を使えないなら…＝最長・2行）まで進めて比較
+  // Q1 → Q2 → … Q9（大切な人に気持ちを伝えるとき…＝最長タイの2行）まで進めて比較
   for (let i = 1; i < 9; i++) {
     await page.locator('button[data-key="A"]').click();
     await expect(page.locator(`[data-qno="${i + 1}"]`)).toBeVisible({ timeout: 3000 });
