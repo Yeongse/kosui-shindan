@@ -7,6 +7,7 @@ import { NOTES, NOTE_SLUGS } from './notes';
 import { GUIDES, GUIDE_SLUGS } from './guides';
 import { QUESTIONS } from './questions';
 import { LP_FAQ, LP_PHILOSOPHY } from './site-copy';
+import { PICKS_BY_TYPE } from './picks';
 import type { ArticleSection } from './schema';
 
 /**
@@ -138,6 +139,39 @@ describe('タイプ16ページ（§8.4 / §11.3）', () => {
       expect(t.body).not.toContain('かもしれません');
       expect(t.catch).not.toContain('かもしれません');
     }
+  });
+});
+
+describe('おすすめ香水 3本（§12.6）', () => {
+  it('全16タイプに3本ずつ、必須項目が埋まっている', () => {
+    for (const t of TYPES) {
+      const picks = PICKS_BY_TYPE[t.code];
+      expect(picks, t.code).toHaveLength(3);
+      for (const p of picks) {
+        expect(p.brand.length, `${t.code} brand`).toBeGreaterThan(2);
+        expect(p.brandJa.length, `${t.code} brandJa`).toBeGreaterThan(2);
+        // 「ニナ」のように2文字の商品名が実在するので下限は2
+        expect(p.name.length, `${t.code} ${p.brand} name`).toBeGreaterThanOrEqual(2);
+        expect(p.kind.length, `${t.code} ${p.brand} kind`).toBeGreaterThan(2);
+        expect(p.notes, `${t.code} ${p.brand} notes`).toContain('/');
+        expect(p.why.length, `${t.code} ${p.brand} why`).toBeGreaterThanOrEqual(30);
+        // 検索リンクの精度確保: クエリはブランド名と商品名の双方を手がかりにする
+        expect(p.query.length, `${t.code} ${p.brand} query`).toBeGreaterThan(6);
+        expect(p.query, `${t.code} ${p.brand} query`).toMatch(/\s/);
+      }
+    }
+  });
+
+  it('1タイプ内でブランドが重複しない', () => {
+    for (const t of TYPES) {
+      const brands = PICKS_BY_TYPE[t.code].map((p) => p.brand);
+      expect(new Set(brands).size, `${t.code}: ${brands.join(', ')}`).toBe(brands.length);
+    }
+  });
+
+  it('推薦理由が全48本で相互に重複しない', () => {
+    const all = TYPES.flatMap((t) => PICKS_BY_TYPE[t.code].map((p) => p.why));
+    expect(new Set(all).size).toBe(all.length);
   });
 });
 

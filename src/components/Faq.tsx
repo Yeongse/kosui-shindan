@@ -4,7 +4,10 @@ import styles from './Faq.module.css';
 
 /**
  * FAQ（実テキスト + FAQPage 構造化データ）。画面表示と JSON-LD は同一配列から生成する。
- * DOM には常に全文が存在する（畳まない）。
+ *
+ * 各問を <details> で畳む。答えの本文は畳んだ状態でも DOM に存在するので、
+ * FAQPage のリッチリザルトにも検索インデックスにも影響しない（Google は折りたたみ内の
+ * テキストを通常どおり評価する）。展開しない状態の高さを抑えて、下部のセクションを近づけるのが狙い。
  */
 export function Faq({
   items,
@@ -23,19 +26,20 @@ export function Faq({
       <H id="faq-heading" className={`h2 h2--center ${styles.heading}`}>
         {heading}
       </H>
-      <dl className={styles.list}>
+      <div className={styles.list}>
         {items.map((f, i) => (
-          <div key={i} className={`card ${styles.item}`}>
-            <dt className={styles.q}>
+          <details key={i} className={`card ${styles.item}`}>
+            <summary className={styles.q}>
               <span className={styles.qMark} aria-hidden="true">
                 Q
               </span>
-              <span>{f.q}</span>
-            </dt>
-            <dd className={styles.a}>{f.a}</dd>
-          </div>
+              <span className={styles.qText}>{f.q}</span>
+              <span className={styles.chevron} aria-hidden="true" />
+            </summary>
+            <p className={styles.a}>{f.a}</p>
+          </details>
         ))}
-      </dl>
+      </div>
       {withJsonLd && <JsonLd data={faqJsonLd([...items])} />}
     </section>
   );

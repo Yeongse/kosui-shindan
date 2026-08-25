@@ -86,6 +86,29 @@ export interface ScentTypeSeo {
 
 export type ScentType = ScentTypeBase & ScentTypeSeo;
 
+/* ---------- おすすめ香水（§12.6 プロモーション枠） ---------- */
+
+/**
+ * タイプごとに手で選んだ実在の1本。検索クエリではなく「この商品」を出すための最小データ。
+ * asin / rakutenItemUrl を入れると商品ページへ直リンクし、無ければ商品名の完全一致検索に落ちる。
+ */
+export interface ProductPick {
+  brand: string; // ラテン表記（見出しの上に小さく出す） 例: 'Jo Malone London'
+  brandJa: string; // 日本語表記。検索クエリの構成にも使う 例: 'ジョー マローン ロンドン'
+  name: string; // 商品名（ブランド名を含めない） 例: 'ウッド セージ & シー ソルト コロン'
+  kind: string; // 賦香濃度・種別 例: 'オードゥ パルファム'
+  notes: string; // 主要ノートの並び。選定根拠として残す編集メモで、ページには出さない
+  why: string; // このタイプに薦める理由（1文・60字前後）
+  query: string; // 商品名の完全一致検索に使う語（ブランド + 商品名）
+  /**
+   * 同ブランドの紛らわしい別商品を弾くための語（`npm run fetch:media` の突き合わせ用）。
+   * 例: コロニア に「プーラ」、ザ・ワン に「フォーメン」。商品名に1つでも含まれたらその出品は候補から外す。
+   */
+  exclude?: string[];
+  asin?: string; // Amazon 商品ページ直リンク用（任意）
+  rakutenItemUrl?: string; // 楽天の商品ページURL（任意）
+}
+
 export type Concentration = 'parfum' | 'edp' | 'edt';
 
 export interface ScoreResult {

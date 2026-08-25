@@ -21,30 +21,7 @@
   margin-bottom: 14px;
 }
 
-.bodyText {
-  font-size: 15.5px;
-  line-height: 2;
-}
-.bodyText + .bodyText {
-  margin-top: 1.2em;
-}
 
-.kv + .kv {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--c-border);
-}
-
-.kvKey {
-  font-size: 13px;
-  color: var(--c-rose);
-  margin-bottom: 4px;
-}
-
-.kvVal {
-  font-size: 15px;
-  line-height: 1.9;
-}
 
 /* 相性 */
 .section {
@@ -91,19 +68,33 @@
 }
 
 /* 関連 */
+/* 関連リンクは内部リンク要件(§12.1)を満たすための枠。読ませる本文ではないので高さを詰める */
+.relatedPanel {
+  padding: 16px 18px 18px;
+}
+
+.relatedHeading {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--c-text-3);
+  margin-bottom: 10px;
+}
+
 .relatedList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 6px;
 }
 
 .relatedLink {
   display: block;
-  font-size: 14.5px;
+  font-size: 13.5px;
   font-weight: 500;
+  line-height: 1.55;
   color: var(--c-text);
-  padding: 10px 12px;
-  border-radius: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
   background: var(--c-card-2);
   transition: background-color var(--dur-base) var(--ease);
 }

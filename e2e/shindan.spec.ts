@@ -29,9 +29,19 @@ test('LP → 12 answers → result → X share intent → type index', async ({ 
   await expect(page.locator('#shindan-card')).toBeVisible();
   await expect(page.locator('#shindan-card')).toContainText('あなたの香水タイプは');
 
-  // タイプ名・調香ノート
+  // タイプ名・香りのバランス
   await expect(page.locator('#shindan-card h2')).toContainText('月虹');
-  await expect(page.locator('#shindan-card')).toContainText('ペアー・アルデハイド');
+  await expect(page.locator('#shindan-card')).toContainText('香りのバランス');
+
+  // あなたに合う香水3本が香りのバランスの直後に、ブランド名を立てて出ている
+  const picks = page.locator('section[aria-labelledby="find-heading"]');
+  await expect(picks).toContainText('月虹タイプに似合う香水 3本');
+  await expect(picks.locator('ol > li')).toHaveCount(3);
+  // ブランド名・楽天の実売価格・商品画像・PRリンクが3本とも揃っている
+  await expect(picks.locator('ol > li img')).toHaveCount(3);
+  await expect(picks).toContainText('楽天市場');
+  await expect(picks).toContainText('円〜');
+  await expect(picks.locator('a[rel~="sponsored"]').first()).toBeVisible();
 
   // X シェア intent URL
   const x = page.locator('a[data-share="x"]');

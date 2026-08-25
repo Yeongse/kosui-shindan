@@ -119,13 +119,9 @@
   color: var(--c-text-2);
 }
 
-/* 調香ノート */
-.notes,
+/* 香りのバランス */
 .balance {
   padding: 20px 22px 22px;
-}
-
-.balance {
   border-top: 1px solid var(--c-border);
 }
 
@@ -134,60 +130,6 @@
   color: var(--c-text-2);
   margin-bottom: 12px;
   text-align: center;
-}
-
-.noteGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.noteCard {
-  padding: 12px 10px 12px;
-  border-radius: 14px;
-  background: var(--c-card-2);
-  border: 1px solid var(--c-border);
-  text-align: center;
-}
-
-.noteKey {
-  font-family: var(--ff-display);
-  font-weight: 900;
-  font-size: 13px;
-  color: var(--c-rose);
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.noteWhen {
-  font-family: var(--ff-body);
-  font-weight: 500;
-  font-size: 10.5px;
-  color: var(--c-text-3);
-}
-
-.noteList {
-  margin-top: 6px;
-  font-size: 12.5px;
-  font-weight: 700;
-  line-height: 1.6;
-}
-
-@media (max-width: 480px) {
-  .noteGrid {
-    grid-template-columns: 1fr;
-  }
-  .noteCard {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    align-items: center;
-    text-align: left;
-    gap: 10px;
-  }
-  .noteList {
-    margin-top: 0;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
