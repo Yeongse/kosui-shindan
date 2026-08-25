@@ -1,0 +1,94 @@
+.main {
+  padding-top: 14px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.h1 {
+  font-size: clamp(22px, 3.6vw, 30px);
+  font-weight: 900;
+}
+
+.lead {
+  max-width: 60ch;
+  color: var(--c-text-2);
+}
+
+.list {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  overflow: hidden;
+}
+
+.itemLink {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 14px;
+  padding: 18px 20px;
+  align-items: flex-start;
+  transition: background-color var(--dur-base) var(--ease);
+}
+.itemLink:hover {
+  background: var(--c-card-2);
+}
+
+.no {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--c-lav-soft);
+  color: var(--c-lav);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-display);
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.itemBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.desc {
+  font-size: 13px;
+  color: var(--c-text-2);
+  line-height: 1.7;
+}
+
+.ctaPanel {
+  margin-top: 44px;
+  padding: clamp(24px, 5vw, 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.ctaLine {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 16px;
+}

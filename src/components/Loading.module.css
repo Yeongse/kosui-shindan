@@ -1,0 +1,66 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: var(--c-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  animation: fadeIn 0.25s var(--ease) both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.dots {
+  display: flex;
+  gap: 14px;
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--c-lav-soft);
+  animation: pulse 1.2s var(--ease) infinite;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    background: var(--c-lav-soft);
+  }
+  40% {
+    transform: translateY(-10px) scale(1.1);
+    background: var(--type);
+  }
+}
+
+.text {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--c-text-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+    background: var(--type);
+  }
+}

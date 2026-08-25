@@ -1,0 +1,270 @@
+/* ---------- Hero（中央一列） ---------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: clamp(28px, 6vh, 56px);
+  gap: 18px;
+}
+
+.kv {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 16 / 9;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--c-shadow-lg);
+  background: var(--c-card);
+}
+
+.kvArt {
+  width: 100%;
+  height: 100%;
+}
+
+.kvFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--c-bg-rose), var(--c-bg-lav));
+}
+
+.kvDot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  animation: bob 2.4s var(--ease) infinite alternate;
+}
+
+@keyframes bob {
+  from {
+    transform: translateY(-6px);
+  }
+  to {
+    transform: translateY(6px);
+  }
+}
+
+.h1 {
+  font-size: clamp(26px, 5.2vw, 40px);
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  margin-top: 8px;
+}
+
+.brMobile {
+  display: none;
+}
+
+.sub {
+  max-width: 40ch;
+  color: var(--c-text-2);
+  font-size: 15px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cta {
+  width: 100%;
+  max-width: 420px;
+  margin-top: 6px;
+}
+
+.subLinks {
+  font-size: 13.5px;
+  color: var(--c-text-3);
+}
+
+/* ---------- Sections ---------- */
+.section {
+  padding-top: 72px;
+}
+
+.lead {
+  margin: 12px auto 24px;
+  max-width: 56ch;
+  text-align: center;
+  color: var(--c-text-2);
+}
+
+/* わかること */
+.whatGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.whatCard {
+  padding: 24px 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.whatIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-rose-soft);
+  color: var(--c-rose-deep);
+}
+
+.whatCard:nth-child(2) .whatIcon {
+  background: var(--c-lav-soft);
+  color: var(--c-lav);
+}
+.whatCard:nth-child(3) .whatIcon {
+  background: var(--c-mint-soft);
+  color: #2f7d5d;
+}
+
+.whatTitle {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.whatBody {
+  font-size: 13.5px;
+  color: var(--c-text-2);
+}
+
+/* 16タイプ */
+.typeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.more {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 考え方 */
+.prosePanel {
+  padding: clamp(24px, 4vw, 40px);
+}
+
+.proseHeading {
+  font-size: 20px;
+  margin-bottom: 18px;
+}
+
+.prose p {
+  font-size: 15px;
+  line-height: 1.95;
+  color: var(--c-text);
+}
+.prose p + p {
+  margin-top: 1.2em;
+}
+
+.inlineCta {
+  margin-top: 26px;
+}
+
+/* ノート / ガイド */
+.twoCol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.linkPanel {
+  padding: 22px 20px;
+}
+
+.linkHeading {
+  font-size: 15.5px;
+  margin-bottom: 12px;
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.linkItem {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--c-text);
+  font-weight: 500;
+}
+.linkItem:hover {
+  color: var(--c-rose-deep);
+}
+
+.linkDot {
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  transform: translateY(-1px);
+}
+
+/* 末尾 CTA */
+.finalCta {
+  margin-top: 72px;
+}
+
+.finalPanel {
+  padding: clamp(28px, 5vw, 44px) clamp(20px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.finalLine {
+  font-family: var(--ff-display);
+  font-weight: 900;
+  font-size: clamp(18px, 3vw, 24px);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .typeGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .brMobile {
+    display: inline;
+  }
+}
+
+@media (max-width: 680px) {
+  .whatGrid {
+    grid-template-columns: 1fr;
+  }
+  .typeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+  .section {
+    padding-top: 56px;
+  }
+}

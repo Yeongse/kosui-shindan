@@ -1,0 +1,181 @@
+.root {
+  min-height: calc(100dvh - 60px);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 0 80px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--c-text-2);
+  padding: 6px 4px 6px 0;
+  transition: color var(--dur-base) var(--ease);
+}
+.back:hover {
+  color: var(--c-text);
+}
+
+.counter {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--ff-display);
+  font-weight: 700;
+}
+
+.counterNow {
+  font-size: 22px;
+  color: var(--c-rose);
+}
+
+.counterSep,
+.counterTotal {
+  font-size: 14px;
+  color: var(--c-text-3);
+}
+
+/* 進捗バー */
+.progress {
+  margin-top: 10px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--c-border);
+  overflow: hidden;
+}
+
+.progressBar {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--c-grad);
+  transition: width 400ms var(--ease);
+}
+
+/* 設問カード */
+.question {
+  margin-top: 24px;
+  padding: clamp(22px, 4vw, 32px) clamp(18px, 4vw, 28px) clamp(20px, 4vw, 28px);
+  animation: slideIn var(--dur-base) var(--ease) both;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.qLabel {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: var(--c-rose);
+}
+
+.text {
+  margin-top: 6px;
+  font-size: clamp(19px, 2.8vw, 22px);
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+  outline: none;
+  /* 設問の長さ（1行/2行）で選択肢の位置が動かないよう、常に2行分の高さを確保 */
+  min-height: calc(2 * 1.7em);
+  display: flex;
+  align-items: flex-start;
+}
+
+/* 選択肢: 縦積みの角丸ボタン */
+.options {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  min-height: 58px;
+  padding: 12px 14px 12px 12px;
+  background: var(--c-card);
+  border: 1.5px solid var(--c-border-2);
+  border-radius: var(--r-btn);
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    background-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+
+.option:hover,
+.option:focus-visible {
+  border-color: var(--c-rose);
+  background: #fff8fa;
+}
+
+.option:active {
+  transform: scale(0.99);
+}
+
+.selected,
+.selected:hover {
+  background: var(--c-rose);
+  border-color: var(--c-rose);
+  color: #fff;
+}
+.selected .key {
+  background: #fff;
+  color: var(--c-rose);
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.key {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-rose-soft);
+  color: var(--c-rose);
+  font-family: var(--ff-body);
+  font-weight: 700;
+  font-size: 13px;
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.label {
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .question {
+    animation: none;
+  }
+}

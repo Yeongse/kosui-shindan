@@ -1,0 +1,79 @@
+.main {
+  padding-top: 14px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.h1 {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 900;
+}
+
+.lead {
+  max-width: 60ch;
+  color: var(--c-text-2);
+}
+
+.groups {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 24px;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.groupHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.groupDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.groupLink:hover {
+  color: var(--c-rose-deep);
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ctaPanel {
+  margin-top: 48px;
+  padding: clamp(28px, 5vw, 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.ctaLine {
+  font-family: var(--ff-display);
+  font-weight: 900;
+  font-size: 20px;
+}
+
+@media (max-width: 720px) {
+  .groups {
+    grid-template-columns: 1fr;
+  }
+}

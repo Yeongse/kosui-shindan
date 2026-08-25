@@ -1,0 +1,29 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // 香水診断 調香箋 — Cloudflare Workers の静的アセットとして配信する。
+  // Worker のコードは持たない（アセット専用）ため main は指定しない。
+  //   npm run build && npm run deploy
+  "name": "kosui-shindan",
+  "compatibility_date": "2026-08-01",
+
+  "assets": {
+    "directory": "./out",
+    // /type/gekko → out/type/gekko.html。末尾スラッシュ付きは 301 で落とす（canonical と一致させる）
+    "html_handling": "drop-trailing-slash",
+    // どのアセットにも一致しないリクエストは 404.html を 404 で返す
+    "not_found_handling": "404-page"
+  },
+
+  // 独自ドメインに接続する（DNS と証明書は Cloudflare 側で自動設定される）
+  "routes": [
+    {
+      "pattern": "kosui-shindan.com",
+      "custom_domain": true
+    }
+  ],
+
+  "observability": {
+    "enabled": true
+  }
+}

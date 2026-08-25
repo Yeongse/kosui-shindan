@@ -1,0 +1,21 @@
+# Cloudflare Workers 静的アセットのリダイレクト設定。
+# public/ に置くことでビルド時に out/ へコピーされ、アップロード時に Cloudflare が読み取る。
+# 旧URL（app-spec.md §6 の旧仕様）を 301 で現行URLへ集約する。
+/q               /shindan            301
+/types           /type               301
+/r/CIT-C         /type/shinko        301
+/r/CIT-W         /type/yokoku        301
+/r/GRN-C         /type/ugo           301
+/r/GRN-W         /type/nobi          301
+/r/FLR-C         /type/gekko         301
+/r/FLR-W         /type/shunsho       301
+/r/FRT-C         /type/karo          301
+/r/FRT-W         /type/mitsugetsu    301
+/r/GRM-C         /type/setto         301
+/r/GRM-W         /type/shoko         301
+/r/WDY-C         /type/shinkan       301
+/r/WDY-W         /type/shinka        301
+/r/AMB-C         /type/yoiyami       301
+/r/AMB-W         /type/kohaku        301
+/r/MSK-C         /type/hakuji        301
+/r/MSK-W         /type/kime          301

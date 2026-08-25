@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>アフィリエイト導入手順書 — 香水診断 調香箋（Amazon・楽天・香水作成体験）</title>
+<style>
+  :root { --ink:#27262b; --ink2:#6b6a70; --line:#e6e1da; --shu:#e0492f; --ai:#2d4f8a; --bg:#fcfaf7; --card:#fff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:"Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif; line-height:1.9; font-size:15.5px; }
+  .wrap { max-width:860px; margin:0 auto; padding:40px 24px 96px; }
+  h1 { font-size:28px; line-height:1.5; margin:0 0 8px; }
+  .sub { color:var(--ink2); margin:0 0 28px; }
+  h2 { font-size:21px; margin:56px 0 14px; padding-bottom:8px; border-bottom:2px solid var(--shu); }
+  h3 { font-size:16.5px; margin:28px 0 8px; color:var(--ai); }
+  p { margin:0 0 12px; }
+  ol, ul { margin:0 0 14px; padding-left:1.5em; }
+  li { margin:4px 0; }
+  code { font-family:Menlo,Consolas,monospace; font-size:0.92em; background:#f1ede7; padding:2px 6px; border-radius:4px; }
+  pre { background:#2a2a2e; color:#f3f3f3; padding:14px 16px; border-radius:10px; overflow:auto; font-size:13.5px; line-height:1.6; }
+  pre code { background:none; color:inherit; padding:0; }
+  table { width:100%; border-collapse:collapse; margin:10px 0 18px; font-size:14.5px; }
+  th, td { border:1px solid var(--line); padding:9px 10px; vertical-align:top; text-align:left; }
+  th { background:#f6f2ec; font-weight:700; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin:14px 0 18px; }
+  .box.warn { border-color:#f0c2b8; background:#fff6f3; }
+  .box.ok { border-color:#bcd3c4; background:#f3faf5; }
+  .tag { display:inline-block; font-size:12px; font-weight:700; padding:1px 8px; border-radius:999px; background:#f1ede7; color:var(--ink2); margin-right:6px; }
+  .check li { list-style:none; position:relative; padding-left:1.6em; }
+  .check li::before { content:"☐"; position:absolute; left:0; top:0; color:var(--ai); }
+  a { color:var(--ai); }
+  .toc { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 18px; }
+  .toc ol { margin:0; }
+  .muted { color:var(--ink2); font-size:14px; }
+  @media print { body { background:#fff; } .wrap { padding:0; } pre { white-space:pre-wrap; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>アフィリエイト導入手順書</h1>
+<p class="sub">香水診断 調香箋 — Amazon アソシエイト / 楽天アフィリエイト / 香水作成（調香）体験の3本立て。作成日 2026-08-19。各社の条件は変わるので、登録時に公式画面で最終確認すること。</p>
+
+<div class="toc">
+<ol>
+  <li><a href="#overview">全体像 — サイトのどこに、何が出るか</a></li>
+  <li><a href="#amazon">Amazon アソシエイト</a></li>
+  <li><a href="#rakuten">楽天アフィリエイト</a></li>
+  <li><a href="#experience">香水作成体験（調香体験）</a></li>
+  <li><a href="#deploy">サイトへの反映（環境変数 → デプロイ → 確認）</a></li>
+  <li><a href="#legal">表記・ルール（PR表記・ステマ規制・必須文言）</a></li>
+  <li><a href="#ops">運用チェックリスト</a></li>
+</ol>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="overview">1. 全体像 — サイトのどこに、何が出るか</h2>
+
+<p>結果ページ（<code>/type/{slug}</code>）の中ほどに、収益導線が2ブロック並ぶ。どちらも「PR」ラベル付き。</p>
+
+<table>
+<tr><th style="width:28%">ブロック</th><th>中身</th><th style="width:34%">鍵になる設定</th></tr>
+<tr><td><b>この香りを探す</b></td><td>タイプの検索ワード2本 ×（楽天市場／Amazon）のボタン。ブランド固定をしない「ノート名検索」リンク</td><td><code>NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID</code><br><code>NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG</code></td></tr>
+<tr><td><b>自分だけの香水を作る</b></td><td>調香体験（香水作り）の予約サイトへのボタン。URL未設定なら非表示</td><td><code>NEXT_PUBLIC_EXPERIENCE_URL</code><br><code>NEXT_PUBLIC_EXPERIENCE_NAME</code>（任意）<br><code>NEXT_PUBLIC_EXPERIENCE_LABEL</code>（任意）</td></tr>
+</table>
+
+<div class="box">
+<b>仕組み</b>：楽天・Amazon は「検索結果ページ」へのリンクをアフィリエイト化している。商品を個別に選ばないので、リンク切れ・在庫切れが起きず、16タイプ×2本＝32本のリンクをIDひとつで一括管理できる。体験は ASP が発行する1本のリンクを差し込むだけ。
+</div>
+
+<p class="muted">コードの該当箇所：<code>src/lib/affiliate.ts</code>（URL組立）、<code>src/components/AffiliateBlock.tsx</code>、<code>src/components/ExperienceBlock.tsx</code>、<code>src/components/SiteFooter.tsx</code>（Amazon必須表記）。</p>
+
+<!-- ===================================================== -->
+<h2 id="amazon">2. Amazon アソシエイト</h2>
+
+<h3>仕組みと条件（2026年時点）</h3>
+<ul>
+  <li>登録すると「仮登録」状態でリンクを作れる。<b>登録から180日以内に、アフィリエイト経由の適格販売（発送完了）3件</b>を達成すると本審査が自動で始まり、合否がメールで来る。</li>
+  <li>本審査ではサイトの中身も見られる。記事数が少ないサイトは落ちやすいと言われる（当サイトは診断16＋ノート8＋ガイド10＝34ページ＋LPがあるので問題ない）。</li>
+  <li>報酬は商品カテゴリ別の料率（香水は「ビューティー」カテゴリ）。支払いは銀行振込またはAmazonギフト券、最低支払額あり。</li>
+  <li>180日・3件が厳しい場合の代替：<b>もしもアフィリエイト</b>経由で Amazon 案件を使う（こちらは審査条件が異なる）。その場合はリンクの形が変わるので、<code>src/lib/affiliate.ts</code> の <code>amazonSearchUrl</code> を差し替える。</li>
+</ul>
+
+<h3>手順</h3>
+<ol>
+  <li><a href="https://affiliate.amazon.co.jp/" target="_blank" rel="noopener">affiliate.amazon.co.jp</a> で Amazon アカウントでログインし、アソシエイトに申し込む。</li>
+  <li>ウェブサイト情報に <code>https://kosui-shindan.com</code> を登録。サイトの説明は「12問の無料香水診断。結果の香調（ノート）に合う香水を紹介」。</li>
+  <li>支払い・税務情報を入力（マイナンバー等）。</li>
+  <li>登録完了画面で <b>トラッキングID</b>（例 <code>kosuishindan-22</code>）をメモ。</li>
+  <li><code>NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG=kosuishindan-22</code> を設定してデプロイ（<a href="#deploy">§5</a>）。これで全結果ページの「Amazonで探す」に <code>&amp;tag=…</code> が付き、フッターに必須文言が自動表示される。</li>
+  <li>自分でテストクリック→購入してはいけない（規約違反）。公開して待つ。3件達成で本審査。</li>
+  <li>本審査に通ったら、アソシエイト・セントラルの「レポート」で売上を確認。</li>
+</ol>
+
+<div class="box warn">
+<b>守ること</b>
+<ul>
+  <li>サイトに <b>「Amazonのアソシエイトとして、香水診断 調香箋は適格販売により収入を得ています。」</b> を表示する（<code>NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG</code> を設定するとフッターに自動で出る）。</li>
+  <li>価格や在庫を自分のサイトに書かない（変動するため）。検索結果リンクなので元々書いていない。</li>
+  <li>リンクの短縮・クローキング禁止。メール／PDF／SNS のDMなどオフラインでのリンク配布禁止。</li>
+  <li>自己購入・家族購入は成果にならない。</li>
+</ul>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="rakuten">3. 楽天アフィリエイト</h2>
+
+<h3>仕組みと条件（2026年時点）</h3>
+<ul>
+  <li>楽天IDがあれば登録でき、<b>審査なしで即日開始</b>。サイトURLの登録は必要。</li>
+  <li>成果条件：リンクをクリックしてから24時間以内にカートに入れ、89日以内に購入完了。料率はジャンル別（香水・コスメは概ね2〜4%帯、ショップ設定により変動）。</li>
+  <li>報酬は <b>楽天キャッシュ</b> で支払い。月3,001円を超える月は楽天カードまたは楽天銀行との連携が必要。3ヶ月連続で月間3,001円以上あると銀行振込の申請が可能。</li>
+  <li>「検索結果ページ」も、楽天の任意URLをアフィリエイト化する仕組み（どこでもリンク）でリンク化できる。当サイトはこの形式で組み立てている。</li>
+</ul>
+
+<h3>手順</h3>
+<ol>
+  <li><a href="https://affiliate.rakuten.co.jp/" target="_blank" rel="noopener">affiliate.rakuten.co.jp</a> に楽天IDでログイン。</li>
+  <li>「サイト情報の登録」で <code>https://kosui-shindan.com</code> を登録（サイト名: 香水診断 調香箋 / ジャンル: 美容・コスメ）。</li>
+  <li>管理画面右上または「アフィリエイトID」から <b>アフィリエイトID</b>（<code>xxxxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx</code> の4ブロック形式）をメモ。</li>
+  <li><code>NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID=</code> にそのIDを設定してデプロイ。</li>
+  <li>確認：結果ページの「楽天市場で探す」のリンクが <code>https://hb.afl.rakuten.co.jp/hgc/（ID）/?pc=…&amp;m=…</code> になっていること。クリックして楽天の検索結果に飛べばOK。</li>
+  <li>報酬の受け取り：楽天キャッシュは楽天ペイで使える。現金化したい場合は「楽天銀行連携＋3ヶ月連続3,001円以上」を満たしてから振込申請。</li>
+</ol>
+
+<div class="box">
+<b>リンクの形（参考）</b>
+<pre><code>https://hb.afl.rakuten.co.jp/hgc/{アフィリエイトID}/?pc={楽天の検索URL}&amp;m={楽天の検索URL}
+検索URL = https://search.rakuten.co.jp/search/mall/ベルガモット%20ネロリ%20香水/</code></pre>
+この組立は <code>src/lib/affiliate.ts</code> の <code>rakutenSearchUrl()</code>。楽天側で「どこでもリンク」の仕様が変わったら、ここだけ直せば全ページに反映される。
+</div>
+
+<!-- ===================================================== -->
+<h2 id="experience">4. 香水作成体験（調香体験）</h2>
+
+<h3>どこと組むか</h3>
+<p>「調香体験・香水作り」を全国で予約できる主なサイトと、提携できる ASP の候補。<b>ASP の掲載状況は変わるので、登録後に各 ASP の管理画面で「アソビュー」「じゃらん」等を検索して確認する。</b></p>
+
+<table>
+<tr><th>予約サイト</th><th>体験の量</th><th>提携できる ASP（候補）</th><th>備考</th></tr>
+<tr><td><b>アソビュー！</b>（asoview）</td><td>調香体験・香水作り 30店舗超（全国）</td><td>バリューコマース / A8.net / アクセストレード（情報サイトにより記載が分かれる）</td><td>体験ギフト「アソビュー！ギフト」は afb で別案件。成果は予約完了（料率 5%前後という情報あり）</td></tr>
+<tr><td><b>じゃらん遊び・体験予約</b></td><td>調香・アロマ系あり</td><td>バリューコマース</td><td>リクルート系。ポイント還元との相性が良い</td></tr>
+<tr><td><b>アクティビティジャパン</b></td><td>調香体験あり</td><td>A8.net 等（要確認）</td><td>案件の有無を ASP で確認</td></tr>
+<tr><td><b>KLOOK</b></td><td>海外・都市部の体験</td><td>自社アフィリエイト / ASP</td><td>国内の調香体験は少なめ</td></tr>
+</table>
+
+<div class="box ok">
+<b>おすすめの進め方</b>：まず <b>バリューコマース</b> に登録（審査あり・数日）→「アソビュー！」と「じゃらん遊び・体験予約」に提携申請 → どちらか承認された方の<b>「調香体験」一覧ページへのリンク</b>を作る。
+サイト側は URL を1本入れるだけで全16タイプの結果ページに出る。
+</div>
+
+<h3>手順（バリューコマースの例）</h3>
+<ol>
+  <li><a href="https://www.valuecommerce.ne.jp/" target="_blank" rel="noopener">バリューコマース</a> にサイト <code>https://kosui-shindan.com</code> で登録（審査 1〜数日）。</li>
+  <li>管理画面「プログラム検索」で「アソビュー」を検索 → <b>提携申請</b>（即時提携の場合も）。</li>
+  <li>承認後、「広告作成」→ 任意のページURLをリンク化できる機能（MyLink／マイリンク）で、アソビューの調香体験一覧 <code>https://www.asoview.com/leisure/act0077/</code> をアフィリエイトリンクにする。</li>
+  <li>発行された URL をそのまま <code>NEXT_PUBLIC_EXPERIENCE_URL=</code> に設定。サービス名を変える場合は <code>NEXT_PUBLIC_EXPERIENCE_NAME=アソビュー</code>、ボタン文言は <code>NEXT_PUBLIC_EXPERIENCE_LABEL=調香体験を探す</code>。</li>
+  <li>デプロイ後、結果ページに「自分だけの香水を作る」ブロックが出ていること、クリックで一覧ページに着くことを確認。</li>
+</ol>
+
+<h3>記事側の強化（任意・効果が大きい）</h3>
+<ul>
+  <li>ガイド記事「香水作り・調香体験とは｜自分だけの1本を作る流れと選び方」（<code>/guide/perfume-making-experience</code>）を公開済み。体験ブロックの注記からもリンクしている。記事本文に ASP リンクを直接置く場合は、そのセクションに「PR」を付ける。</li>
+  <li>各タイプの結果ページ文言は、タイプのトップ／ミドル／ラストのノート名を自動で差し込んでいる（例「ベルガモット、ネロリ、ホワイトムスクを手がかりに…」）ので、追加作業は不要。</li>
+</ul>
+
+<!-- ===================================================== -->
+<h2 id="deploy">5. サイトへの反映（環境変数 → デプロイ → 確認）</h2>
+
+<h3>環境変数</h3>
+<pre><code># 楽天（アフィリエイトID）
+NEXT_PUBLIC_RAKUTEN_AFFILIATE_ID=xxxxxxxx.xxxxxxxx.xxxxxxxx.xxxxxxxx
+
+# Amazon（トラッキングID）— 設定するとフッターに必須文言が出る
+NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG=kosuishindan-22
+
+# 香水作成体験（ASPで発行したリンク）— 未設定ならブロックごと非表示
+NEXT_PUBLIC_EXPERIENCE_URL=https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=…&amp;pid=…&amp;vc_url=https%3A%2F%2Fwww.asoview.com%2Fleisure%2Fact0077%2F
+NEXT_PUBLIC_EXPERIENCE_NAME=アソビュー
+NEXT_PUBLIC_EXPERIENCE_LABEL=調香体験を探す</code></pre>
+
+<ol>
+  <li><b>ローカル確認</b>：プロジェクト直下の <code>.env.local</code> に上記を書き、<code>npm run dev</code> → <code>http://localhost:3000/type/gekko</code> を開いてボタンのリンク先を確認。</li>
+  <li><b>本番</b>：このサイトは完全静的なので、<code>NEXT_PUBLIC_</code> の値は<b>ビルドしたマシンの <code>.env.local</code></b> がそのままHTMLに焼き込まれる。値を入れたら <code>npm run build</code> → <code>npm run deploy</code> で反映する（Cloudflare のダッシュボードに環境変数を置いても反映されない）。</li>
+  <li><b>確認</b>：本番の結果ページで 3つのリンク（楽天／Amazon／体験）を実際にクリックして着地を確認。各 ASP のレポートに「クリック」が1件つけば配線完了。</li>
+</ol>
+
+<div class="box">
+<b>計測</b>：クリックはすべての ASP／Amazon／楽天の管理画面で見られる。サイト側の計測フック（<code>track('affiliate_click', …)</code>）は現在 no-op。Cloudflare Web Analytics では外部リンククリックは追えないので、成果の確認は各管理画面で行う。
+</div>
+
+<!-- ===================================================== -->
+<h2 id="legal">6. 表記・ルール</h2>
+<ul>
+  <li><b>PR表記（ステマ規制・2023年10月施行）</b>：アフィリエイトリンクを含むブロックには「PR」ラベルを付ける。両ブロックとも実装済み。記事本文にリンクを置く場合も、そのセクションに「PR」または「広告を含みます」を付ける。</li>
+  <li><b>Amazon 必須文言</b>：「Amazonのアソシエイトとして、香水診断 調香箋は適格販売により収入を得ています。」— タグ設定時にフッターへ自動表示。</li>
+  <li><b>プライバシーポリシー</b>：楽天アフィリエイト／Amazon アソシエイト等への参加と PR 表記について記載済み（<code>/privacy</code>）。体験予約サービスも「など」に含まれるが、明示したければ一文足す。</li>
+  <li><b>やってはいけない</b>：自己購入、リンクの短縮URL化、価格・在庫の断定記載、ランキングの根拠なし表示、未成年向け表現。</li>
+  <li><b>免責</b>：リンク先の商品・体験の品質や在庫は保証しない旨を既に about／結果ページに記載。</li>
+</ul>
+
+<!-- ===================================================== -->
+<h2 id="ops">7. 運用チェックリスト</h2>
+
+<h3>初期設定</h3>
+<ul class="check">
+  <li>Amazon アソシエイト申請 → トラッキングIDを環境変数に設定</li>
+  <li>楽天アフィリエイト登録 → アフィリエイトIDを環境変数に設定</li>
+  <li>バリューコマース（または A8.net／アクセストレード）登録 → アソビュー／じゃらんに提携申請</li>
+  <li>承認後、調香体験一覧のアフィリエイトリンクを発行 → <code>NEXT_PUBLIC_EXPERIENCE_URL</code> に設定</li>
+  <li><code>.env.local</code> に環境変数を入れて <code>npm run build</code> → <code>npm run deploy</code> で反映</li>
+  <li>本番の結果ページで3リンクをクリックし、各管理画面にクリックが記録されることを確認</li>
+  <li>フッターに Amazon 必須文言が出ていることを確認</li>
+</ul>
+
+<h3>月次</h3>
+<ul class="check">
+  <li>各管理画面でクリック数・成果を確認（タイプ別の偏りがあれば検索ワードを見直す：<code>src/data/types.base.ts</code> の <code>searchQueries</code>）</li>
+  <li>Amazon：180日以内の3件達成状況（未達なら記事からの導線を増やす／もしもアフィリエイトを検討）</li>
+  <li>楽天：報酬が月3,001円を超えたら楽天銀行／カード連携、3ヶ月連続で振込申請</li>
+  <li>体験リンクの着地ページが生きているか（ASP が案件を終了することがある）</li>
+  <li>ASP からの提携解除・料率変更メールの確認</li>
+</ul>
+
+<h3>参考リンク</h3>
+<ul class="muted">
+  <li>Amazon アソシエイト：<a href="https://affiliate.amazon.co.jp/" target="_blank" rel="noopener">affiliate.amazon.co.jp</a> ／ 審査条件の解説例：<a href="https://hitodeblog.com/amazon-hazimekata" target="_blank" rel="noopener">hitodeblog</a>、<a href="https://poyaran.com/entry/amazon-associate-requirements" target="_blank" rel="noopener">キラッとはてログ</a></li>
+  <li>楽天アフィリエイト：<a href="https://affiliate.rakuten.co.jp/" target="_blank" rel="noopener">affiliate.rakuten.co.jp</a> ／ <a href="https://affiliate.rakuten.co.jp/guides/rank/" target="_blank" rel="noopener">成果報酬について（公式）</a> ／ <a href="https://note.com/rakutenaffiliate/n/n7fbdf72f8f60" target="_blank" rel="noopener">報酬の受け取り方（公式note）</a></li>
+  <li>調香体験：<a href="https://www.asoview.com/leisure/act0077/" target="_blank" rel="noopener">アソビュー！ 調香体験・香水作り一覧</a> ／ 提携ASPの情報例：<a href="https://enma-blog.com/asoviewpartnershipasp/" target="_blank" rel="noopener">えんまのブログ</a>、<a href="https://app-colle.jp/af00532/" target="_blank" rel="noopener">アプコレ（じゃらん遊び体験）</a></li>
+  <li>ASP：<a href="https://www.valuecommerce.ne.jp/" target="_blank" rel="noopener">バリューコマース</a> ／ <a href="https://www.a8.net/" target="_blank" rel="noopener">A8.net</a> ／ <a href="https://www.accesstrade.ne.jp/" target="_blank" rel="noopener">アクセストレード</a> ／ <a href="https://af.moshimo.com/" target="_blank" rel="noopener">もしもアフィリエイト</a></li>
+</ul>
+
+</div>
+</body>
+</html>
