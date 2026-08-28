@@ -171,30 +171,81 @@ Japanese modern wordmark: the two kanji 「調香箋」 in a bold contemporary m
 
 # 記事用の図版（MBTI／ラブタイプの考察記事）
 
-**すべて 16:9 の横長**（1600×900 推奨）。文字は入れさせない（AIは日本語を正しく描けないため、意味は絵だけで持たせる設計にしてある）。
+**すべて 16:9 の横長**（1600×900 推奨）。文字は入れさせない（AIは日本語を正しく描けないので、意味は絵だけで持たせる設計にしてある）。
 保存先は `assets/img/article/`。保存後に `npm run img:optimize` を実行すると `public/img/article/*.webp` が作られ、記事に自動で出る。
-**画像が無い間は図版ごと非表示になる**ので、1枚ずつ差し込んでいって構わない。
+**画像が無い間は図版ごと非表示になる**ので、上から1枚ずつ差し込んでいって構わない。1記事7枚・計14枚。
+
+| # | ファイル | 入る位置 | 役割 |
+|---|---|---|---|
+| 1 | `mbti-hero.png` | 前提セクションの締め（記事の顔） | 「16人いる中の自分」を探したくなる導入。ここで足を止めさせる |
+| 2 | `mbti-axes.png` | 4つの軸を翻訳する（結論の直前） | 4軸それぞれが別の設計要素だと一目で分かる |
+| 3 | `mbti-grid.png` | 16タイプ対応表の直後 | 一覧を読んだ直後に全体像を見せて、読み終えた満足感を作る |
+| 4 | `mbti-distance.png` | E/I（香りの距離）の説明の後 | 「遠くまで届く」と「近くだけ」の差を体感させる |
+| 5 | `mbti-outline.png` | S/N（香りの輪郭）の説明の後 | 「名前で言える香り」と「言葉にできない香り」の差 |
+| 6 | `mbti-temperature.png` | T/F・J/P の説明の後 | 同じ香調でも温度で別物になることを見せる |
+| 7 | `mbti-groups.png` | 4グループのまとめの後 | 分析家・外交官・番人・探検家の空気の違い |
+| 8 | `lovetype-hero.png` | 冒頭（前提）の締め（記事の顔） | 恋愛の空気で引き込む。距離＝この記事の主題 |
+| 9 | `lovetype-axes.png` | 4軸の翻訳表の直後 | 4つの軸を4つの情景として覚えさせる |
+| 10 | `lovetype-grid.png` | 16通りの対応表の直後 | 内側/外側・左右で分かれる構造を絵で見せる |
+| 11 | `lovetype-lead.png` | 主導性の説明の後 | 「会った瞬間」と「別れ際」の時間差を見せる |
+| 12 | `lovetype-distance.png` | 公開度の説明の後 | 量を変えれば届く距離は設計できる |
+| 13 | `lovetype-temperature.png` | 熱量とコミットメントの説明の後 | 近づいたときに崩れる香りと崩れない香り |
+| 14 | `lovetype-scenes.png` | 場面別の量の説明の後 | 場所で適量が変わることを4コマで理解させる |
+
+---
+
+## assets/img/article/mbti-hero.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Sixteen different young women standing together in a loose grid, bust-up, each with her own mood and her own pastel colour aura — citrus yellow, mint green, pale pink, coral, cream beige, warm brown, amber gold, soft lavender — evenly spaced, varied calm expressions, a small floral or fruit motif beside each one. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
 
 ## assets/img/article/mbti-axes.png（1600×900）
 
-soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Four young women arranged in a two-by-two grid, each in a clearly different atmosphere: top-left one stands far away with her scent drifting wide across the frame, top-right one stands very close in a quiet intimate space, bottom-left one is surrounded by crisp cool blue air, bottom-right one is wrapped in warm amber light. Thin vermilion #E0492F dividing lines between the four cells. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Four young women in a two-by-two grid, each in a clearly different atmosphere: top-left her scent drifts wide across the whole cell, top-right her scent stays in a tight halo at her shoulders, bottom-left she is surrounded by crisp cool blue air, bottom-right she is wrapped in warm amber light. Thin vermilion #E0492F hairlines dividing the four cells. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
 
-## assets/img/article/mbti-matrix.png（1600×900）
+## assets/img/article/mbti-grid.png（1600×900）
 
-soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. A neat overhead grid of sixteen small glass perfume bottles laid out in four rows of four on a pale paper surface, each bottle holding a different colour of liquid ranging from pale yellow and mint green through pink, coral, beige, brown, amber and lavender, soft shadows, a single thin vermilion #E0492F line running along one edge as an accent. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. A neat overhead grid of sixteen small glass perfume bottles in four rows of four on a pale paper surface, each holding a different colour of liquid ranging from pale yellow and mint green through pink, coral, beige, brown, amber and lavender, soft shadows, a single thin vermilion #E0492F line along one edge. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
 
-## assets/img/article/mbti-bottles.png（1600×900）
+## assets/img/article/mbti-distance.png（1600×900）
 
-soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two glass perfume bottles side by side in close-up, the left one filled with clear ice-blue liquid in crisp cool light with a faint frost bloom, the right one filled with warm amber liquid glowing in soft evening light, the air between them shifting gradually from cool to warm. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two scenes side by side: on the left a young woman in a room where her scent spreads as a wide translucent haze filling the whole space; on the right another young woman whose scent stays as a small soft halo close around her shoulders, a second person just beside her noticing it. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/mbti-outline.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two halves of one image: the left half shows a peach, a lemon and a sprig of rosemary drawn with crisp clear outlines and clean colour; the right half shows the same objects dissolving into a soft blurred haze of overlapping pastel colour, their shapes barely readable. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/mbti-temperature.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two glass perfume bottles side by side in close-up, the left filled with clear ice-blue liquid in crisp cool light with a faint frost bloom, the right filled with warm amber liquid glowing in soft evening light, the air between them shifting gradually from cool to warm. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/mbti-groups.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Four young women in a row, each representing a different temperament: the first cool and analytical among glass and incense smoke, the second warm and open among roses and peaches, the third steady and reliable beside cypress wood and a small hearth, the fourth light and quick among citrus fruit and fresh green leaves. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/lovetype-hero.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two young people standing a little apart, half turned toward each other, unsure how close to step, a soft translucent trail of scent drifting in the space between them, tender evening light, quiet unspoken tension. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
 
 ## assets/img/article/lovetype-axes.png（1600×900）
 
-soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Four quiet symbolic vignettes in one row: a hand reaching forward first, a paper sliding door half open with light spilling out, a small flame beside a piece of clear ice, and a single long indigo #2D4F8A thread running unbroken to the edge of the frame. Soft pastel colours, thin vermilion #E0492F hairlines separating the vignettes. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Four quiet symbolic vignettes in one row: a hand reaching forward first, a paper sliding door half open with light spilling out, a small flame beside a piece of clear ice, and a single long indigo #2D4F8A thread running unbroken to the edge of the frame. Thin vermilion #E0492F hairlines separating the vignettes. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
 
-## assets/img/article/lovetype-matrix.png（1600×900）
+## assets/img/article/lovetype-grid.png（1600×900）
 
-soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. A young woman seen from above, sitting calmly at the centre, with sixteen small translucent scent droplets arranged around her in two concentric rings, the inner ring close to her body in muted deep colours and the outer ring spread wide in bright airy colours, the left half of the image tinted cool blue and the right half tinted warm amber. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. A young woman seen from above sitting calmly at the centre, sixteen small translucent scent droplets arranged around her in two concentric rings, the inner ring close to her body in muted deep colours and the outer ring spread wide in bright airy colours, the left half of the image tinted cool blue and the right half tinted warm amber. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/lovetype-lead.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. A diptych of the same couple: on the left the moment they meet, a bright burst of scent rising immediately between them; on the right the moment they part, only a faint warm trace of scent left hanging in the empty air after one has walked away. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
 
 ## assets/img/article/lovetype-distance.png（1600×900）
 
 soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two young people sitting side by side on a bench at a comfortable close distance, seen from the side, a soft translucent halo of scent extending only about an arm's length around them and fading gently into the air, calm evening light, tender unforced mood. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/lovetype-temperature.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two portraits side by side: on the left a young woman in crisp cool light, her scent drawn as clean sharp translucent lines that keep their shape; on the right another young woman in warm light, her scent drawn as soft round blooms opening outward from the warmth of her skin. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/lovetype-scenes.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Four small scenes in a row showing how far a scent spreads in different places: a dim cinema row, the inside of a car, a restaurant table set for two, and a night street. In each scene a translucent scent haze of a clearly different size surrounds one seated or standing figure, smallest at the restaurant table and largest on the night street. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
