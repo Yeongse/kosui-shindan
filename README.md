@@ -22,7 +22,7 @@
 - 診断・結果は最大 560px の一列（PCでもアプリ感）。設問は「3 / 12」+ 進捗バー + 縦積みの角丸ボタン
 - 結果は丸いキャラ絵 → タイプ名 → タグ → 調香ノート3カード → 香りのバランス（8本のバー%）→ 相性カード → シェア4ボタン
 - 見出しの横バー・等幅ラベル・罫線主体・暗い地・セリフ体・クリーム地×赤茶は使わない
-- 画像は原本を `assets/img/`、配信用 WebP を `public/img/` に置く（`npm run img:optimize` で生成）。スロットは無くても崩れない。生成プロンプトは [docs/image-prompts.md](./docs/image-prompts.md) / [docs/image-prompts-ready.md](./docs/image-prompts-ready.md)
+- 画像は原本を `assets/img/`、配信用 WebP を `public/img/` に置く（`npm run img:optimize` で生成）。スロットは無くても崩れない。生成プロンプトは [docs/image-prompts.md](./docs/image-prompts.md) / [docs/image-prompts-ready.md](./docs/image-prompts-ready.md)。記事の構造図（横長）は [docs/figure-prompts.md](./docs/figure-prompts.md)
 
 ## セットアップ
 
