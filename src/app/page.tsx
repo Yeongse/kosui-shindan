@@ -141,7 +141,7 @@ export default function HomePage() {
             性格診断から香りを探す
           </h2>
           <p className={styles.lead}>
-            すでに自分のMBTIや恋愛タイプを知っている人向けに、その結果を香りの系統に翻訳した考察を書きました。
+            すでに自分のMBTIやラブタイプを知っている人向けに、その結果を香りの系統に翻訳した考察を書きました。
           </p>
           <ul className={styles.crossGrid}>
             {CROSS_ARTICLES.map((c) => (

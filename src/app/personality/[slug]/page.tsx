@@ -5,6 +5,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArticleBody, ArticleMeta } from '@/components/ArticleBody';
+import { CrossTabs } from '@/components/CrossTabs';
 import { ShindanCta } from '@/components/ShindanCta';
 import { JsonLd } from '@/components/JsonLd';
 import { getCrossBySlug, CROSS_ARTICLES, CROSS_SLUGS } from '@/data/cross';
@@ -48,6 +49,7 @@ export default async function PersonalityPage({ params }: { params: Promise<{ sl
             { name: shortTitle, path },
           ]}
         />
+        <CrossTabs current={c.slug} />
         <div className={styles.head}>
           <span className="eyebrow">{c.badge}</span>
           <h1 className={styles.h1}>{c.title}</h1>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { LogoMark } from './LogoMark';
+import { CROSS_ARTICLES } from '@/data/cross';
 import styles from './SiteHeader.module.css';
 
 /** ヘッダー: ロゴ + 主要ナビ。白地・薄い下線。 */
@@ -16,12 +17,14 @@ export function SiteHeader({ minimal = false }: { minimal?: boolean }) {
         </Link>
         {!minimal && (
           <nav className={styles.nav} aria-label="サイト内ナビゲーション">
-            <Link href="/type" className={styles.navLink}>
+            <Link href="/type" className={`${styles.navLink} ${styles.navLinkWide}`}>
               タイプ一覧
             </Link>
-            <Link href="/personality" className={styles.navLink}>
-              性格診断
-            </Link>
+            {CROSS_ARTICLES.map((c) => (
+              <Link key={c.slug} href={`/personality/${c.slug}`} className={styles.navLink}>
+                {c.tab}
+              </Link>
+            ))}
             <Link href="/notes" className={`${styles.navLink} ${styles.navLinkWide}`}>
               香りの解説
             </Link>

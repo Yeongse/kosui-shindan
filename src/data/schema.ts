@@ -161,6 +161,7 @@ export interface NoteArticle {
  */
 export interface CrossArticle extends GuideArticle {
   badge: string; // 例: MBTI × 香水
+  tab: string; // ヘッダー・タブの短いラベル（例: MBTIから）
   cardTitle: string; // カード見出し（記事タイトルの短縮）
   cardBody: string;
   cardMore: string; // カード下段の一行

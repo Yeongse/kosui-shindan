@@ -4,6 +4,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ShindanCta } from '@/components/ShindanCta';
+import { CrossTabs } from '@/components/CrossTabs';
 import { CROSS_ARTICLES } from '@/data/cross';
 import { buildMetadata, META } from '@/lib/seo';
 import styles from './page.module.css';
@@ -25,9 +26,11 @@ export default function PersonalityIndexPage() {
           <span className="eyebrow">Personality</span>
           <h1 className={styles.h1}>性格診断から香りを探す</h1>
           <p className={styles.lead}>
-            MBTIや恋愛タイプの結果を、香水の香調に翻訳する試みです。性格と香りは直接つながりませんが、「他人との距離をどう設計するか」という中間項を挟むとつながります。どちらの記事も、4つの軸から16タイプすべてに対応させました。
+            MBTIやラブタイプ診断の結果を、香水の香調に翻訳する試みです。性格と香りは直接つながりませんが、「他人との距離をどう設計するか」という中間項を挟むとつながります。どちらの記事も、4つの軸から16タイプすべてに対応させました。
           </p>
         </div>
+
+        <CrossTabs />
 
         <ul className={styles.list}>
           {CROSS_ARTICLES.map((c) => (

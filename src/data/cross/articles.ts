@@ -10,9 +10,10 @@ import type { CrossArticle } from '../schema';
 export const CROSS: CrossArticle[] = [
   {
     slug: 'mbti-perfume',
-    title: 'MBTI×香水｜16タイプ別に似合う香りの系統を考察する',
+    title: 'MBTIから似合う香水を選ぶ｜16タイプ別の香りの系統を考察する',
     badge: 'MBTI × 香水',
-    cardTitle: '16タイプ別に似合う香りの系統',
+    tab: 'MBTIから',
+    cardTitle: 'MBTIから香水を選ぶ',
     cardBody:
       'E/Iは香りが届く距離、S/Nは輪郭の分かりやすさ、T/Fは温度、J/Pは重心。4つの軸を香水の設計要素に翻訳して、16タイプすべてに対応する香調とノート名を出しました。',
     cardMore: 'INFPは肌理、INTJは宵闇、ENFPは蜜月',
@@ -155,9 +156,10 @@ export const CROSS: CrossArticle[] = [
   },
   {
     slug: 'lovetype-perfume',
-    title: 'ラブタイプ診断×香水｜恋愛の4つの軸から似合う香りを考える',
+    title: 'ラブタイプ診断から似合う香水を選ぶ｜恋愛の4つの軸で考える',
     badge: 'ラブタイプ × 香水',
-    cardTitle: '恋愛の4つの軸から香りを考える',
+    tab: 'ラブタイプから',
+    cardTitle: 'ラブタイプから香水を選ぶ',
     cardBody:
       '主導性は香りの立ち上がり、公開度は届く距離、熱量は温度、コミットメントは持続。恋愛での距離の取り方を、そのまま香水の選び方に置き換えます。',
     cardMore: '16通りの組み合わせと、場面別の量の目安',
