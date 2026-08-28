@@ -21,6 +21,9 @@ export function SiteFooter() {
           <Link href="/guide" className={styles.link}>
             香水の選び方ガイド
           </Link>
+          <Link href="/personality" className={styles.link}>
+            性格診断と香り
+          </Link>
           <Link href="/about" className={styles.link}>
             診断の考え方・運営者
           </Link>

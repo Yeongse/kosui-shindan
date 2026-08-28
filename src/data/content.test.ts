@@ -5,6 +5,7 @@ import { TYPES } from './types';
 import { TYPE_CODES } from './types.base';
 import { NOTES, NOTE_SLUGS } from './notes';
 import { GUIDES, GUIDE_SLUGS } from './guides';
+import { CROSS_ARTICLES } from './cross';
 import { QUESTIONS } from './questions';
 import { LP_FAQ, LP_PHILOSOPHY } from './site-copy';
 import { PICKS_BY_TYPE } from './picks';
@@ -204,6 +205,28 @@ describe('ガイド記事（§12.3）', () => {
       }
       expect(g.publishedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
+  });
+});
+
+describe('性格診断×香水のクロス考察（/personality）', () => {
+  it('本文 1600字以上、カード用コピーが揃い、関連リンクが実在', () => {
+    expect(CROSS_ARTICLES.length).toBeGreaterThanOrEqual(2);
+    for (const c of CROSS_ARTICLES) {
+      const len = (c.lead + sectionText(c.sections)).length;
+      expect(len, `${c.slug}: ${len}`).toBeGreaterThanOrEqual(1600);
+      expect(c.badge.length, `${c.slug} badge`).toBeGreaterThan(0);
+      expect(c.cardTitle.length, `${c.slug} cardTitle`).toBeGreaterThan(0);
+      expect(c.cardBody.length, `${c.slug} cardBody`).toBeGreaterThan(0);
+      expect(c.cardMore.length, `${c.slug} cardMore`).toBeGreaterThan(0);
+      // 関連リンクは実在するノート／ガイドのみ（クロス記事同士は自動で相互リンクする）
+      for (const n of c.relatedNotes) expect(NOTE_SLUGS, `${c.slug} relatedNotes`).toContain(n);
+      for (const g of c.relatedGuides) expect(GUIDE_SLUGS, `${c.slug} relatedGuides -> ${g}`).toContain(g);
+      expect(c.publishedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+  });
+
+  it('選び方ガイドには含めない（別立てのセクション）', () => {
+    for (const c of CROSS_ARTICLES) expect(GUIDE_SLUGS).not.toContain(c.slug);
   });
 });
 

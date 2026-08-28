@@ -114,6 +114,12 @@ for (const [route, html] of pages) {
   if (!/href="\/notes\/[a-z]+"/.test(html)) ruleIssues.push(`${route}: 関連ノートなし`);
   if (!html.includes('href="/shindan"')) ruleIssues.push(`${route}: 診断CTAなし`);
 }
+for (const [route, html] of pages) {
+  if (!/^\/personality\/[a-z-]+$/.test(route)) continue;
+  if (!/href="\/notes\/[a-z]+"/.test(html)) ruleIssues.push(`${route}: 関連ノートなし`);
+  if (!/href="\/guide\/[a-z-]+"/.test(html)) ruleIssues.push(`${route}: 関連ガイドなし`);
+  if (!html.includes('href="/shindan"')) ruleIssues.push(`${route}: 診断CTAなし`);
+}
 console.log(`internal link rule issues: ${ruleIssues.length}`, ruleIssues);
 
 const failed = orphans.length + broken.length + badAnchors.length + robotsIssues.length + ruleIssues.length;

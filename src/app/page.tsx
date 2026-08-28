@@ -10,6 +10,7 @@ import { TypeCard } from '@/components/TypeCard';
 import { TYPES } from '@/data/types';
 import { NOTES } from '@/data/notes';
 import { GUIDES } from '@/data/guides';
+import { CROSS_ARTICLES } from '@/data/cross';
 import { ACCORD_CODES } from '@/data/schema';
 import { ACCORD_LIQUID } from '@/data/palette';
 import { LP_FAQ, LP_PHILOSOPHY, LP_PHILOSOPHY_HEADING, LP_WHAT_YOU_GET } from '@/data/site-copy';
@@ -40,24 +41,6 @@ const ICONS = [
     <path d="M20 20l-4.2-4.2" />
   </svg>,
 ];
-
-/** 性格診断×香水のクロス考察。LPから直接入れるようにする（§12.1 ロングテール） */
-const CROSS_ARTICLES = [
-  {
-    slug: 'mbti-perfume',
-    badge: 'MBTI × 香水',
-    title: '16タイプ別に似合う香りの系統',
-    body: 'E/Iは香りが届く距離、S/Nは輪郭の分かりやすさ、T/Fは温度、J/Pは重心。4つの軸を香水の設計要素に翻訳して、16タイプすべてに対応する香調とノート名を出しました。',
-    more: 'INFPは肌理、INTJは宵闇、ENFPは蜜月',
-  },
-  {
-    slug: 'lovetype-perfume',
-    badge: 'ラブタイプ × 香水',
-    title: '恋愛の4つの軸から香りを考える',
-    body: '主導性は香りの立ち上がり、公開度は届く距離、熱量は温度、コミットメントは持続。恋愛での距離の取り方を、そのまま香水の選び方に置き換えます。',
-    more: '16通りの組み合わせと、場面別の量の目安',
-  },
-] as const;
 
 /** LP — 中央一列。最初の画面で「香水診断・無料90秒・何がわかるか」を伝える。 */
 export default function HomePage() {
@@ -161,17 +144,22 @@ export default function HomePage() {
             すでに自分のMBTIや恋愛タイプを知っている人向けに、その結果を香りの系統に翻訳した考察を書きました。
           </p>
           <ul className={styles.crossGrid}>
-            {CROSS_ARTICLES.map((a) => (
-              <li key={a.slug}>
-                <Link href={`/guide/${a.slug}`} className={`card ${styles.crossCard}`}>
-                  <span className={styles.crossBadge}>{a.badge}</span>
-                  <span className={styles.crossTitle}>{a.title}</span>
-                  <span className={styles.crossBody}>{a.body}</span>
-                  <span className={styles.crossMore}>{a.more}</span>
+            {CROSS_ARTICLES.map((c) => (
+              <li key={c.slug}>
+                <Link href={`/personality/${c.slug}`} className={`card ${styles.crossCard}`}>
+                  <span className={styles.crossBadge}>{c.badge}</span>
+                  <span className={styles.crossTitle}>{c.cardTitle}</span>
+                  <span className={styles.crossBody}>{c.cardBody}</span>
+                  <span className={styles.crossMore}>{c.cardMore}</span>
                 </Link>
               </li>
             ))}
           </ul>
+          <p className={styles.more}>
+            <Link href="/personality" className="btn btn--ghost">
+              性格診断と香りの考察をまとめて見る
+            </Link>
+          </p>
         </section>
 
         {/* ---------- 考え方 ---------- */}

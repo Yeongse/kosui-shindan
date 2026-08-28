@@ -155,6 +155,17 @@ export interface NoteArticle {
   updatedAt: string; // YYYY-MM-DD
 }
 
+/**
+ * 性格診断×香水のクロス考察（/personality）。本文の構造はガイド記事と同じで、
+ * 一覧・LPのカードに出す短いコピーを追加で持つ。
+ */
+export interface CrossArticle extends GuideArticle {
+  badge: string; // 例: MBTI × 香水
+  cardTitle: string; // カード見出し（記事タイトルの短縮）
+  cardBody: string;
+  cardMore: string; // カード下段の一行
+}
+
 export interface GuideArticle {
   slug: string;
   title: string; // = 主キーワード

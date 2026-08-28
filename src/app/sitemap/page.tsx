@@ -6,6 +6,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { TYPES } from '@/data/types';
 import { NOTES } from '@/data/notes';
 import { GUIDES } from '@/data/guides';
+import { CROSS_ARTICLES } from '@/data/cross';
 import { buildMetadata, META } from '@/lib/seo';
 import styles from '../about/page.module.css';
 
@@ -96,6 +97,23 @@ export default function SitemapPage() {
               <li key={g.slug}>
                 <Link href={`/guide/${g.slug}`} className="link">
                   {g.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.h2}>
+            <Link href="/personality" className="link">
+              性格診断と香り
+            </Link>
+          </h2>
+          <ul className={listStyle}>
+            {CROSS_ARTICLES.map((c) => (
+              <li key={c.slug}>
+                <Link href={`/personality/${c.slug}`} className="link">
+                  {c.title}
                 </Link>
               </li>
             ))}

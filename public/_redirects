@@ -19,3 +19,7 @@
 /r/AMB-W         /type/kohaku        301
 /r/MSK-C         /type/hakuji        301
 /r/MSK-W         /type/kime          301
+
+# 性格診断×香水の考察は /guide から /personality へ移設した（2026-08-28）
+/guide/mbti-perfume      /personality/mbti-perfume       301
+/guide/lovetype-perfume  /personality/lovetype-perfume   301

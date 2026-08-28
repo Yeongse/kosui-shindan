@@ -19,7 +19,10 @@ export function SiteHeader({ minimal = false }: { minimal?: boolean }) {
             <Link href="/type" className={styles.navLink}>
               タイプ一覧
             </Link>
-            <Link href="/notes" className={styles.navLink}>
+            <Link href="/personality" className={styles.navLink}>
+              性格診断
+            </Link>
+            <Link href="/notes" className={`${styles.navLink} ${styles.navLinkWide}`}>
               香りの解説
             </Link>
             <Link href="/guide" className={`${styles.navLink} ${styles.navLinkWide}`}>

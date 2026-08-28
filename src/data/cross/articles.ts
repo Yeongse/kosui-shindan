@@ -1,16 +1,21 @@
-import type { GuideArticle } from '../schema';
+import type { CrossArticle } from '../schema';
 
 /**
- * ガイド記事 追加分（21〜22本目）— 診断×診断のクロス考察
- * 「MBTI 香水」「ラブタイプ診断 香水」からの流入を受ける読み物。
+ * 性格診断×香水のクロス考察（/personality）
+ * 「MBTI 香水」「ラブタイプ診断 香水」からの流入を受ける読み物。選び方ガイドとは別立て。
  * 記事中の画像は assets/img/article（原本PNG）→ public/img/article（配信WebP）。
- * 未配置でも Art の空スロットになるだけでレイアウトは崩れない。
+ * 未配置なら図版ごと非表示になるので、後から差し込める。
  * mbti-perfume / lovetype-perfume
  */
-export const GUIDES_6: GuideArticle[] = [
+export const CROSS: CrossArticle[] = [
   {
     slug: 'mbti-perfume',
     title: 'MBTI×香水｜16タイプ別に似合う香りの系統を考察する',
+    badge: 'MBTI × 香水',
+    cardTitle: '16タイプ別に似合う香りの系統',
+    cardBody:
+      'E/Iは香りが届く距離、S/Nは輪郭の分かりやすさ、T/Fは温度、J/Pは重心。4つの軸を香水の設計要素に翻訳して、16タイプすべてに対応する香調とノート名を出しました。',
+    cardMore: 'INFPは肌理、INTJは宵闇、ENFPは蜜月',
     seoDescription:
       'MBTIの16タイプと香水の香調を1対1で対応させた考察記事。E/Iが香りの届く距離、S/Nが輪郭の分かりやすさ、T/Fが温度、J/Pが重心を決めるという枠組みで、INFPからESTJまで16タイプそれぞれに似合う香りの系統と具体的なノート名をまとめました。',
     lead:
@@ -144,13 +149,18 @@ export const GUIDES_6: GuideArticle[] = [
       },
     ],
     relatedNotes: ['musk', 'amber', 'floral'],
-    relatedGuides: ['lovetype-perfume', 'how-to-choose', 'aroma-shindan'],
+    relatedGuides: ['how-to-choose', 'aroma-shindan', 'perfume-terms'],
     publishedAt: '2026-08-28',
     updatedAt: '2026-08-28',
   },
   {
     slug: 'lovetype-perfume',
     title: 'ラブタイプ診断×香水｜恋愛の4つの軸から似合う香りを考える',
+    badge: 'ラブタイプ × 香水',
+    cardTitle: '恋愛の4つの軸から香りを考える',
+    cardBody:
+      '主導性は香りの立ち上がり、公開度は届く距離、熱量は温度、コミットメントは持続。恋愛での距離の取り方を、そのまま香水の選び方に置き換えます。',
+    cardMore: '16通りの組み合わせと、場面別の量の目安',
     seoDescription:
       'ラブタイプ診断の4つの軸（主導性・公開度・熱量・コミットメント）を、香水の設計要素に翻訳した考察記事。主導性は香りの立ち上がり、公開度は届く距離、熱量は温度、コミットメントは持続。16通りの組み合わせすべてに対応する香りの系統と、恋愛の場面別の量の目安をまとめました。',
     lead:
@@ -286,7 +296,7 @@ export const GUIDES_6: GuideArticle[] = [
       },
     ],
     relatedNotes: ['musk', 'gourmand', 'woody'],
-    relatedGuides: ['mbti-perfume', 'first-date-scent', 'how-many-sprays'],
+    relatedGuides: ['first-date-scent', 'how-many-sprays', 'nioi-kaori-difference'],
     publishedAt: '2026-08-28',
     updatedAt: '2026-08-28',
   },

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import type { GuideArticle, NoteArticle, ScentType } from '@/data/schema';
+import type { CrossArticle, GuideArticle, NoteArticle, ScentType } from '@/data/schema';
 
 /**
  * §12.2 メタデータテンプレート / §12.4 構造化データ / §12.5 絶対URL
@@ -44,6 +44,11 @@ export const META = {
     title: '香水の選び方・つけ方ガイド｜香水診断 調香箋',
     description:
       '香水の選び方、オードトワレとオードパルファンの違い、つける場所や適量に加えて、香りのおすすめの選び分けやアロマ診断との違いまで。初心者が最初の1本で失敗しないためのガイド記事一覧。',
+  },
+  personality: {
+    title: '性格診断×香水｜MBTI・ラブタイプから似合う香りを探す',
+    description:
+      'MBTIの16タイプや恋愛タイプの結果を、香水の香調に翻訳した考察記事。E/Iは香りの届く距離、T/Fは温度というように、性格診断の軸をそのまま香りの設計要素として読み替えます。',
   },
   about: {
     title: '香水診断 調香箋について｜診断の考え方・運営者・免責',
@@ -123,6 +128,18 @@ export function noteMetadata(n: NoteArticle): Metadata {
     type: 'article',
     publishedTime: n.publishedAt,
     modifiedTime: n.updatedAt,
+  });
+}
+
+export function crossMetadata(c: CrossArticle): Metadata {
+  return buildMetadata({
+    title: `${c.title}｜${SITE_NAME}`,
+    description: c.seoDescription,
+    path: `/personality/${c.slug}`,
+    ogImage: `/og/cross-${c.slug}.png`,
+    type: 'article',
+    publishedTime: c.publishedAt,
+    modifiedTime: c.updatedAt,
   });
 }
 

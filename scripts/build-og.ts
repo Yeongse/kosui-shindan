@@ -5,7 +5,8 @@
  *
  * - public/og/type-{slug}.png   ×16（タイプの結果カード風）
  * - public/og/note-{slug}.png   ×8（香りノート解説）
- * - public/og/guide-{slug}.png  ×16（ガイド記事）
+ * - public/og/guide-{slug}.png  ×18（ガイド記事）
+ * - public/og/cross-{slug}.png  ×2（性格診断×香水の考察）
  * - public/og/default.png       （LP・その他）
  * フォントは assets/og-fonts/*.woff（npm run og:fonts で再生成）。
  * タイプ・ノートの絵は assets/img 配下の原本PNGを data URI として埋め込む
@@ -16,6 +17,7 @@ import path from 'node:path';
 import { TYPES } from '../src/data/types';
 import { NOTES } from '../src/data/notes';
 import { GUIDES } from '../src/data/guides';
+import { CROSS_ARTICLES } from '../src/data/cross';
 import { TYPE_LIQUID } from '../src/data/palette';
 import { renderTypeOg, renderLabelOg, type OgAssets } from '../src/lib/og';
 
@@ -71,6 +73,11 @@ async function write(name: string, res: Response) {
   for (const g of GUIDES) {
     const short = g.title.split('｜')[0] ?? g.title;
     bytes += await write(`guide-${g.slug}.png`, renderLabelOg(assets, short));
+    count++;
+  }
+  for (const c of CROSS_ARTICLES) {
+    const short = c.title.split('｜')[0] ?? c.title;
+    bytes += await write(`cross-${c.slug}.png`, renderLabelOg(assets, short));
     count++;
   }
   bytes += await write('default.png', renderLabelOg(assets, null));

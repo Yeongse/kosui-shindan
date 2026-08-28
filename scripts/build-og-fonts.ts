@@ -16,6 +16,7 @@ import path from 'node:path';
 import { TYPES_BASE } from '../src/data/types.base';
 import { NOTES } from '../src/data/notes';
 import { GUIDES } from '../src/data/guides';
+import { CROSS_ARTICLES } from '../src/data/cross';
 import { OG_FIXED_STRINGS } from '../src/lib/og-labels';
 
 const SRC = process.env.OG_FONT_SRC ?? '';
@@ -51,6 +52,7 @@ for (const n of NOTES) {
   add(n.h1);
 }
 for (const g of GUIDES) add(g.title);
+for (const c of CROSS_ARTICLES) add(c.title);
 for (const s of OG_FIXED_STRINGS) add(s);
 
 const text = Array.from(chars).join('');

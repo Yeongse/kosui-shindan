@@ -10,7 +10,7 @@
 - ホスティング: Cloudflare Workers の静的アセット（アセット専用・Worker コードなし）。設定は `wrangler.jsonc`
 - 状態: React useReducer + sessionStorage（回答）/ localStorage（履歴3件）。外部状態管理なし
 - アニメーション: CSS transition/keyframes + SVG。framer-motion 等なし
-- OG画像: `next/og`（satori）で**ビルド時に生成**し `public/og/*.png` として配信（41枚）
+- OG画像: `next/og`（satori）で**ビルド時に生成**し `public/og/*.png` として配信（45枚）
 - テスト: Vitest（scoring / 分布 / digest / コンテンツ検収）+ Playwright（静的出力に対する E2E）
 - 解析: Cloudflare Web Analytics（Cookie 不使用・同意バナーなし）。DB なし。個人情報は収集しない
 
@@ -41,7 +41,7 @@ npm run dev
 | `npm run test` | Vitest（scoring スナップショット・分布 10万試行×2モデル・digest 往復・コンテンツ検収） |
 | `npm run test:e2e` | Playwright（390px幅・静的出力 out/ に対して実行。要 `npm run build`） |
 | `npm run serve` | `out/` を Cloudflare と同じURL解決でローカル配信（:3199） |
-| `npm run og:build` | OG画像 41枚を `public/og/` に生成（`npm run build` の前段で自動実行） |
+| `npm run og:build` | OG画像 45枚を `public/og/` に生成（`npm run build` の前段で自動実行） |
 | `npm run check:links` | ビルド済みHTMLから内部リンクグラフを検証（孤立ページ0・リンク切れ0・アンカーテキスト・robots・§12.1 内部リンク規則） |
 | `npm run analyze:distribution` | 16タイプの出現分布（一様ランダム / 人間モデル）を表示。`PATCHES` 環境変数で重み案を試算 |
 | `npm run og:fonts` | OG画像用フォントのサブセット再生成（後述） |
@@ -61,7 +61,8 @@ src/
     type/                 香水タイプ一覧（香層図鑑）
     type/[slug]/          結果 兼 タイプ解説（SSG 16）
     notes/ notes/[slug]/  香りノート解説（8）
-    guide/ guide/[slug]/  ガイド記事（10、データ層に追加するだけで増える）
+    guide/ guide/[slug]/  ガイド記事（18、データ層に追加するだけで増える）
+    personality/          性格診断×香水の考察（MBTI・ラブタイプ）
     about/ privacy/ sitemap/  静的ページ・HTMLサイトマップ
     sitemap.ts robots.ts not-found.tsx
   components/             ShindanFlow（設問）/ Loading / ShindanCard（結果カード）/ AccordBars / TypeCard / ShareRow / Art（画像スロット）ほか
@@ -72,7 +73,8 @@ src/
     type-seo/part-*.ts    16タイプの SEO本文・FAQ・関連リンク（固有書き下ろし）
     types.ts              上2つの合成（唯一の参照点）
     notes/ notes.ts       ノート解説 8本
-    guides/ guides.ts     ガイド記事 16本（part-N.ts を足して配列に加えれば公開）
+    guides/ guides.ts     ガイド記事 18本（part-N.ts を足して配列に加えれば公開）
+    cross/ cross.ts       性格診断×香水の考察 2本（/personality。選び方ガイドとは別立て）
     palette.ts            色トークン・液体色・混色
     site-copy.ts          LP/aboutの固定コピー・FAQ 5問
     human-prior.ts        キャリブレーション用の「選択肢の選ばれやすさ」事前分布
@@ -104,7 +106,7 @@ wrangler.jsonc            Cloudflare へのデプロイ設定（アセット専�
 
 ## OG 画像の再生成
 
-OG画像は `npm run build` の前段（`npm run og:build`）で 41枚（タイプ16・ノート8・ガイド16・既定1）を
+OG画像は `npm run build` の前段（`npm run og:build`）で 45枚（タイプ16・ノート8・ガイド18・考察2・既定1）を
 `public/og/` に生成する。デザインは `src/lib/og.tsx`。
 
 フォントのサブセット `assets/og-fonts/*.woff` は Shippori Mincho B1（全文言）と Yuji Syuku（タイプ名・見出し語のみ）を、
