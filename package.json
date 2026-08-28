@@ -22,8 +22,7 @@
     "verify": "npm run typecheck && npm run test && npm run build && npm run check:links && npm run test:e2e",
     "og:build": "tsx scripts/build-og.ts",
     "serve": "tsx scripts/serve-out.ts",
-    "deploy": "wrangler deploy",
-    "figures": "tsx scripts/build-figures.ts"
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "next": "^16.3.1",

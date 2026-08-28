@@ -18,7 +18,6 @@ import { NOTES } from '../src/data/notes';
 import { GUIDES } from '../src/data/guides';
 import { CROSS_ARTICLES } from '../src/data/cross';
 import { OG_FIXED_STRINGS } from '../src/lib/og-labels';
-import { figureStrings } from '../src/lib/figure-data';
 
 const SRC = process.env.OG_FONT_SRC ?? '';
 const PYFTSUBSET = process.env.PYFTSUBSET ?? 'pyftsubset';
@@ -55,9 +54,6 @@ for (const n of NOTES) {
 for (const g of GUIDES) add(g.title);
 for (const c of CROSS_ARTICLES) add(c.title);
 for (const s of OG_FIXED_STRINGS) add(s);
-for (const s of figureStrings()) add(s);
-// 図版にはタイプ名とトップノートも出る
-for (const t of TYPES_BASE) add(t.notes.top.join(''));
 
 const text = Array.from(chars).join('');
 mkdirSync(OUT, { recursive: true });

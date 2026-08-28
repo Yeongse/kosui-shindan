@@ -42,7 +42,6 @@ npm run dev
 | `npm run test:e2e` | Playwright（390px幅・静的出力 out/ に対して実行。要 `npm run build`） |
 | `npm run serve` | `out/` を Cloudflare と同じURL解決でローカル配信（:3199） |
 | `npm run og:build` | OG画像 45枚を `public/og/` に生成（`npm run build` の前段で自動実行） |
-| `npm run figures` | 記事の図版を PNG で書き出す（SNS用。本文の図版は HTML で描くので通常は不要） |
 | `npm run check:links` | ビルド済みHTMLから内部リンクグラフを検証（孤立ページ0・リンク切れ0・アンカーテキスト・robots・§12.1 内部リンク規則） |
 | `npm run analyze:distribution` | 16タイプの出現分布（一様ランダム / 人間モデル）を表示。`PATCHES` 環境変数で重み案を試算 |
 | `npm run og:fonts` | OG画像用フォントのサブセット再生成（後述） |
@@ -76,8 +75,6 @@ src/
     notes/ notes.ts       ノート解説 8本
     guides/ guides.ts     ガイド記事 18本（part-N.ts を足して配列に加えれば公開）
     cross/ cross.ts       性格診断×香水の考察 2本（/personality。選び方ガイドとは別立て）
-  lib/figure-data.ts      記事の図版の中身（軸・対応表・場面別の量）— 図版の文言はここが唯一の出所
-  lib/figures.tsx         図版のPNG書き出し（npm run figures）
     palette.ts            色トークン・液体色・混色
     site-copy.ts          LP/aboutの固定コピー・FAQ 5問
     human-prior.ts        キャリブレーション用の「選択肢の選ばれやすさ」事前分布
