@@ -6,7 +6,6 @@
  * - assets/img/types/*.png  → public/img/types/*.webp  （512×512）
  * - assets/img/notes/*.png  → public/img/notes/*.webp  （幅 1200、比率維持）
  * - assets/img/hero/*.png   → public/img/hero/*.webp   （幅 1200、比率維持）
- * - assets/img/article/*.png→ public/img/article/*.webp（幅 1200、比率維持）
  * 原本は assets/ に残す。画像を差し替えたら再実行する。
  */
 import { chromium } from '@playwright/test';
@@ -17,7 +16,6 @@ const JOBS: { src: string; out: string; width: number; height?: number; quality:
   { src: 'assets/img/types', out: 'public/img/types', width: 512, height: 512, quality: 0.84 },
   { src: 'assets/img/notes', out: 'public/img/notes', width: 1200, quality: 0.82 },
   { src: 'assets/img/hero', out: 'public/img/hero', width: 1200, quality: 0.82 },
-  { src: 'assets/img/article', out: 'public/img/article', width: 1200, quality: 0.82 },
 ];
 
 (async () => {

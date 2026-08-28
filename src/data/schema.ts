@@ -134,7 +134,24 @@ export interface ArticleImage {
   ratio?: '16/9' | '4/3' | '1/1';
 }
 
-export type ContentBlock = string | { list: string[] } | { image: ArticleImage };
+/** 記事に差し込む図版のID。中身は src/lib/figure-data.ts、描画は src/components/Figures.tsx */
+export type FigureId =
+  | 'mbti-axes'
+  | 'mbti-accords'
+  | 'mbti-map'
+  | 'mbti-distance'
+  | 'mbti-groups'
+  | 'love-axes'
+  | 'love-accords'
+  | 'love-map'
+  | 'love-distance'
+  | 'love-scenes';
+
+export type ContentBlock =
+  | string
+  | { list: string[] }
+  | { image: ArticleImage }
+  | { figure: { id: FigureId; caption?: string } };
 
 export interface ArticleSection {
   heading: string;

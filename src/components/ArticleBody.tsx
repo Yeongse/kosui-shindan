@@ -1,5 +1,6 @@
 import type { ArticleSection } from '@/data/schema';
 import { ArticleFigure } from './ArticleFigure';
+import { Figure } from './Figures';
 import styles from './ArticleBody.module.css';
 
 /**
@@ -31,7 +32,8 @@ export function ArticleBody({ sections }: { sections: ArticleSection[] }) {
                 </ul>
               );
             }
-            return <ArticleFigure key={j} image={b.image} />;
+            if ('image' in b) return <ArticleFigure key={j} image={b.image} />;
+            return <Figure key={j} id={b.figure.id} caption={b.figure.caption} />;
           })}
         </section>
       ))}

@@ -47,5 +47,8 @@ yarn-error.log*
 # ビルド時に生成する OG 画像（npm run og:build）
 /public/og
 
+# ビルド時に生成する記事の図版（npm run figures）
+/public/img/figure
+
 # wrangler
 .wrangler
