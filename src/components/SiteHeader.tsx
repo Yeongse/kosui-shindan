@@ -17,20 +17,23 @@ export function SiteHeader({ minimal = false }: { minimal?: boolean }) {
         </Link>
         {!minimal && (
           <nav className={styles.nav} aria-label="サイト内ナビゲーション">
-            <Link href="/type" className={`${styles.navLink} ${styles.navLinkWide}`}>
-              タイプ一覧
-            </Link>
-            {CROSS_ARTICLES.map((c) => (
-              <Link key={c.slug} href={`/personality/${c.slug}`} className={styles.navLink}>
-                {c.tab}
+            {/* 狭い画面では横スクロールする。リンクは隠さず、診断CTAだけ右に固定する */}
+            <div className={styles.navLinks}>
+              <Link href="/type" className={styles.navLink}>
+                タイプ一覧
               </Link>
-            ))}
-            <Link href="/notes" className={`${styles.navLink} ${styles.navLinkWide}`}>
-              香りの解説
-            </Link>
-            <Link href="/guide" className={`${styles.navLink} ${styles.navLinkWide}`}>
-              選び方ガイド
-            </Link>
+              <Link href="/notes" className={styles.navLink}>
+                香りの解説
+              </Link>
+              <Link href="/guide" className={styles.navLink}>
+                選び方ガイド
+              </Link>
+              {CROSS_ARTICLES.map((c) => (
+                <Link key={c.slug} href={`/personality/${c.slug}`} className={styles.navLink}>
+                  {c.tab}
+                </Link>
+              ))}
+            </div>
             <Link href="/shindan" className={`${styles.navCta}`}>
               診断する
             </Link>
