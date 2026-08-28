@@ -125,7 +125,16 @@ export interface ScoreResult {
 /* ---------- 記事コンテンツ（ノート解説 / ガイド） ---------- */
 
 /** 文字列は段落、{ list } は箇条書き */
-export type ContentBlock = string | { list: string[] };
+/** 記事中に差し込む画像（未配置でもレイアウトが崩れないよう Art で描画する） */
+export interface ArticleImage {
+  src: string; // 配信パス（例: /img/article/mbti-matrix.webp）
+  alt: string;
+  caption?: string;
+  /** 表示比率。省略時は 16:9 */
+  ratio?: '16/9' | '4/3' | '1/1';
+}
+
+export type ContentBlock = string | { list: string[] } | { image: ArticleImage };
 
 export interface ArticleSection {
   heading: string;

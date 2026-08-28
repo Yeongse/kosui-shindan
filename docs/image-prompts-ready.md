@@ -166,3 +166,35 @@ flat vector logo mark, a slightly tilted vertical rectangular paper strip (tanza
 Japanese modern wordmark: the two kanji 「調香箋」 in a bold contemporary mincho typeface in ink black #27262B, with a small vermilion #E0492F rounded-square seal mark containing a white water drop placed to the left, horizontal layout, lots of white space, flat vector style, white background, no other text, no watermark, 8:3.
 
 （※文字の正確さは画像生成が苦手なので、ワードマークは実際にはサイトのWebフォントで出している。生成するなら「調香箋」の字形をよく確認すること）
+
+---
+
+# 記事用の図版（MBTI／ラブタイプの考察記事）
+
+**すべて 16:9 の横長**（1600×900 推奨）。文字は入れさせない（AIは日本語を正しく描けないため、意味は絵だけで持たせる設計にしてある）。
+保存先は `assets/img/article/`。保存後に `npm run img:optimize` を実行すると `public/img/article/*.webp` が作られ、記事に自動で出る。
+**画像が無い間は図版ごと非表示になる**ので、1枚ずつ差し込んでいって構わない。
+
+## assets/img/article/mbti-axes.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Four young women arranged in a two-by-two grid, each in a clearly different atmosphere: top-left one stands far away with her scent drifting wide across the frame, top-right one stands very close in a quiet intimate space, bottom-left one is surrounded by crisp cool blue air, bottom-right one is wrapped in warm amber light. Thin vermilion #E0492F dividing lines between the four cells. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/mbti-matrix.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. A neat overhead grid of sixteen small glass perfume bottles laid out in four rows of four on a pale paper surface, each bottle holding a different colour of liquid ranging from pale yellow and mint green through pink, coral, beige, brown, amber and lavender, soft shadows, a single thin vermilion #E0492F line running along one edge as an accent. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/mbti-bottles.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two glass perfume bottles side by side in close-up, the left one filled with clear ice-blue liquid in crisp cool light with a faint frost bloom, the right one filled with warm amber liquid glowing in soft evening light, the air between them shifting gradually from cool to warm. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/lovetype-axes.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Four quiet symbolic vignettes in one row: a hand reaching forward first, a paper sliding door half open with light spilling out, a small flame beside a piece of clear ice, and a single long indigo #2D4F8A thread running unbroken to the edge of the frame. Soft pastel colours, thin vermilion #E0492F hairlines separating the vignettes. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/lovetype-matrix.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. A young woman seen from above, sitting calmly at the centre, with sixteen small translucent scent droplets arranged around her in two concentric rings, the inner ring close to her body in muted deep colours and the outer ring spread wide in bright airy colours, the left half of the image tinted cool blue and the right half tinted warm amber. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.
+
+## assets/img/article/lovetype-distance.png（1600×900）
+
+soft pastel digital illustration, clean modern style for a personality-quiz website aimed at women in their 20s, a light touch of Japanese craft motifs, thin elegant lines, flat shading, airy light. Two young people sitting side by side on a bench at a comfortable close distance, seen from the side, a soft translucent halo of scent extending only about an arm's length around them and fading gently into the air, calm evening light, tender unforced mood. Plain off-white background #FCFAF7, wide landscape 16:9, generous margins, no text, no letters, no numbers, no watermark, no frame, not kimono-costume-drama, not loud traditional patterns.

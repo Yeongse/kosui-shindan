@@ -38,7 +38,10 @@ function walk(dir: string, out: string[] = []): string[] {
 
 function sectionText(sections: ArticleSection[]): string {
   return sections
-    .map((s) => s.heading + s.blocks.map((b) => (typeof b === 'string' ? b : b.list.join(''))).join(''))
+    .map(
+      (s) =>
+        s.heading + s.blocks.map((b) => (typeof b === 'string' ? b : 'list' in b ? b.list.join('') : '')).join(''),
+    )
     .join('');
 }
 

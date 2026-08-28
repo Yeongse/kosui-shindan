@@ -60,3 +60,27 @@
   font-weight: 500;
   color: var(--c-text-3);
 }
+
+/* 記事中の画像（未配置のときは Art の空スロットが残るだけで崩れない） */
+.figure {
+  margin: 26px 0;
+}
+
+.figureImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--c-border);
+  background: var(--c-card-2);
+  transition: opacity 300ms ease;
+}
+
+.caption {
+  margin-top: 8px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--c-text-3);
+  text-align: center;
+}

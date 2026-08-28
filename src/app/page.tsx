@@ -41,6 +41,24 @@ const ICONS = [
   </svg>,
 ];
 
+/** 性格診断×香水のクロス考察。LPから直接入れるようにする（§12.1 ロングテール） */
+const CROSS_ARTICLES = [
+  {
+    slug: 'mbti-perfume',
+    badge: 'MBTI × 香水',
+    title: '16タイプ別に似合う香りの系統',
+    body: 'E/Iは香りが届く距離、S/Nは輪郭の分かりやすさ、T/Fは温度、J/Pは重心。4つの軸を香水の設計要素に翻訳して、16タイプすべてに対応する香調とノート名を出しました。',
+    more: 'INFPは肌理、INTJは宵闇、ENFPは蜜月',
+  },
+  {
+    slug: 'lovetype-perfume',
+    badge: 'ラブタイプ × 香水',
+    title: '恋愛の4つの軸から香りを考える',
+    body: '主導性は香りの立ち上がり、公開度は届く距離、熱量は温度、コミットメントは持続。恋愛での距離の取り方を、そのまま香水の選び方に置き換えます。',
+    more: '16通りの組み合わせと、場面別の量の目安',
+  },
+] as const;
+
 /** LP — 中央一列。最初の画面で「香水診断・無料90秒・何がわかるか」を伝える。 */
 export default function HomePage() {
   const featuredGuides = GUIDES.slice(0, 6);
@@ -132,6 +150,28 @@ export default function HomePage() {
               香水タイプ一覧（全16タイプの香りと似合う人）を見る
             </Link>
           </p>
+        </section>
+
+        {/* ---------- 診断クロス考察 ---------- */}
+        <section className={`container ${styles.section}`} aria-labelledby="cross-heading">
+          <h2 id="cross-heading" className="h2 h2--center">
+            性格診断から香りを探す
+          </h2>
+          <p className={styles.lead}>
+            すでに自分のMBTIや恋愛タイプを知っている人向けに、その結果を香りの系統に翻訳した考察を書きました。
+          </p>
+          <ul className={styles.crossGrid}>
+            {CROSS_ARTICLES.map((a) => (
+              <li key={a.slug}>
+                <Link href={`/guide/${a.slug}`} className={`card ${styles.crossCard}`}>
+                  <span className={styles.crossBadge}>{a.badge}</span>
+                  <span className={styles.crossTitle}>{a.title}</span>
+                  <span className={styles.crossBody}>{a.body}</span>
+                  <span className={styles.crossMore}>{a.more}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* ---------- 考え方 ---------- */}

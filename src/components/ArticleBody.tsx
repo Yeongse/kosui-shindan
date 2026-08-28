@@ -1,4 +1,5 @@
 import type { ArticleSection } from '@/data/schema';
+import { ArticleFigure } from './ArticleFigure';
 import styles from './ArticleBody.module.css';
 
 /**
@@ -11,21 +12,27 @@ export function ArticleBody({ sections }: { sections: ArticleSection[] }) {
       {sections.map((s, i) => (
         <section key={i} className={styles.section}>
           <h2 className={styles.h2}>{s.heading}</h2>
-          {s.blocks.map((b, j) =>
-            typeof b === 'string' ? (
-              <p key={j} className={styles.p}>
-                {b}
-              </p>
-            ) : (
-              <ul key={j} className={styles.ul}>
-                {b.list.map((item, k) => (
-                  <li key={k} className={styles.li}>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            ),
-          )}
+          {s.blocks.map((b, j) => {
+            if (typeof b === 'string') {
+              return (
+                <p key={j} className={styles.p}>
+                  {b}
+                </p>
+              );
+            }
+            if ('list' in b) {
+              return (
+                <ul key={j} className={styles.ul}>
+                  {b.list.map((item, k) => (
+                    <li key={k} className={styles.li}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              );
+            }
+            return <ArticleFigure key={j} image={b.image} />;
+          })}
         </section>
       ))}
     </div>
