@@ -120,6 +120,12 @@ for (const [route, html] of pages) {
   if (!/href="\/guide\/[a-z-]+"/.test(html)) ruleIssues.push(`${route}: 関連ガイドなし`);
   if (!html.includes('href="/shindan"')) ruleIssues.push(`${route}: 診断CTAなし`);
 }
+for (const [route, html] of pages) {
+  if (!/^\/mbti\/[a-z]+$/.test(route)) continue;
+  if (!/href="\/type\/[a-z]+"/.test(html)) ruleIssues.push(`${route}: タイプ解説へのリンクなし`);
+  if (!/href="\/mbti\/[a-z]+"/.test(html)) ruleIssues.push(`${route}: 近いMBTIへのリンクなし`);
+  if (!html.includes('href="/shindan"')) ruleIssues.push(`${route}: 診断CTAなし`);
+}
 console.log(`internal link rule issues: ${ruleIssues.length}`, ruleIssues);
 
 const failed = orphans.length + broken.length + badAnchors.length + robotsIssues.length + ruleIssues.length;

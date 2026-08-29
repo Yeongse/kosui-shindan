@@ -134,7 +134,10 @@ export interface ArticleImage {
   ratio?: '16/9' | '4/3' | '1/1';
 }
 
-export type ContentBlock = string | { list: string[] } | { image: ArticleImage };
+/** 記事に埋め込む定型ブロック（データ層から描くもの） */
+export type EmbedId = 'mbti-grid';
+
+export type ContentBlock = string | { list: string[] } | { image: ArticleImage } | { embed: EmbedId };
 
 export interface ArticleSection {
   heading: string;

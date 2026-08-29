@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { LogoMark } from './LogoMark';
-import { CROSS_ARTICLES } from '@/data/cross';
+
 import styles from './SiteHeader.module.css';
 
 /** ヘッダー: ロゴ + 主要ナビ。白地・薄い下線。 */
@@ -28,11 +28,12 @@ export function SiteHeader({ minimal = false }: { minimal?: boolean }) {
               <Link href="/guide" className={styles.navLink}>
                 選び方ガイド
               </Link>
-              {CROSS_ARTICLES.map((c) => (
-                <Link key={c.slug} href={`/personality/${c.slug}`} className={styles.navLink}>
-                  {c.tab}
-                </Link>
-              ))}
+              <Link href="/personality/mbti-perfume" className={styles.navLink}>
+                MBTIから
+              </Link>
+              <Link href="/personality/lovetype-perfume" className={styles.navLink}>
+                ラブタイプから
+              </Link>
             </div>
             <Link href="/shindan" className={`${styles.navCta}`}>
               診断する

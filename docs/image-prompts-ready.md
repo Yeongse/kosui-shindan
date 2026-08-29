@@ -169,9 +169,3 @@ Japanese modern wordmark: the two kanji 「調香箋」 in a bold contemporary m
 
 ---
 
----
-
-# 記事の構造図（MBTI／ラブタイプの考察記事）
-
-**このファイルにあるのは正方形（1024×1024）のキャラ絵・扉絵だけ。**
-記事に差し込む横長の構造図（1600×900・12枚）は [figure-prompts.md](./figure-prompts.md) に分けてある。

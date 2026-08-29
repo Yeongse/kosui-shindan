@@ -1,5 +1,6 @@
 import type { ArticleSection } from '@/data/schema';
 import { ArticleFigure } from './ArticleFigure';
+import { MbtiGrid } from './MbtiGrid';
 import styles from './ArticleBody.module.css';
 
 /**
@@ -31,7 +32,8 @@ export function ArticleBody({ sections }: { sections: ArticleSection[] }) {
                 </ul>
               );
             }
-            return <ArticleFigure key={j} image={b.image} />;
+            if ('image' in b) return <ArticleFigure key={j} image={b.image} />;
+            return <MbtiGrid key={j} />;
           })}
         </section>
       ))}

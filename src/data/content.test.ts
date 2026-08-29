@@ -6,6 +6,8 @@ import { TYPE_CODES } from './types.base';
 import { NOTES, NOTE_SLUGS } from './notes';
 import { GUIDES, GUIDE_SLUGS } from './guides';
 import { CROSS_ARTICLES } from './cross';
+import { MBTI_MAP } from './mbti';
+import { TYPE_BY_SLUG } from './types';
 import { QUESTIONS } from './questions';
 import { LP_FAQ, LP_PHILOSOPHY } from './site-copy';
 import { PICKS_BY_TYPE } from './picks';
@@ -227,6 +229,20 @@ describe('性格診断×香水のクロス考察（/personality）', () => {
 
   it('選び方ガイドには含めない（別立てのセクション）', () => {
     for (const c of CROSS_ARTICLES) expect(GUIDE_SLUGS).not.toContain(c.slug);
+  });
+});
+
+describe('MBTI 16タイプ × 香水タイプの対応表', () => {
+  it('16タイプが香水タイプに1対1で対応し、3文字目が温度と一致する', () => {
+    expect(MBTI_MAP).toHaveLength(16);
+    expect(new Set(MBTI_MAP.map((m) => m.code)).size).toBe(16);
+    expect(new Set(MBTI_MAP.map((m) => m.typeSlug)).size, '香水タイプの重複なし').toBe(16);
+    for (const m of MBTI_MAP) {
+      expect(m.code).toMatch(/^[EI][SN][TF][JP]$/);
+      const t = TYPE_BY_SLUG[m.typeSlug];
+      expect(t, `${m.code} -> ${m.typeSlug}`).toBeDefined();
+      expect(t!.code.endsWith(m.code[2] === 'T' ? '-C' : '-W'), `${m.code} の温度`).toBe(true);
+    }
   });
 });
 
