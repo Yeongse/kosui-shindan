@@ -81,8 +81,8 @@ async function write(name: string, res: Response) {
     liquid: TYPE_LIQUID[t.code],
   }));
   const CROSS_OG: Record<string, { title: string; subtitle: string; note: string; accent: 'rose' | 'lav' }> = {
-    'mbti-perfume': { title: 'MBTIから香水を選ぶ', subtitle: '16タイプ別に、似合う香りの系統を考察する', note: 'INFPは肌理、INTJは宵闇、ENFPは蜜月。', accent: 'rose' },
-    'lovetype-perfume': { title: 'ラブタイプから香水を選ぶ', subtitle: '恋愛の4つの軸から、似合う香りを考える', note: '主導性・公開度・熱量・コミットメントの4軸。', accent: 'lav' },
+    'mbti-perfume': { title: 'MBTIから香水を選ぶ', subtitle: 'パーソナリティから、似合う香りを考える', note: '外向内向・感覚直観・思考感情・判断知覚の4軸で評価', accent: 'rose' },
+    'lovetype-perfume': { title: 'ラブタイプから香水を選ぶ', subtitle: '恋愛の4つの軸から、似合う香りを考える', note: '主導性・公開度・熱量・コミットメントの4軸で評価', accent: 'lav' },
   };
   for (const c of CROSS_ARTICLES) {
     const o = CROSS_OG[c.slug];

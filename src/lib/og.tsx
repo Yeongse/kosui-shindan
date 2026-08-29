@@ -210,7 +210,7 @@ export function renderCrossOg(
               <span style={{ display: 'flex', fontSize: 20, lineHeight: 1.6, color: C.text2 }}>{subtitle}</span>
             </div>
             <div style={{ display: 'flex', marginTop: 8, padding: '14px 18px', borderRadius: 16, background: '#FAF7FC', border: `1px solid ${C.border}` }}>
-              <span style={{ display: 'flex', fontSize: 18, lineHeight: 1.6, color: C.text2 }}>{note}</span>
+              <span style={{ display: 'flex', fontSize: 17, lineHeight: 1.6, color: C.text2 }}>{note}</span>
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 'auto' }}>
               {pills.map((t) => (
