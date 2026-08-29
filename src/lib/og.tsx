@@ -167,6 +167,89 @@ export function renderTypeOg(type: ScentType, assets: OgAssets, art: string | nu
   );
 }
 
+/**
+ * 性格診断×香水の考察記事のOG（/personality/[slug]）。
+ * 左に見出し、右に16タイプのキャラ絵を4×4で並べる。arts は slug 順の data URI。
+ */
+export function renderCrossOg(
+  title: string,
+  subtitle: string,
+  note: string,
+  pills: string[],
+  arts: { art: string | null; liquid: string }[],
+  assets: OgAssets,
+  accent: 'rose' | 'lav' = 'rose',
+): ImageResponse {
+  const ac = accent === 'rose' ? C.rose : C.lav;
+  const acSoft = accent === 'rose' ? C.roseSoft : C.lavSoft;
+  return new ImageResponse(
+    (
+      <div style={{ width: OG_W, height: OG_H, display: 'flex', background: C.bg, position: 'relative', fontFamily: 'Body', color: C.text, overflow: 'hidden' }}>
+        <Blobs />
+        <div
+          style={{
+            position: 'absolute',
+            left: 60,
+            top: 50,
+            width: 1080,
+            height: 530,
+            background: C.card,
+            borderRadius: 32,
+            border: `1px solid ${C.border}`,
+            boxShadow: '0 30px 60px -30px rgba(120,80,160,0.35)',
+            display: 'flex',
+            padding: '40px 44px',
+            gap: 30,
+          }}
+        >
+          {/* 左: 見出し */}
+          <div style={{ display: 'flex', flexDirection: 'column', width: 520, gap: 18 }}>
+            <Logo src={assets.logo} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 6 }}>
+              <span style={{ display: 'flex', fontFamily: 'Display', fontSize: 52, lineHeight: 1.25, color: C.text }}>{title}</span>
+              <span style={{ display: 'flex', fontSize: 20, lineHeight: 1.6, color: C.text2 }}>{subtitle}</span>
+            </div>
+            <div style={{ display: 'flex', marginTop: 8, padding: '14px 18px', borderRadius: 16, background: '#FAF7FC', border: `1px solid ${C.border}` }}>
+              <span style={{ display: 'flex', fontSize: 18, lineHeight: 1.6, color: C.text2 }}>{note}</span>
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 'auto' }}>
+              {pills.map((t) => (
+                <div key={t} style={{ display: 'flex', padding: '7px 16px', borderRadius: 999, background: acSoft, color: ac, fontSize: 16, fontFamily: 'Display' }}>
+                  {t}
+                </div>
+              ))}
+            </div>
+            <span style={{ display: 'flex', fontSize: 14, color: C.text3 }}>{OG_SITE_URL_LABEL}</span>
+          </div>
+          {/* 右: 16タイプのキャラ絵 */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignContent: 'center', width: 452 }}>
+            {arts.map((a, i) => (
+              <div
+                key={i}
+                style={{
+                  width: 98,
+                  height: 98,
+                  borderRadius: 49,
+                  background: a.liquid,
+                  display: 'flex',
+                  overflow: 'hidden',
+                  boxShadow: `0 0 0 4px #fff, 0 0 0 5px ${a.liquid}`,
+                }}
+              >
+                {a.art ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={a.art} width={98} height={98} alt="" style={{ borderRadius: 49, objectFit: 'cover' }} />
+                ) : null}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+    { width: OG_W, height: OG_H, fonts: fontConfig(assets) },
+  );
+}
+
 /** 記事・既定の OG（label 無しならサイト全体の既定）。art は右上の丸に入れる絵（data URI）。 */
 export function renderLabelOg(assets: OgAssets, label: string | null, accentColor?: string, art: string | null = null): ImageResponse {
   const title = label ?? '香水診断';

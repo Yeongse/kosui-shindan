@@ -19,7 +19,7 @@ import { NOTES } from '../src/data/notes';
 import { GUIDES } from '../src/data/guides';
 import { CROSS_ARTICLES } from '../src/data/cross';
 import { TYPE_LIQUID } from '../src/data/palette';
-import { renderTypeOg, renderLabelOg, type OgAssets } from '../src/lib/og';
+import { renderTypeOg, renderLabelOg, renderCrossOg, type OgAssets } from '../src/lib/og';
 
 const OUT = path.resolve('public/og');
 
@@ -75,9 +75,22 @@ async function write(name: string, res: Response) {
     bytes += await write(`guide-${g.slug}.png`, renderLabelOg(assets, short));
     count++;
   }
+  // 考察記事は16タイプの顔を並べた専用OG（シェアされたときの引きを作る）
+  const faces = TYPES.map((t) => ({
+    art: dataUri(path.resolve(`assets/img/types/${t.slug}.png`)),
+    liquid: TYPE_LIQUID[t.code],
+  }));
+  const CROSS_OG: Record<string, { title: string; subtitle: string; note: string; accent: 'rose' | 'lav' }> = {
+    'mbti-perfume': { title: 'MBTIから香水を選ぶ', subtitle: '16タイプ別に、似合う香りの系統を考察する', note: 'INFPは肌理、INTJは宵闇、ENFPは蜜月。', accent: 'rose' },
+    'lovetype-perfume': { title: 'ラブタイプから香水を選ぶ', subtitle: '恋愛の4つの軸から、似合う香りを考える', note: '主導性・公開度・熱量・コミットメントの4軸。', accent: 'lav' },
+  };
   for (const c of CROSS_ARTICLES) {
-    const short = c.title.split('｜')[0] ?? c.title;
-    bytes += await write(`cross-${c.slug}.png`, renderLabelOg(assets, short));
+    const o = CROSS_OG[c.slug];
+    if (o) {
+      bytes += await write(`cross-${c.slug}.png`, renderCrossOg(o.title, o.subtitle, o.note, ['全16タイプ', '約90秒', '無料診断つき'], faces, assets, o.accent));
+    } else {
+      bytes += await write(`cross-${c.slug}.png`, renderLabelOg(assets, c.title.split('｜')[0] ?? c.title));
+    }
     count++;
   }
   bytes += await write('default.png', renderLabelOg(assets, null));
