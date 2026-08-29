@@ -1,0 +1,48 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 26px 0;
+}
+
+.figure {
+  margin: 0;
+}
+
+.link {
+  display: block;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+  background: var(--c-card);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-base) var(--ease);
+}
+.link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--c-shadow);
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.caption {
+  margin-top: 8px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  text-align: center;
+  color: var(--c-text-3);
+}
+
+.capLink {
+  color: var(--c-text-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.capLink:hover {
+  color: var(--c-text-2);
+}

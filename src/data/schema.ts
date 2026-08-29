@@ -134,10 +134,14 @@ export interface ArticleImage {
   ratio?: '16/9' | '4/3' | '1/1';
 }
 
-/** 記事に埋め込む定型ブロック（データ層から描くもの） */
-export type EmbedId = 'mbti-grid';
+/**
+ * 記事に埋め込む定型ブロック（データ層から描くもの）
+ * - mbti-grid: MBTI 16タイプ × 香水タイプの対応表
+ * - types: 指定した香水タイプの横長カード（OG画像を流用）
+ */
+export type Embed = { embed: 'mbti-grid' } | { embed: 'types'; slugs: string[] };
 
-export type ContentBlock = string | { list: string[] } | { image: ArticleImage } | { embed: EmbedId };
+export type ContentBlock = string | { list: string[] } | { image: ArticleImage } | Embed;
 
 export interface ArticleSection {
   heading: string;
